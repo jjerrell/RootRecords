@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../model/task.dart';
 
 class TaskEditPage extends StatefulWidget {
@@ -59,8 +60,11 @@ class _TaskEditPageState extends State<TaskEditPage> {
 
   @override
   Widget build(BuildContext context) {
+    String formattedDate = DateFormat.yMMMd().format(_selectedDate);
+
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Edit Task'),
         actions: [
           IconButton(
@@ -88,12 +92,12 @@ class _TaskEditPageState extends State<TaskEditPage> {
             Row(
               children: [
                 Text(
-                  'Date: ${_selectedDate.toLocal()}'.split(' ')[0],
+                  'Date:',
                 ),
                 const SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: () => _selectDate(context),
-                  child: const Text('Select date'),
+                  child: Text(formattedDate),
                 ),
               ],
             ),
