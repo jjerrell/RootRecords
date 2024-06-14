@@ -64,7 +64,6 @@ class _TaskEditPageState extends State<TaskEditPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Edit Task'),
         actions: [
           IconButton(
