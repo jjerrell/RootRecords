@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:root_records/model/task.dart';
+import 'package:root_records/provider/theme_notifier.dart';
 import 'package:root_records/view/settings_view.dart';
 import 'package:root_records/view/task_edit_view.dart';
 import 'package:root_records/view/task_view.dart';
 import 'db/database_helper.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => ThemeNotifier(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,12 +18,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'RootRecords',
-        theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-            useMaterial3: true),
-        home: const MyHomePage(title: 'Gardening Diary'));
+    return Consumer<ThemeNotifier>(builder: (context, themeNotifier, child) {
+      return MaterialApp(
+          title: 'RootRecords',
+          theme: themeNotifier.currentTheme,
+          home: const MyHomePage(title: 'Gardening Diary'));
+    });
   }
 }
 
@@ -72,7 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
         actions: [
           IconButton(
@@ -109,9 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           builder: (context) => TaskEditPage(
                             task: task,
                             onSave: (updatedTask) {
-                              // Handle saving the updated task (e.g., update the task in the list and database)
                               _updateTask(updatedTask);
-                              // print('Task updated: ${updatedTask.name}');
                             },
                           ),
                         ),
