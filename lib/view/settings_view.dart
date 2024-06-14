@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:root_records/view/settings_category_view.dart';
 import '../provider/theme_notifier.dart';
 
 class SettingsView extends StatefulWidget {
@@ -33,7 +34,11 @@ class _SettingsViewState extends State<SettingsView> {
             leading: const Icon(Icons.category),
             title: const Text('Edit Categories'),
             onTap: () {
-              // Handle category navigation
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SettingsCategoryView()),
+              );
             },
           ),
           // SwitchListTile(
@@ -58,30 +63,6 @@ class _SettingsViewState extends State<SettingsView> {
               );
             },
           ),
-          // const Divider(),
-          // const ListTile(
-          //   title: Text(
-          //     "Account",
-          //     style: TextStyle(
-          //       fontSize: 20,
-          //       fontWeight: FontWeight.bold,
-          //     ),
-          //   ),
-          // ),
-          // ListTile(
-          //   leading: const Icon(Icons.person),
-          //   title: const Text('Profile'),
-          //   onTap: () {
-          //     // Handle Profile tap
-          //   },
-          // ),
-          // ListTile(
-          //   leading: const Icon(Icons.lock),
-          //   title: const Text('Change Password'),
-          //   onTap: () {
-          //     // Handle Change Password tap
-          //   },
-          // ),
           const Divider(),
           const ListTile(
             title: Text(

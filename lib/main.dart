@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:root_records/model/task.dart';
+import 'package:root_records/provider/category_notifier.dart';
 import 'package:root_records/provider/theme_notifier.dart';
 import 'package:root_records/view/settings_view.dart';
 import 'package:root_records/view/task_edit_view.dart';
@@ -8,8 +9,15 @@ import 'package:root_records/view/task_view.dart';
 import 'db/database_helper.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-      create: (context) => ThemeNotifier(), child: const MyApp()));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeNotifier()),
+        ChangeNotifierProvider(create: (context) => CategoryNotifier()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
