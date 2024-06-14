@@ -10,7 +10,7 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  bool _notificationEnabled = true;
+  // bool _notificationEnabled = true;
 
   @override
   Widget build(BuildContext context) {

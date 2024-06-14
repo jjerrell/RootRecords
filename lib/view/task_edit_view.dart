@@ -90,7 +90,7 @@ class _TaskEditPageState extends State<TaskEditPage> {
             const SizedBox(height: 16),
             Row(
               children: [
-                Text(
+                const Text(
                   'Date:',
                 ),
                 const SizedBox(width: 8),
