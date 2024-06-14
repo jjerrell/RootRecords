@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:root_records/model/task.dart';
+import 'package:root_records/view/settings_view.dart';
 import 'package:root_records/view/task_edit_view.dart';
 import 'package:root_records/view/task_view.dart';
 import 'db/database_helper.dart';
@@ -73,6 +74,17 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsView()),
+              );
+            },
+          ),
+        ],
       ),
       body: Expanded(
         child: _tasks.isEmpty
