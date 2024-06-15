@@ -4,21 +4,20 @@ import '../model/task.dart';
 
 class TaskView extends StatelessWidget {
   final Task task;
-  final VoidCallback onCardTap;
   final VoidCallback onDelete;
+  final VoidCallback onCardTap;
   @override
   final Key key;
 
   const TaskView({
-    required this.key,
     required this.task,
-    required this.onCardTap,
     required this.onDelete,
+    required this.onCardTap,
+    required this.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Format the date as a simple date string
     String formattedDate = DateFormat.yMMMd().format(task.date);
 
     return Dismissible(
@@ -38,10 +37,10 @@ class TaskView extends StatelessWidget {
           onDelete();
         }
       },
-      child: InkWell(
-        onTap: onCardTap, // Action when the card is tapped
-        child: Card(
-          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Card(
+        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        child: InkWell(
+          onTap: onCardTap,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -59,7 +58,7 @@ class TaskView extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8), // Use height instead of width
+                const SizedBox(height: 8),
                 Text(
                   'Date: $formattedDate',
                   style: const TextStyle(fontSize: 16),
