@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+
 import '../model/category.dart';
 import '../model/task.dart';
 
@@ -27,6 +29,7 @@ class DatabaseHelper {
   }
 
   Future _onCreate(Database db, int version) async {
+    // Create the 'tasks' table
     await db.execute('''
     CREATE TABLE tasks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,6 +39,7 @@ class DatabaseHelper {
     )
     ''');
 
+    // Create the 'categories' table
     await db.execute('''
     CREATE TABLE categories (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,7 +48,7 @@ class DatabaseHelper {
     )
     ''');
 
-    // Insert predefined categories
+    // Create predefined categories, preferring common/accessible colors
     List<Category> predefinedCategories = [
       Category(name: 'Black', color: 0xFF000000),
       Category(name: 'White', color: 0xFFFFFFFF),
@@ -57,7 +61,7 @@ class DatabaseHelper {
       Category(name: 'Teal', color: 0xFF008080),
       Category(name: 'Brown', color: 0xFFA52A2A),
     ];
-
+    // Insert the default categories
     for (Category category in predefinedCategories) {
       await db.insert('categories', category.toMap());
     }
