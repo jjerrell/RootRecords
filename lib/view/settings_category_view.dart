@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
-import '../provider/category_notifier.dart';
+
 import '../model/category.dart';
+import '../provider/category_notifier.dart';
 
 class SettingsCategoryView extends StatelessWidget {
   const SettingsCategoryView({super.key});

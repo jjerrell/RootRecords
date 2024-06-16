@@ -23,8 +23,9 @@ class DatabaseHelper {
     String path = join(await getDatabasesPath(), 'app_database.db');
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
     );
   }
 
@@ -35,7 +36,9 @@ class DatabaseHelper {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
       date TEXT,
-      description TEXT
+      description TEXT,
+      category_id INTEGER,
+      FOREIGN KEY (category_id) REFERENCES categories (id)
     )
     ''');
 
@@ -64,6 +67,19 @@ class DatabaseHelper {
     // Insert the default categories
     for (Category category in predefinedCategories) {
       await db.insert('categories', category.toMap());
+    }
+  }
+
+  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute('ALTER TABLE tasks ADD COLUMN category_id INTEGER');
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS categories (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT,
+          color INTEGER
+        )
+      ''');
     }
   }
 
@@ -112,6 +128,20 @@ class DatabaseHelper {
     return List.generate(maps.length, (i) {
       return Category.fromMap(maps[i]);
     });
+  }
+
+  Future<Category?> getCategoryById(int id) async {
+    Database db = await database;
+    List<Map<String, dynamic>> maps = await db.query(
+      'categories',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (maps.isNotEmpty) {
+      return Category.fromMap(maps.first);
+    } else {
+      return null;
+    }
   }
 
   Future<int> updateCategory(Category category) async {

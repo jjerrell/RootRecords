@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:root_records/model/category.dart';
+import 'package:root_records/view/widget/category_list.dart';
+
+import '../db/database_helper.dart';
 import '../model/task.dart';
 
 class TaskEditPage extends StatefulWidget {
@@ -16,6 +20,7 @@ class _TaskEditPageState extends State<TaskEditPage> {
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
   DateTime _selectedDate = DateTime.now();
+  Category? _assignedCategory;
 
   @override
   void initState() {
@@ -24,6 +29,16 @@ class _TaskEditPageState extends State<TaskEditPage> {
     _descriptionController =
         TextEditingController(text: widget.task.description);
     _selectedDate = widget.task.date;
+    _loadCategory(widget.task.categoryId);
+  }
+
+  Future<void> _loadCategory(int? categoryId) async {
+    if (categoryId != null) {
+      Category? category = await DatabaseHelper().getCategoryById(categoryId);
+      setState(() {
+        _assignedCategory = category;
+      });
+    }
   }
 
   @override
@@ -47,12 +62,19 @@ class _TaskEditPageState extends State<TaskEditPage> {
     }
   }
 
+  void _onCategorySelected(Category category) {
+    setState(() {
+      _assignedCategory = category;
+    });
+  }
+
   void _saveTask() {
     final updatedTask = Task(
       id: widget.task.id,
       name: _nameController.text,
       date: _selectedDate,
       description: _descriptionController.text,
+      categoryId: _assignedCategory?.id,
     );
     widget.onSave(updatedTask);
     Navigator.of(context).pop();
@@ -90,15 +112,35 @@ class _TaskEditPageState extends State<TaskEditPage> {
             const SizedBox(height: 16),
             Row(
               children: [
-                const Text(
-                  'Date:',
-                ),
+                const Text('Date:'),
                 const SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: () => _selectDate(context),
                   child: Text(formattedDate),
                 ),
+                const Spacer(),
+                if (_assignedCategory != null)
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
+                        width: 2.0,
+                      ),
+                    ),
+                    child: CircleAvatar(
+                      backgroundColor: Color(_assignedCategory!.color),
+                    ),
+                  ),
               ],
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: CategoryList(
+                onCategorySelected: _onCategorySelected,
+              ),
             ),
           ],
         ),
