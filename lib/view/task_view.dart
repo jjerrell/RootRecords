@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../model/task.dart';
+import 'component/root_card.dart';
 
 class TaskView extends StatelessWidget {
   final Task task;
   final VoidCallback onDelete;
   final VoidCallback onCardTap;
-  @override
-  final Key key;
 
   const TaskView({
+    Key? key,
     required this.task,
     required this.onDelete,
     required this.onCardTap,
-    required this.key,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String formattedDate = DateFormat.yMMMd().format(task.date);
 
     return Dismissible(
-      key: key,
+      key: Key(task.name), // Use a unique key for Dismissible
       direction: DismissDirection.endToStart,
       background: Container(
         color: Colors.red,
@@ -37,35 +37,21 @@ class TaskView extends StatelessWidget {
           onDelete();
         }
       },
-      child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-        child: InkWell(
-          onTap: onCardTap,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        task.name,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Date: $formattedDate',
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ],
+      child: RootCard(
+        onTap: onCardTap,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              task.name,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-          ),
+            const SizedBox(height: 8),
+            Text(
+              'Date: $formattedDate',
+              style: const TextStyle(fontSize: 16),
+            ),
+          ],
         ),
       ),
     );
