@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
+import 'package:root_records/view/widget/category_list.dart';
 
 import '../model/category.dart';
 import '../provider/category_notifier.dart';
@@ -14,42 +15,23 @@ class SettingsCategoryView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Manage Categories'),
       ),
-      body: Consumer<CategoryNotifier>(
-        builder: (context, categoryNotifier, child) {
-          return ListView(
+      body: CategoryList(
+        trailingWidgetBuilder: (category) {
+          return Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              ...categoryNotifier.categories.map((category) {
-                return ListTile(
-                  title: Text(category.name),
-                  leading: CircleAvatar(
-                    backgroundColor: Color(category.color),
-                  ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.edit),
-                        onPressed: () {
-                          _showCategoryDialog(context, category);
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          categoryNotifier.deleteCategory(category.id!);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              }),
-              ListTile(
-                title: TextButton(
-                  child: const Text('Add Category'),
-                  onPressed: () {
-                    _showCategoryDialog(context);
-                  },
-                ),
+              IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () {
+                  _showCategoryDialog(context, category);
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  Provider.of<CategoryNotifier>(context, listen: false)
+                      .deleteCategory(category.id!);
+                },
               ),
             ],
           );
