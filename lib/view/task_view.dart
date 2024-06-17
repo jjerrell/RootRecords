@@ -33,14 +33,13 @@ class TaskView extends StatelessWidget {
       future: _getCategory(task.categoryId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
-          return Text('Error loading category');
+          return const Text('Error loading category');
         } else {
           Category? category = snapshot.data;
           return Dismissible(
-            key: Key(
-                "${task.id ?? task.name}"), // Use a unique key for Dismissible
+            key: Key("${task.id ?? task.name}"),
             direction: DismissDirection.endToStart,
             background: Container(
               color: Colors.red,
@@ -59,11 +58,11 @@ class TaskView extends StatelessWidget {
             child: RootCard(
               onTap: onCardTap,
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   if (category != null)
                     Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
+                      padding: const EdgeInsets.only(right: 12.0),
                       child: CircleAvatar(
                         radius: 8, // Small indicator
                         backgroundColor: Color(category.color),

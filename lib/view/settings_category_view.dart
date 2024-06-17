@@ -71,7 +71,7 @@ class SettingsCategoryView extends StatelessWidget {
                   width: double.infinity,
                   color: selectedColor,
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     'Pick Color',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -84,7 +84,7 @@ class SettingsCategoryView extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -101,7 +101,7 @@ class SettingsCategoryView extends StatelessWidget {
                 }
                 Navigator.of(context).pop();
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );
