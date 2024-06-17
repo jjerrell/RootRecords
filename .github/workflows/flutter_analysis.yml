@@ -29,11 +29,8 @@ jobs:
             echo "No formatting issues found."
           fi
 
-      - name: Run dart analyze
+      - name: Run Flutter analysis
         run: flutter analyze
-
-      - name: Run dart lint
-        run: dart pub run lints
 
       - name: Run tests
         run: flutter test
