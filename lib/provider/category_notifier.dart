@@ -18,6 +18,11 @@ class CategoryNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setCategories(List<Category> categories) {
+    _categories = categories;
+    notifyListeners();
+  }
+
   Future<void> addCategory(Category category) async {
     await _databaseHelper.insertCategory(category);
     await _loadCategories();
