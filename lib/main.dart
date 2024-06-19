@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import 'package:root_records/model/task.dart';
 import 'package:root_records/provider/category_notifier.dart';
@@ -80,6 +81,10 @@ class _MyHomePageState extends State<MyHomePage> {
     _loadTasks();
   }
 
+  void _copyLastTask() {
+    // Implement your logic to duplicate the last event with the current timestamp
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,18 +148,48 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // Example of adding a task
-          Task newTask = Task(
-            name: 'New Task',
-            date: DateTime.now(),
-            description: 'This is a new task description',
-          );
-          await _addTask(newTask);
-        },
-        tooltip: 'Add Entry',
-        child: const Icon(Icons.add),
+      floatingActionButton: SpeedDial(
+        icon: Icons.add,
+        activeIcon: Icons.close,
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        children: [
+          SpeedDialChild(
+              child: const Icon(Icons.copy),
+              label: 'Quick Create',
+              onTap: () async {
+                // Example of adding a task
+                Task newTask = Task(
+                  name: 'New Task',
+                  date: DateTime.now(),
+                  description: 'This is a new task description',
+                );
+                await _addTask(newTask);
+              }),
+          SpeedDialChild(
+            child: const Icon(Icons.add),
+            label: 'New Task',
+            onTap: () {
+              Task newTask = Task(
+                name: 'New Task',
+                date: DateTime.now(),
+                description: 'This is a new task description',
+              );
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TaskEditPage(
+                    task: newTask,
+                    onSave: (updatedTask) async {
+                      await _addTask(updatedTask);
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
