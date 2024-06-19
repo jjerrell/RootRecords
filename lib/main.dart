@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
           title: 'RootRecords',
           theme: themeNotifier.currentTheme,
-          home: const MyHomePage(title: 'Gardening Diary'));
+          home: const MyHomePage(title: 'Root Records'));
     });
   }
 }

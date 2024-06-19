@@ -1,4 +1,4 @@
-# root_records
+# Root Records
 
 A diary for your garden
 

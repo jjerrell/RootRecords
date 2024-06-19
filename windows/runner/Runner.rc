@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "dev.jjerrell" "\0"
-            VALUE "FileDescription", "root_records" "\0"
+            VALUE "FileDescription", "Root Records" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "root_records" "\0"
+            VALUE "InternalName", "Root Records" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 dev.jjerrell. All rights reserved." "\0"
             VALUE "OriginalFilename", "root_records.exe" "\0"
-            VALUE "ProductName", "root_records" "\0"
+            VALUE "ProductName", "Root Records" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

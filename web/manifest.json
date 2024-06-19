@@ -1,6 +1,6 @@
 {
-    "name": "root_records",
-    "short_name": "root_records",
+    "name": "Root Records",
+    "short_name": "Root Records",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
