@@ -6,6 +6,7 @@ import 'package:root_records/provider/theme_notifier.dart';
 import 'package:root_records/view/settings_view.dart';
 import 'package:root_records/view/task_edit_view.dart';
 import 'package:root_records/view/task_view.dart';
+
 import 'db/database_helper.dart';
 
 void main() {
@@ -83,6 +84,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const ImageIcon(
+            AssetImage('assets/icons/RootRecords-Icon.png'),
+          ),
+          onPressed: () {
+            // Define your desired action here
+          },
+        ),
         title: Text(widget.title),
         actions: [
           IconButton(
