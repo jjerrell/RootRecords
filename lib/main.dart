@@ -81,10 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
     _loadTasks();
   }
 
-  void _copyLastTask() {
-    // Implement your logic to duplicate the last event with the current timestamp
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,9 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: const ImageIcon(
             AssetImage('assets/icons/RootRecords-Icon.png'),
           ),
-          onPressed: () {
-            // Define your desired action here
-          },
+          onPressed: () {},
         ),
         title: Text(widget.title),
         actions: [

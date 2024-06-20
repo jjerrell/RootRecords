@@ -35,7 +35,7 @@ void main() {
         categoryId: null,
       );
 
-      final id = await databaseHelper.insertTask(task);
+      final _ = await databaseHelper.insertTask(task);
       final retrievedTasks = await databaseHelper.getTasks();
 
       expect(retrievedTasks.length, 1);
