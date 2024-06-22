@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
@@ -30,6 +31,12 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+        androidMain.dependencies {
+            implementation(libs.sql.delight.android)
+        }
+        iosMain.dependencies {
+            implementation(libs.sql.delight.native)
+        }
     }
 }
 
@@ -42,5 +49,14 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+
+sqldelight {
+    databases {
+        create("RootRecordsDb") {
+            packageName.set("dev.jjerrell.root.records.db")
+        }
     }
 }
