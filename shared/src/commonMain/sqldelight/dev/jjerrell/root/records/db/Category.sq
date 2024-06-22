@@ -1,0 +1,29 @@
+CREATE TABLE category (
+    id TEXT PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    color INTEGER
+);
+
+INSERT INTO category(id, name, color)
+VALUES ("123456", 'Example category', 123456789);
+
+selectAll:
+SELECT *
+FROM category;
+
+selectById:
+SELECT *
+FROM category WHERE id = ?;
+
+selectByIds:
+SELECT *
+FROM category
+WHERE id IN ?;
+
+insert:
+INSERT INTO category(id, name, color)
+VALUES (?, ?, ?);
+
+insertFullCategoryObject:
+INSERT INTO category(id, name, color)
+VALUES ?;
