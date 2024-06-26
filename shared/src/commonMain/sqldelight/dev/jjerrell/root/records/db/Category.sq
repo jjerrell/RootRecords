@@ -4,6 +4,7 @@ CREATE TABLE category (
     color INTEGER
 );
 
+-- Sample data
 INSERT INTO category(id, name, color)
 VALUES ("123456", 'Example category', 123456789);
 

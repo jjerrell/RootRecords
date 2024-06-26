@@ -52,7 +52,6 @@ android {
     }
 }
 
-
 sqldelight {
     databases {
         create("RootRecordsDb") {
