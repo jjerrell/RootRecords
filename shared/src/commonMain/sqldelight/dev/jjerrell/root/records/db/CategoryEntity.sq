@@ -1,0 +1,39 @@
+CREATE TABLE CategoryEntity (
+    id TEXT PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    color INTEGER
+);
+
+-- Predefined categories
+INSERT INTO CategoryEntity(id, name, color) VALUES ("1", 'Black', 4278190080);
+INSERT INTO CategoryEntity(id, name, color) VALUES ("2", 'White', 4294967295);
+INSERT INTO CategoryEntity(id, name, color) VALUES ("3", 'Red', 4294901760);
+INSERT INTO CategoryEntity(id, name, color) VALUES ("4", 'Green', 4278255360);
+INSERT INTO CategoryEntity(id, name, color) VALUES ("5", 'Blue', 4278190335);
+INSERT INTO CategoryEntity(id, name, color) VALUES ("6", 'Yellow', 4294967040);
+INSERT INTO CategoryEntity(id, name, color) VALUES ("7", 'Orange', 4294944000);
+INSERT INTO CategoryEntity(id, name, color) VALUES ("8", 'Purple', 4286578816);
+INSERT INTO CategoryEntity(id, name, color) VALUES ("9", 'Teal', 4278222976);
+INSERT INTO CategoryEntity(id, name, color) VALUES ("10", 'Brown', 4289014314);
+
+-- Named queries
+selectAll:
+SELECT *
+FROM CategoryEntity;
+
+selectById:
+SELECT *
+FROM CategoryEntity WHERE id = ?;
+
+selectByIds:
+SELECT *
+FROM CategoryEntity
+WHERE id IN ?;
+
+insert:
+INSERT INTO CategoryEntity(id, name, color)
+VALUES (?, ?, ?);
+
+insertFullCategoryObject:
+INSERT INTO CategoryEntity(id, name, color)
+VALUES ?;

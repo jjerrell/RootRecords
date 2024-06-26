@@ -8,7 +8,9 @@ struct ContentView: View {
 	var body: some View {
         VStack {
             ForEach(repo.getCategories(), id: \.id) { category in
-                Text("\(category.name)")
+                Text(
+                    "\(category.name)"
+                )
             }
         }
 		Text(greet)
