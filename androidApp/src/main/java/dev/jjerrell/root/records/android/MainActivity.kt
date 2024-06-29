@@ -9,8 +9,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import dev.jjerrell.root.records.PlatformColor
 import dev.jjerrell.root.records.RootRecordsRepository
+import dev.jjerrell.root.records.android.extension.toColor
 import dev.jjerrell.root.records.db.DriverFactory
 
 class MainActivity : ComponentActivity() {
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
                         items(items = repo.getCategories()) { category ->
                             Text(
                                 text = category.name,
-                                color = category.color?.let { Color(PlatformColor(it).color) } ?: Color.Unspecified
+                                color = category.color?.toColor() ?: Color.Unspecified
                             )
                         }
                     }

@@ -2,19 +2,31 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
-    let repo = RootRecordsRepository(databaseDriverFactory: DriverFactory())
-	let greet = Greeting().greet()
+    @StateObject private var viewModel = ContentViewModel()
+
 
 	var body: some View {
         VStack {
-            ForEach(repo.getCategories(), id: \.id) { category in
+            ForEach(viewModel.categories, id: \.id) { category in
                 Text(
                     "\(category.name)"
                 )
             }
         }
-		Text(greet)
+        .onAppear {
+            viewModel.loadCategories()
+        }
 	}
+}
+
+class ContentViewModel: ObservableObject {
+    @Published var categories: [CategoryEntity] = []
+
+    private let repo = RootRecordsRepository(databaseDriverFactory: DriverFactory())
+
+    func loadCategories() {
+        categories = repo.getCategories()
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {

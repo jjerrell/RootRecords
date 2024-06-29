@@ -1,0 +1,33 @@
+CREATE TABLE TaskEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT,
+    date TEXT NOT NULL,
+    category_id TEXT,
+    FOREIGN KEY (category_id) REFERENCES CategoryEntity(id)
+);
+
+-- Defult data
+INSERT INTO TaskEntity(id, name, description, date, category_id)
+VALUES ("456789", "First task", "some description", "1719113155", "123456");
+
+-- Named queries
+insert:
+INSERT INTO TaskEntity(id, name, description, date, category_id)
+VALUES (?, ?, ?, ?, ?);
+
+insertFullTaskObject:
+INSERT INTO TaskEntity(id, name, description, date, category_id)
+VALUES ?;
+
+-- Select all tasks with their categories
+selectTasksWithCategories:
+SELECT TaskEntity.id, TaskEntity.name, TaskEntity.description, TaskEntity.date, CategoryEntity.id AS category_id, CategoryEntity.name AS category_name
+FROM TaskEntity
+LEFT JOIN CategoryEntity ON TaskEntity.category_id = CategoryEntity.id;
+
+-- Select tasks by category
+selectTasksByCategory:
+SELECT TaskEntity.id, TaskEntity.name, TaskEntity.description, TaskEntity.date
+FROM TaskEntity
+WHERE TaskEntity.category_id = ?;
