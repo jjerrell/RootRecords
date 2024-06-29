@@ -16,21 +16,13 @@ import dev.jjerrell.root.records.db.DriverFactory
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val repo = RootRecordsRepository(DriverFactory(this))
         setContent {
             MyApplicationTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LazyColumn {
-                        items(items = repo.getCategories()) { category ->
-                            Text(
-                                text = category.name,
-                                color = category.color?.toColor() ?: Color.Unspecified
-                            )
-                        }
-                    }
+                    MainLayout()
                 }
             }
         }
