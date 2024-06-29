@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RootRecords</string>
+    <string name="tasks_title">Tasks</string>
+    <string name="add_task_title">Add Task</string>
+    <string name="edit_task_title">Edit Task</string>
+    <string name="categories_title">Categories</string>
+    <string name="add_category_title">Add Category</string>
+    <string name="edit_category_title">Edit Category</string>
+    <string name="settings_title">Settings</string>
+    <string name="about_title">About</string>
+    <string name="help_title">Help</string>
+</resources>

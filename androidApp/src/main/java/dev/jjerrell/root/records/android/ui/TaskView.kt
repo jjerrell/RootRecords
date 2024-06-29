@@ -49,7 +49,8 @@ class TaskViewModel : ViewModel() {
 @Composable
 fun TaskListView(
     modifier: Modifier = Modifier,
-    vm: TaskViewModel = viewModel()
+    vm: TaskViewModel = viewModel(),
+    onTaskClick: (TaskEntity) -> Unit
 ) {
     val currentContext = LocalContext.current
     LaunchedEffect(Unit) {
@@ -61,7 +62,7 @@ fun TaskListView(
                 modifier = Modifier.testTag("TASK_ROW_$index"),
                 taskItem = it,
                 onClick = {
-                    // TODO
+                    onTaskClick(it)
                 }
             )
         }

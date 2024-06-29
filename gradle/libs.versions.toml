@@ -6,6 +6,7 @@ compose-compiler = "1.5.13"
 compose-material3 = "1.1.2"
 androidx-activityCompose = "1.8.0"
 lifecycleViewmodelCompose = "2.8.2"
+navigationCompose = "2.7.7"
 sql-delight = "2.0.2"
 
 [libraries]
@@ -16,6 +17,7 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 sql-delight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sql-delight" }
 sql-delight-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sql-delight" }
