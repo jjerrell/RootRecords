@@ -10,4 +10,6 @@
     <string name="settings_title">Settings</string>
     <string name="about_title">About</string>
     <string name="help_title">Help</string>
+    <string name="back">Back</string>
+    <string name="add_task_button">Create a new task</string>
 </resources>

@@ -4,8 +4,10 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -15,11 +17,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import dev.jjerrell.root.records.android.ui.TaskListView
+import dev.jjerrell.root.records.android.ui.tasks.taskGraph
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,40 +32,41 @@ fun MainLayout(
 ) {
     val controller = rememberNavController()
     val navBackStackEntry by controller.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination.let {
-        when (it?.route) {
-            RootRecordsScreen.Tasks.route -> RootRecordsScreen.Tasks
-            RootRecordsScreen.AddTask.route -> RootRecordsScreen.AddTask
-            RootRecordsScreen.EditTask.route -> RootRecordsScreen.EditTask
-            RootRecordsScreen.Categories.route -> RootRecordsScreen.Categories
-            RootRecordsScreen.AddCategory.route -> RootRecordsScreen.AddCategory
-            RootRecordsScreen.EditCategory.route -> RootRecordsScreen.EditCategory
-            RootRecordsScreen.Settings.route -> RootRecordsScreen.Settings
-            RootRecordsScreen.About.route -> RootRecordsScreen.About
-            RootRecordsScreen.Help.route -> RootRecordsScreen.Help
-            else -> null
-        }
-    }
+    val currentDestination = RootRecordsScreen.fromNavDestination(navBackStackEntry?.destination)
     Scaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = stringResource(id = currentDestination?.titleResourceId ?: R.string.app_name)
+                        text = stringResource(
+                            id = currentDestination?.titleResourceId ?: R.string.app_name
+                        )
                     )
                 },
                 navigationIcon = {
-                    if (currentDestination == RootRecordsScreen.EditTask) {
+                    if (currentDestination != null && currentDestination != landingScreen) {
                         IconButton(onClick = { controller.popBackStack() }) {
                             Icon(
                                 imageVector = Icons.Default.ArrowBack,
-                                contentDescription = "Back"
+                                contentDescription = stringResource(id = R.string.back)
                             )
                         }
                     }
                 }
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    controller.navigate(RootRecordsScreen.AddTask.route)
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.add_task_button)
+                )
+            }
         }
     ) { paddingValues ->
         NavHost(
@@ -70,23 +74,9 @@ fun MainLayout(
                 .fillMaxSize()
                 .padding(paddingValues),
             navController = controller,
-            startDestination = landingScreen.route
+            startDestination = landingScreen.name
         ) {
-            composable(RootRecordsScreen.Tasks.route) {
-                TaskListView(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    onTaskClick = {
-                        controller.navigate(RootRecordsScreen.EditTask.fromTaskId(it.id))
-                    }
-                )
-            }
-            composable(RootRecordsScreen.AddTask.route) {
-
-            }
-            composable(RootRecordsScreen.EditTask.route) {
-                Text("TODO: Edit Task Page")
-            }
+            taskGraph(controller)
             composable(RootRecordsScreen.Categories.route) {
 
             }
@@ -114,10 +104,10 @@ sealed class RootRecordsScreen(
     @StringRes val titleResourceId: Int,
     val route: String = name.replace(" ", "_"),
 ) {
-
     data object Tasks : RootRecordsScreen(
         name = "Tasks",
-        titleResourceId = R.string.tasks_title
+        titleResourceId = R.string.tasks_title,
+        route = "view_tasks"
     )
     data object AddTask : RootRecordsScreen(
         name = "Add Task",
@@ -157,4 +147,21 @@ sealed class RootRecordsScreen(
         name = "Help",
         titleResourceId = R.string.help_title
     )
+
+    companion object {
+        fun fromNavDestination(navDestination: NavDestination?): RootRecordsScreen? {
+            return when (navDestination?.route) {
+                Tasks.route -> Tasks
+                AddTask.route -> AddTask
+                EditTask.route -> EditTask
+                Categories.route -> Categories
+                AddCategory.route -> AddCategory
+                EditCategory.route -> EditCategory
+                Settings.route -> Settings
+                About.route -> About
+                Help.route -> Help
+                else -> null
+            }
+        }
+    }
 }

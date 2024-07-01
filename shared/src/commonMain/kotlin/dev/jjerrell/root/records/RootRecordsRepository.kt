@@ -10,15 +10,21 @@ class RootRecordsRepository(databaseDriverFactory: DriverFactory) {
     private val categoryQueries = database.categoryEntityQueries
     private val taskQueries = database.taskEntityQueries
 
-    fun getCategories(): List<CategoryEntity> {
-        return categoryQueries.selectAll().executeAsList()
-    }
-
     fun getAllTasks(): List<TaskEntity> {
         return taskQueries.selectAll().executeAsList()
     }
 
+    fun getTaskById(id: String): TaskEntity {
+        return taskQueries.selectTaskById(
+            TaskEntity.Id(id)
+        ).executeAsOne()
+    }
+
     fun insertTask(entity: TaskEntity) {
         return taskQueries.insertFullTaskObject(entity)
+    }
+
+    fun getCategories(): List<CategoryEntity> {
+        return categoryQueries.selectAll().executeAsList()
     }
 }

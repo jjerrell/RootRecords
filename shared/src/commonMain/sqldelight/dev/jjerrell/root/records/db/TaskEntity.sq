@@ -1,5 +1,5 @@
 CREATE TABLE TaskEntity (
-    id TEXT NOT NULL PRIMARY KEY,
+    id TEXT AS VALUE NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT,
     date TEXT NOT NULL,
@@ -16,6 +16,13 @@ insert:
 INSERT INTO TaskEntity(id, name, description, date, category_id)
 VALUES (?, ?, ?, ?, ?);
 
+updateByValues:
+UPDATE TaskEntity
+SET name = :name,
+    description = :description,
+    date = :date
+WHERE id = :id;
+
 insertFullTaskObject:
 INSERT INTO TaskEntity(id, name, description, date, category_id)
 VALUES ?;
@@ -23,6 +30,11 @@ VALUES ?;
 selectAll:
 SELECT *
 FROM TaskEntity;
+
+selectTaskById:
+SELECT *
+FROM TaskEntity
+WHERE TaskEntity.id = :id;
 
 -- Select all tasks with their categories
 selectTasksWithCategories:
