@@ -57,15 +57,17 @@ fun MainLayout(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    controller.navigate(RootRecordsScreen.AddTask.route)
+            if (currentDestination == landingScreen) {
+                FloatingActionButton(
+                    onClick = {
+                        controller.navigate(RootRecordsScreen.AddTask.route)
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(R.string.add_task_button)
+                    )
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(R.string.add_task_button)
-                )
             }
         }
     ) { paddingValues ->

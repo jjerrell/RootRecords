@@ -2,7 +2,7 @@ CREATE TABLE TaskEntity (
     id TEXT AS VALUE NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT,
-    date TEXT NOT NULL,
+    date INTEGER NOT NULL,
     category_id TEXT,
     FOREIGN KEY (category_id) REFERENCES CategoryEntity(id)
 );

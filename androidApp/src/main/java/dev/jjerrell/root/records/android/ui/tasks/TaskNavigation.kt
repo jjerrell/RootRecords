@@ -19,7 +19,7 @@ fun NavGraphBuilder.taskGraph(navController: NavController) {
                 modifier = Modifier
                     .fillMaxSize(),
                 onTaskClick = {
-                    navController.navigate(RootRecordsScreen.EditTask.fromTaskId(it.id.id))
+                    navController.navigate(RootRecordsScreen.EditTask.fromTaskId(it.id))
                 }
             )
         }

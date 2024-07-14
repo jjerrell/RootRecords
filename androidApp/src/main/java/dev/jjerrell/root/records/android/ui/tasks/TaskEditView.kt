@@ -1,101 +1,42 @@
 package dev.jjerrell.root.records.android.ui.tasks
 
-import android.content.Context
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TimePicker
+import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.ViewModel
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.jjerrell.root.records.RootRecordsRepository
-import dev.jjerrell.root.records.db.CategoryEntity
-import dev.jjerrell.root.records.db.DriverFactory
-import dev.jjerrell.root.records.db.TaskEntity
-import java.util.UUID
-
-class TaskEditViewModel : ViewModel() {
-    private lateinit var repository: RootRecordsRepository
-
-    private var _state = mutableStateOf(State())
-    val state: State
-        get() = _state.value
-
-    fun loadTask(context: Context, taskId: String) {
-        if (!::repository.isInitialized) {
-            repository = RootRecordsRepository(DriverFactory(context))
-        }
-        repository.getTaskById(taskId).let {
-            _state.value = _state.value.copy(
-                isLoading = false,
-                taskId = it.id.id,
-                taskName = it.name,
-                taskDescription = it.description ?: "",
-                taskDate = it.date,
-                taskCategoryId = it.category_id?.id
-            )
-        }
-    }
-
-    fun newTask() {
-        _state.value = State(isLoading = false)
-    }
-
-    fun saveTask(context: Context) {
-        if (!::repository.isInitialized) {
-            repository = RootRecordsRepository(DriverFactory(context))
-        }
-        repository.insertTask(
-            TaskEntity(
-                id = TaskEntity.Id(state.taskId),
-                name = state.taskName,
-                description = state.taskDescription,
-                date = state.taskDate,
-                category_id = state.taskCategoryId?.let {
-                    CategoryEntity.Id(it)
-                }
-            )
-        )
-    }
-
-    //region Update Task/State values
-    fun setTaskName(taskName: String) {
-        _state.value = _state.value.copy(taskName = taskName)
-    }
-
-    fun setTaskDescription(taskDescription: String) {
-        _state.value = _state.value.copy(taskDescription = taskDescription)
-    }
-
-    fun setTaskDate(taskDate: String) {
-        _state.value = _state.value.copy(taskDate = taskDate)
-    }
-
-    fun setTaskCategoryId(taskCategoryId: String?) {
-        _state.value = _state.value.copy(taskCategoryId = taskCategoryId)
-    }
-    //endregion
-
-    data class State(
-        val isLoading: Boolean = true,
-        val taskId: String = UUID.randomUUID().toString(),
-        val taskName: String = "",
-        val taskDescription: String = "",
-        val taskDate: String = "",
-        val taskCategoryId: String? = null
-    )
-}
+import kotlinx.datetime.toJavaInstant
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Composable
 fun TaskEditView(
     modifier: Modifier = Modifier,
     vm: TaskEditViewModel = viewModel(),
     taskId: String?,
-    // TODO: Track pristine state and enable save button.
-    //  navigate back or prompt to store unsaved changes
     onTaskSaved: () -> Unit
 ) {
     val currentContext = LocalContext.current
@@ -106,12 +47,20 @@ fun TaskEditView(
             vm.newTask()
         }
     }
+    var shouldShowDatePicker by remember { mutableStateOf(false) }
+    var shouldShowTimePicker by remember { mutableStateOf(false) }
     LazyColumn(
         modifier = modifier
+            .fillMaxSize()
+            .padding(
+                horizontal = 16.dp,
+                vertical = 8.dp
+            )
     ) {
         item {
             TextField(
-                value = vm.state.taskName,
+                modifier = Modifier.fillMaxWidth(),
+                value = vm.state.task?.name.orEmpty(),
                 onValueChange = vm::setTaskName,
                 placeholder = {
                     Text("Task Name")
@@ -120,7 +69,8 @@ fun TaskEditView(
         }
         item {
             TextField(
-                value = vm.state.taskDescription,
+                modifier = Modifier.fillMaxWidth(),
+                value = vm.state.task?.description.orEmpty(),
                 onValueChange = vm::setTaskDescription,
                 minLines = 3,
                 maxLines = 5,
@@ -128,6 +78,169 @@ fun TaskEditView(
                     Text("Task Description")
                 }
             )
+        }
+        item {
+            Row(
+
+            ) {
+                TextButton(
+                    onClick = {
+                        shouldShowDatePicker = true
+                    }
+                ) {
+                    Text(
+                        text = vm.state.task?.timestamp?.toJavaInstant()?.let {
+                            SimpleDateFormat.getDateInstance().format(
+                                Date.from(it)
+                            )
+                        } ?: "Select Date"
+                    )
+                }
+                TextButton(
+                    onClick = {
+                        shouldShowTimePicker = true
+                    }
+                ) {
+                    Text(
+                        text = vm.state.task?.timestamp?.toJavaInstant()?.let {
+                            SimpleDateFormat.getTimeInstance().format(
+                                Date.from(it)
+                            )
+                        } ?: "Select Time"
+                    )
+                }
+            }
+
+        }
+        item {
+            TextButton(
+                onClick = {
+                    vm.saveTask(context = currentContext)
+                    onTaskSaved()
+                },
+                enabled = vm.state.isDirty
+            ) {
+                Text("Save")
+            }
+        }
+    }
+    if (shouldShowDatePicker) {
+        vm.state.task?.timestamp?.let { currentDate ->
+            TaskDatePickerDialog(
+                taskDateMillis = currentDate.toEpochMilliseconds(),
+                onDateChange = { selectedDate ->
+                    vm.setTaskDate(dateSeconds = selectedDate / 1000)
+                },
+                onClose = {
+                    shouldShowDatePicker = false
+                }
+            )
+        }
+    }
+    if (shouldShowTimePicker) {
+        vm.state.task?.dateTime?.let { currentDate ->
+            TaskTimePickerDialog(
+                taskHours = currentDate.hour,
+                taskMinutes = currentDate.minute,
+                onTimeChange = { selectedHour, selectedMinute ->
+                    vm.setTaskTime(selectedHour, selectedMinute)
+                },
+                onClose = {
+                    shouldShowTimePicker = false
+                }
+            )
+        }
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun TaskDatePickerDialog(
+    modifier: Modifier = Modifier,
+    taskDateMillis: Long,
+    onClose: () -> Unit,
+    onDateChange: (millis: Long) -> Unit
+) {
+    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = taskDateMillis)
+    Dialog(
+        onDismissRequest = onClose
+    ) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
+            DatePicker(
+                state = datePickerState
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                TextButton(
+                    onClick = onClose
+                ) {
+                    Text("Cancel")
+                }
+                TextButton(
+                    onClick = {
+                        datePickerState.selectedDateMillis?.let { onDateChange(it) }
+                        onClose()
+                    }
+                ) {
+                    Text("Save")
+                }
+            }
+        }
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun TaskTimePickerDialog(
+    modifier: Modifier = Modifier,
+    taskHours: Int,
+    taskMinutes: Int,
+    onClose: () -> Unit,
+    onTimeChange: (hour: Int, minute: Int) -> Unit
+) {
+    val timePickerState = rememberTimePickerState(
+        initialHour = taskHours,
+        initialMinute = taskMinutes,
+        is24Hour = false
+    )
+    Dialog(
+        onDismissRequest = onClose
+    ) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
+            TimePicker(
+                state = timePickerState
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                TextButton(
+                    onClick = onClose
+                ) {
+                    Text("Cancel")
+                }
+                TextButton(
+                    onClick = {
+                        onTimeChange(
+                            timePickerState.hour,
+                            timePickerState.minute
+                        )
+                        onClose()
+                    }
+                ) {
+                    Text("Save")
+                }
+            }
         }
     }
 }

@@ -22,8 +22,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.jjerrell.root.records.RootRecordsRepository
 import dev.jjerrell.root.records.db.DriverFactory
 import dev.jjerrell.root.records.db.TaskEntity
+import dev.jjerrell.root.records.model.Task
+import kotlinx.datetime.toJavaInstant
 import java.text.SimpleDateFormat
-import java.time.Instant
 import java.util.*
 
 class TaskViewModel : ViewModel() {
@@ -42,7 +43,7 @@ class TaskViewModel : ViewModel() {
 
     data class State(
         val isLoading: Boolean = true,
-        val tasks: List<TaskEntity> = emptyList()
+        val tasks: List<Task> = emptyList()
     )
 }
 
@@ -50,7 +51,7 @@ class TaskViewModel : ViewModel() {
 fun TaskListView(
     modifier: Modifier = Modifier,
     vm: TaskViewModel = viewModel(),
-    onTaskClick: (TaskEntity) -> Unit
+    onTaskClick: (Task) -> Unit
 ) {
     val currentContext = LocalContext.current
     LaunchedEffect(Unit) {
@@ -73,7 +74,7 @@ fun TaskListView(
 @OptIn(ExperimentalMaterial3Api::class)
 private fun TaskRow(
     modifier: Modifier = Modifier,
-    taskItem: TaskEntity,
+    taskItem: Task,
     onClick: () -> Unit
 ) {
     Card(
@@ -93,12 +94,12 @@ private fun TaskRow(
             )
         ) {
             Text(taskItem.name)
-            taskItem.date.toLongOrNull()?.let {
-                val date = SimpleDateFormat.getDateInstance(
-                    SimpleDateFormat.MEDIUM
-                ).format(Date.from(Instant.ofEpochSecond(it)))
-                Text(date)
-            }
+            val date = SimpleDateFormat.getDateInstance(
+                SimpleDateFormat.MEDIUM
+            ).format(
+                Date.from(taskItem.timestamp.toJavaInstant())
+            )
+            Text(date)
         }
     }
 }
