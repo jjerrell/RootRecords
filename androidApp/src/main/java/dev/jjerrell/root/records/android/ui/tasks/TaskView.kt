@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.jjerrell.root.records.RootRecordsRepository
 import dev.jjerrell.root.records.db.DriverFactory
-import dev.jjerrell.root.records.db.TaskEntity
 import dev.jjerrell.root.records.model.Task
 import kotlinx.datetime.toJavaInstant
 import java.text.SimpleDateFormat

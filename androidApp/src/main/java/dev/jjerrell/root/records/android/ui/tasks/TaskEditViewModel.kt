@@ -13,7 +13,6 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toJavaInstant
 import kotlinx.datetime.toKotlinInstant
 import java.util.*
-import kotlin.math.min
 
 class TaskEditViewModel : ViewModel() {
     private lateinit var repository: RootRecordsRepository
@@ -81,22 +80,15 @@ class TaskEditViewModel : ViewModel() {
     }
 
     fun setTaskTime(hour: Int, minute: Int) {
-        val foo = _state.value.task?.timestamp?.toJavaInstant()?.let {
+        val updatedDate = _state.value.task?.timestamp?.toJavaInstant()?.let {
             Date.from(it)
         }
-        foo?.hours = hour
-        foo?.minutes = minute
-        foo?.let {
+        updatedDate?.hours = hour
+        updatedDate?.minutes = minute
+        updatedDate?.let {
             val updatedTask = _state.value.task?.copy(timestamp = it.toInstant().toKotlinInstant())
             _state.value = _state.value.copy(isDirty = true, task = updatedTask)
         }
-//        _state.value.task?.timestamp?.let {
-//            val updatedDate = it
-//                .plus(hour, DateTimeUnit.HOUR)
-//                .plus(minute, DateTimeUnit.MINUTE)
-//            val updatedTask = _state.value.task?.copy(timestamp = updatedDate)
-//            _state.value = _state.value.copy(isDirty = true, task = updatedTask)
-//        }
     }
 
     fun setTaskCategoryId(taskCategoryId: String?) {
