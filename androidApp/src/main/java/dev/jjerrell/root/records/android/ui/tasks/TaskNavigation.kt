@@ -1,7 +1,6 @@
 package dev.jjerrell.root.records.android.ui.tasks
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
