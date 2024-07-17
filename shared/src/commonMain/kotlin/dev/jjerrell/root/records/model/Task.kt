@@ -14,8 +14,8 @@ data class Task(
 ) {
     val dateTime: LocalDateTime
         get() = timestamp.toLocalDateTime(
-        timeZone = TimeZone.currentSystemDefault()
-    )
+            timeZone = TimeZone.currentSystemDefault()
+        )
 }
 
 data class Category(

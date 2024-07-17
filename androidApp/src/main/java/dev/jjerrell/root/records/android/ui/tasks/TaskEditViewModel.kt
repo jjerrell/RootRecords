@@ -7,11 +7,12 @@ import dev.jjerrell.root.records.RootRecordsRepository
 import dev.jjerrell.root.records.db.DriverFactory
 import dev.jjerrell.root.records.model.Task
 import kotlinx.datetime.Clock
-import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
-import kotlinx.datetime.plus
-import kotlinx.datetime.toJavaInstant
-import kotlinx.datetime.toKotlinInstant
+import kotlinx.datetime.LocalTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atTime
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 import java.util.*
 
 class TaskEditViewModel : ViewModel() {
@@ -72,22 +73,38 @@ class TaskEditViewModel : ViewModel() {
     }
 
     fun setTaskDate(dateSeconds: Long) {
-        val updatedDate = Instant.fromEpochSeconds(dateSeconds)
-            .plus(_state.value.task?.dateTime?.time?.hour ?: 0, DateTimeUnit.HOUR)
-            .plus(_state.value.task?.dateTime?.time?.minute ?: 0, DateTimeUnit.MINUTE)
-        val updatedTask = _state.value.task?.copy(timestamp = updatedDate)
-        _state.value = _state.value.copy(isDirty = true, task = updatedTask)
+        val selectedLocalDateTime = Instant.fromEpochSeconds(dateSeconds)
+            .toLocalDateTime(timeZone = TimeZone.UTC)
+
+        _state.value.task?.let { task ->
+            val originalLocalTime = task.dateTime.time.let {
+                LocalTime(it.hour, it.minute)
+            }
+
+            val updatedDate = selectedLocalDateTime.date
+                .atTime(originalLocalTime)
+                .toInstant(TimeZone.currentSystemDefault())
+
+            _state.value = _state.value.copy(
+                isDirty = true,
+                task = task.copy(timestamp = updatedDate)
+            )
+        }
     }
 
     fun setTaskTime(hour: Int, minute: Int) {
-        val updatedDate = _state.value.task?.timestamp?.toJavaInstant()?.let {
-            Date.from(it)
-        }
-        updatedDate?.hours = hour
-        updatedDate?.minutes = minute
-        updatedDate?.let {
-            val updatedTask = _state.value.task?.copy(timestamp = it.toInstant().toKotlinInstant())
-            _state.value = _state.value.copy(isDirty = true, task = updatedTask)
+        val selectedTime = LocalTime(hour, minute)
+
+        _state.value.task?.let { task ->
+            val updatedDate = task.dateTime
+                .date
+                .atTime(selectedTime)
+                .toInstant(TimeZone.currentSystemDefault())
+
+            _state.value = _state.value.copy(
+                isDirty = true,
+                task = task.copy(timestamp = updatedDate)
+            )
         }
     }
 
