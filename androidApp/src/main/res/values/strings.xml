@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">RootRecords</string>
+    <!-- Page Names -->
     <string name="tasks_title">Tasks</string>
     <string name="add_task_title">Add Task</string>
     <string name="edit_task_title">Edit Task</string>
@@ -10,6 +11,7 @@
     <string name="settings_title">Settings</string>
     <string name="about_title">About</string>
     <string name="help_title">Help</string>
+    <!-- Action Buttons -->
     <string name="back">Back</string>
     <string name="add_task_button">Create a new task</string>
 </resources>

@@ -8,7 +8,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -70,7 +72,6 @@ fun TaskListView(
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 private fun TaskRow(
     modifier: Modifier = Modifier,
     taskItem: Task,
@@ -84,7 +85,11 @@ private fun TaskRow(
             )
             .fillMaxWidth(),
         onClick = onClick,
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors().copy(
+            containerColor = MaterialTheme.colorScheme.tertiary,
+            contentColor = MaterialTheme.colorScheme.onTertiary
+        )
     ) {
         Column(
             modifier = Modifier.padding(

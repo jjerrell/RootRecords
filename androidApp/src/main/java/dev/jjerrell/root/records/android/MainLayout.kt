@@ -6,13 +6,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material3.AlertDialogDefaults.titleContentColor
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -38,10 +44,11 @@ fun MainLayout(
         topBar = {
             TopAppBar(
                 title = {
+                    val titleResource = currentDestination?.titleResourceId?.takeUnless {
+                        currentDestination == landingScreen
+                    } ?: R.string.app_name
                     Text(
-                        text = stringResource(
-                            id = currentDestination?.titleResourceId ?: R.string.app_name
-                        )
+                        text = stringResource(id = titleResource)
                     )
                 },
                 navigationIcon = {
@@ -53,7 +60,24 @@ fun MainLayout(
                             )
                         }
                     }
-                }
+                },
+                actions = {
+                    if (currentDestination == landingScreen) {
+                        IconButton(onClick = { controller.navigate(RootRecordsScreen.Settings.route) }) {
+                            Icon(
+                                imageVector = Icons.Filled.Settings,
+                                contentDescription = stringResource(id = R.string.back)
+                            )
+                        }
+                    }
+                },
+                colors = TopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    scrolledContainerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                    actionIconContentColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
         },
         floatingActionButton = {

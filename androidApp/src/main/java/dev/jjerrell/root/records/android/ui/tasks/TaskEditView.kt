@@ -1,6 +1,9 @@
 package dev.jjerrell.root.records.android.ui.tasks
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -167,8 +171,10 @@ private fun TaskDatePickerDialog(
     ) {
         Column(
             modifier = modifier
+                .padding(8.dp)
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surface)
+                .background(MaterialTheme.colorScheme.surface),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             DatePicker(
                 state = datePickerState
@@ -215,10 +221,12 @@ private fun TaskTimePickerDialog(
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surface)
+                .background(MaterialTheme.colorScheme.surface),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TimePicker(
-                state = timePickerState
+                state = timePickerState,
+                modifier = Modifier.padding(top = 8.dp)
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
