@@ -28,6 +28,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dev.jjerrell.root.records.android.ui.settings.CategoriesView
+import dev.jjerrell.root.records.android.ui.settings.SettingsView
 import dev.jjerrell.root.records.android.ui.tasks.taskGraph
 
 @Composable
@@ -104,7 +106,7 @@ fun MainLayout(
         ) {
             taskGraph(controller)
             composable(RootRecordsScreen.Categories.route) {
-
+                CategoriesView()
             }
             composable(RootRecordsScreen.AddCategory.route) {
 
@@ -113,7 +115,9 @@ fun MainLayout(
 
             }
             composable(RootRecordsScreen.Settings.route) {
-
+                SettingsView(
+                    controller = controller
+                )
             }
             composable(RootRecordsScreen.About.route) {
                 Text("About")

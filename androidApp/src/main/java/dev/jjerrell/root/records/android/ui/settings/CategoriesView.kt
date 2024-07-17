@@ -1,16 +1,8 @@
-package dev.jjerrell.root.records.android.ui.tasks
+package dev.jjerrell.root.records.android.ui.settings
 
 import android.content.Context
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,54 +10,53 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.jjerrell.root.records.RootRecordsRepository
 import dev.jjerrell.root.records.android.ui.components.RootCard
 import dev.jjerrell.root.records.db.DriverFactory
+import dev.jjerrell.root.records.model.Category
 import dev.jjerrell.root.records.model.Task
 import kotlinx.datetime.toJavaInstant
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TaskViewModel : ViewModel() {
+class CategoriesViewModel : ViewModel() {
     private lateinit var repository: RootRecordsRepository
 
     var state = mutableStateOf(State())
         private set
 
-    fun loadTasks(context: Context) {
+    fun loadCategories(context: Context) {
         repository = RootRecordsRepository(DriverFactory(context))
         state.value = state.value.copy(
             isLoading = false,
-            tasks = repository.getAllTasks()
+            categories = repository.getCategories()
         )
     }
 
     data class State(
         val isLoading: Boolean = true,
-        val tasks: List<Task> = emptyList()
+        val categories: List<Category> = emptyList()
     )
 }
 
 @Composable
-fun TaskListView(
+fun CategoriesView(
     modifier: Modifier = Modifier,
-    vm: TaskViewModel = viewModel(),
-    onTaskClick: (Task) -> Unit
+    vm: CategoriesViewModel = viewModel()
 ) {
     val currentContext = LocalContext.current
     LaunchedEffect(Unit) {
-        vm.loadTasks(currentContext)
+        vm.loadCategories(currentContext)
     }
     LazyColumn(modifier = modifier) {
-        itemsIndexed(vm.state.value.tasks) { index, it ->
-            TaskRow(
-                modifier = Modifier.testTag("TASK_ROW_$index"),
-                taskItem = it,
+        itemsIndexed(vm.state.value.categories) { index, it ->
+            CategoryRow(
+                modifier = Modifier.testTag("CATEGORY_ROW_$index"),
+                categoryItem = it,
                 onClick = {
-                    onTaskClick(it)
+
                 }
             )
         }
@@ -73,21 +64,21 @@ fun TaskListView(
 }
 
 @Composable
-private fun TaskRow(
+private fun CategoryRow(
     modifier: Modifier = Modifier,
-    taskItem: Task,
+    categoryItem: Category,
     onClick: () -> Unit
 ) {
     RootCard(
         modifier = modifier,
         onClick = onClick
     ) {
-        Text(taskItem.name)
-        val date = SimpleDateFormat.getDateInstance(
-            SimpleDateFormat.MEDIUM
-        ).format(
-            Date.from(taskItem.timestamp.toJavaInstant())
-        )
-        Text(date)
+        Text(categoryItem.name)
+//        val date = SimpleDateFormat.getDateInstance(
+//            SimpleDateFormat.MEDIUM
+//        ).format(
+//            Date.from(taskItem.timestamp.toJavaInstant())
+//        )
+//        Text(date)
     }
 }
