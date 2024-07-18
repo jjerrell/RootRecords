@@ -21,8 +21,7 @@ fun RootCard(
     Card(
         modifier = modifier
             .padding(
-                horizontal = 16.dp,
-                vertical = 8.dp
+                horizontal = 8.dp
             )
             .fillMaxWidth(),
         onClick = onClick,
@@ -35,7 +34,7 @@ fun RootCard(
         Column(
             modifier = Modifier.padding(
                 horizontal = 8.dp,
-                vertical = 4.dp
+                vertical = 8.dp
             ),
             content = content
         )

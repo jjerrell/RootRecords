@@ -1,9 +1,6 @@
 package dev.jjerrell.root.records.android.ui.tasks
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.FlingBehavior
-import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
