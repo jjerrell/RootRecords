@@ -1,25 +1,28 @@
 package dev.jjerrell.root.records.android.ui.settings
 
 import android.content.Context
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.jjerrell.root.records.RootRecordsRepository
+import dev.jjerrell.root.records.android.extension.toColor
+import dev.jjerrell.root.records.android.ui.components.OutlinedCircle
 import dev.jjerrell.root.records.android.ui.components.RootCard
 import dev.jjerrell.root.records.db.DriverFactory
 import dev.jjerrell.root.records.model.Category
-import dev.jjerrell.root.records.model.Task
-import kotlinx.datetime.toJavaInstant
-import java.text.SimpleDateFormat
-import java.util.*
 
 class CategoriesViewModel : ViewModel() {
     private lateinit var repository: RootRecordsRepository
@@ -50,7 +53,11 @@ fun CategoriesView(
     LaunchedEffect(Unit) {
         vm.loadCategories(currentContext)
     }
-    LazyColumn(modifier = modifier) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         itemsIndexed(vm.state.value.categories) { index, it ->
             CategoryRow(
                 modifier = Modifier.testTag("CATEGORY_ROW_$index"),
@@ -73,12 +80,17 @@ private fun CategoryRow(
         modifier = modifier,
         onClick = onClick
     ) {
-        Text(categoryItem.name)
-//        val date = SimpleDateFormat.getDateInstance(
-//            SimpleDateFormat.MEDIUM
-//        ).format(
-//            Date.from(taskItem.timestamp.toJavaInstant())
-//        )
-//        Text(date)
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            categoryItem.color?.toColor()?.let {
+                OutlinedCircle(
+                    innerColor = it
+                )
+            }
+            Text(categoryItem.name)
+        }
     }
 }
+
