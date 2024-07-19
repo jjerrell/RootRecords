@@ -22,15 +22,33 @@ fun RootRecordsTheme(
 ) {
     val colors = if (darkTheme) {
         darkColorScheme(
-            primary = Color(0xFFBB86FC),
-            secondary = Color(0xFF03DAC5),
-            tertiary = Color(0xFF3700B3)
+            primary = Color(0xFF4CAF50),  // Green
+            secondary = Color(0xFF8BC34A),  // Light Green
+            tertiary = Color(0xFF795548),  // Brown
+            background = Color(0xFF2E7D32),  // Dark Green
+            surface = Color(0xFF1B5E20),  // Very Dark Green
+            error = Color(0xFFB00020),
+            onPrimary = Color.White,
+            onSecondary = Color.White,
+            onTertiary = Color.White,
+            onBackground = Color.White,
+            onSurface = Color.White,
+            onError = Color.White
         )
     } else {
         lightColorScheme(
-            primary = Color(0xFF6200EE),
-            secondary = Color(0xFF03DAC5),
-            tertiary = Color(0xFF3700B3)
+            primary = Color(0xFF4CAF50),  // Green
+            secondary = Color(0xFF8BC34A),  // Light Green
+            tertiary = Color(0xFF795548),  // Brown
+            background = Color(0xFFC8E6C9),  // Light Green
+            surface = Color(0xFFA5D6A7),  // Soft Green
+            error = Color(0xFFB00020),
+            onPrimary = Color.Black,
+            onSecondary = Color.Black,
+            onTertiary = Color.Black,
+            onBackground = Color.Black,
+            onSurface = Color.Black,
+            onError = Color.White
         )
     }
     val typography = Typography(
