@@ -27,6 +27,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.jjerrell.root.records.android.ui.settings.CategoriesView
 import dev.jjerrell.root.records.android.ui.settings.SettingsView
+import dev.jjerrell.root.records.android.ui.settings.settingsGraph
 import dev.jjerrell.root.records.android.ui.tasks.taskGraph
 
 @Composable
@@ -84,7 +85,9 @@ fun MainLayout(
                 FloatingActionButton(
                     onClick = {
                         controller.navigate(RootRecordsScreen.AddTask.route)
-                    }
+                    },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
@@ -102,20 +105,7 @@ fun MainLayout(
             startDestination = landingScreen.name
         ) {
             taskGraph(controller)
-            composable(RootRecordsScreen.Categories.route) {
-                CategoriesView()
-            }
-            composable(RootRecordsScreen.AddCategory.route) {
-
-            }
-            composable(RootRecordsScreen.EditCategory.route) {
-
-            }
-            composable(RootRecordsScreen.Settings.route) {
-                SettingsView(
-                    controller = controller
-                )
-            }
+            settingsGraph(controller)
             composable(RootRecordsScreen.About.route) {
                 Text("About")
             }
@@ -164,7 +154,8 @@ sealed class RootRecordsScreen(
     }
     data object Settings : RootRecordsScreen(
         name = "Settings",
-        titleResourceId = R.string.settings_title
+        titleResourceId = R.string.settings_title,
+        route = "view_settings"
     )
     data object About : RootRecordsScreen(
         name = "About",

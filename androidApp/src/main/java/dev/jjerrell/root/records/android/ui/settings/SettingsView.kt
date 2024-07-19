@@ -7,14 +7,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import dev.jjerrell.root.records.android.RootRecordsScreen
 import dev.jjerrell.root.records.android.ui.components.RootCard
 
 @Composable
 fun SettingsView(
     modifier: Modifier = Modifier,
-    controller: NavController
+    openCategories: () -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
@@ -22,13 +20,7 @@ fun SettingsView(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         item {
-            RootCard(
-                onClick = {
-                    controller.navigate(
-                        RootRecordsScreen.Categories.route
-                    )
-                }
-            ) {
+            RootCard(onClick = openCategories) {
                 Text("Categories")
             }
         }
