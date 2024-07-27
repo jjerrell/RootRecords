@@ -58,7 +58,12 @@ class RootRecordsRepository(databaseDriverFactory: DriverFactory) {
             .map(CategoryEntity::toCategory)
     }
 
-
+    fun getCategoryById(id: String): Category {
+        return categoryQueries
+            .selectById(CategoryEntity.Id(id))
+            .executeAsOne()
+            .toCategory()
+    }
 }
 
 private fun TaskEntity.toTask(

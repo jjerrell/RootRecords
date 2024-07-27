@@ -47,7 +47,8 @@ class CategoriesViewModel : ViewModel() {
 @Composable
 fun CategoriesView(
     modifier: Modifier = Modifier,
-    vm: CategoriesViewModel = viewModel()
+    vm: CategoriesViewModel = viewModel(),
+    onCategoryClick: (Category) -> Unit,
 ) {
     val currentContext = LocalContext.current
     LaunchedEffect(Unit) {
@@ -63,7 +64,7 @@ fun CategoriesView(
                 modifier = Modifier.testTag("CATEGORY_ROW_$index"),
                 categoryItem = it,
                 onClick = {
-
+                    onCategoryClick(it)
                 }
             )
         }

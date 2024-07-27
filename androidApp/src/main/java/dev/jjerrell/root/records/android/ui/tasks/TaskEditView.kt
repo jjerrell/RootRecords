@@ -111,7 +111,6 @@ fun TaskEditView(
                     )
                 }
             }
-
         }
         item {
             TextButton(

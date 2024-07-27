@@ -21,13 +21,28 @@ fun NavGraphBuilder.settingsGraph(navController: NavController) {
             )
         }
         composable(RootRecordsScreen.Categories.route) {
-            CategoriesView()
+            CategoriesView(
+                onCategoryClick = {
+                    navController.navigate(RootRecordsScreen.EditCategory.fromCategoryId(it.id))
+                }
+            )
         }
         composable(RootRecordsScreen.AddCategory.route) {
-
+            CategoryEditView(
+                categoryId = null,
+                onCategorySaved = {
+                    navController.navigate(RootRecordsScreen.Categories.route)
+                }
+            )
         }
         composable(RootRecordsScreen.EditCategory.route) {
-
+            val categoryId = it.arguments?.getString("categoryId")
+            CategoryEditView(
+                categoryId = categoryId,
+                onCategorySaved = {
+                    navController.navigate(RootRecordsScreen.Categories.route)
+                }
+            )
         }
     }
 }

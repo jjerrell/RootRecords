@@ -52,5 +52,7 @@ dependencies {
 
     implementation(libs.kotlinx.datetime)
 
+    implementation(libs.compose.colorpicker)
+
     debugImplementation(libs.compose.ui.tooling)
 }
