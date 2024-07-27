@@ -64,6 +64,18 @@ class RootRecordsRepository(databaseDriverFactory: DriverFactory) {
             .executeAsOne()
             .toCategory()
     }
+
+    fun insertCategory(item: Category) {
+        return categoryQueries.insertFullCategoryObject(item.toCategoryEntity())
+    }
+
+    fun updateCategory(item: Category) {
+        return categoryQueries.updateByValues(
+            name = item.name,
+            color = item.color,
+            id = CategoryEntity.Id(item.id)
+        )
+    }
 }
 
 private fun TaskEntity.toTask(

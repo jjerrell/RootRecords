@@ -37,3 +37,9 @@ VALUES (?, ?, ?);
 insertFullCategoryObject:
 INSERT INTO CategoryEntity(id, name, color)
 VALUES ?;
+
+updateByValues:
+UPDATE CategoryEntity
+SET name = :name,
+    color = :color
+WHERE id = :id;
