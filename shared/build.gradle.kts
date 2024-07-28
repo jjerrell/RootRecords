@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.sqlDelight)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.roomDb)
 }
 
 kotlin {
@@ -18,8 +20,14 @@ kotlin {
     }
 
     sourceSets {
-        commonMain.dependencies {
-            implementation(libs.kotlinx.datetime)
+        commonMain {
+            // Adds generated files to sources so Room's `instantiateImpl()` can be located
+            kotlin.srcDir("build/generated/ksp/metadata")
+            dependencies {
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.room.runtime)
+                implementation(libs.room.sqlite.bundled)
+            }
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -45,6 +53,21 @@ android {
     }
 }
 
+dependencies {
+    add("kspCommonMainMetadata", libs.room.compiler)
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
+    if (name != "kspCommonMainKotlinMetadata" ) {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
+// TODO: Deprecate
 sqldelight {
     databases {
         create("RootRecordsDb") {
