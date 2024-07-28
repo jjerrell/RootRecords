@@ -2,8 +2,6 @@ package dev.jjerrell.root.records.db
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.SQLiteDriver
-import androidx.sqlite.driver.NativeSQLiteDriver
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import platform.Foundation.NSHomeDirectory
