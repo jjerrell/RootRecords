@@ -1,6 +1,5 @@
 package dev.jjerrell.root.records.android.ui.tasks
 
-import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,40 +7,16 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.jjerrell.root.records.RootRecordsRepository
 import dev.jjerrell.root.records.android.ui.components.RootCard
-import dev.jjerrell.root.records.db.DriverFactory
 import dev.jjerrell.root.records.model.Task
 import kotlinx.datetime.toJavaInstant
 import java.text.SimpleDateFormat
 import java.util.*
-
-class TaskViewModel : ViewModel() {
-    private lateinit var repository: RootRecordsRepository
-
-    var state = mutableStateOf(State())
-        private set
-
-    fun loadTasks(context: Context) {
-        repository = RootRecordsRepository(DriverFactory(context))
-        state.value = state.value.copy(
-            isLoading = false,
-            tasks = repository.getAllTasks()
-        )
-    }
-
-    data class State(
-        val isLoading: Boolean = true,
-        val tasks: List<Task> = emptyList()
-    )
-}
 
 @Composable
 fun TaskListView(

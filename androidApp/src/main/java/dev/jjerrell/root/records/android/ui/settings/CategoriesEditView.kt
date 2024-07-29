@@ -1,6 +1,5 @@
 package dev.jjerrell.root.records.android.ui.settings
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,71 +22,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.skydoves.colorpicker.compose.AlphaSlider
 import com.github.skydoves.colorpicker.compose.BrightnessSlider
 import com.github.skydoves.colorpicker.compose.ColorEnvelope
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
-import dev.jjerrell.root.records.RootRecordsRepository
 import dev.jjerrell.root.records.android.extension.toColor
 import dev.jjerrell.root.records.android.ui.components.OutlinedCircle
-import dev.jjerrell.root.records.db.DriverFactory
-import dev.jjerrell.root.records.model.Category
-import java.util.*
-
-class CategoryEditViewModel : ViewModel() {
-    private lateinit var repository: RootRecordsRepository
-
-    var state by mutableStateOf(State())
-        private set
-
-    fun loadCategory(context: Context, categoryId: String) {
-        if (!::repository.isInitialized) {
-            repository = RootRecordsRepository(DriverFactory(context))
-        }
-        repository.getCategoryById(categoryId).let {
-            state = state.copy(
-                isLoading = false,
-                category = it
-            )
-        }
-    }
-
-    fun newCategory() {
-        state = State(
-            isLoading = false,
-            isNewCategory = true,
-            category = Category(
-                id = UUID.randomUUID().toString(),
-                name = "",
-                color = null
-            )
-        )
-    }
-
-    fun setCategoryName(categoryName: String) {
-        val updatedCategory = state.category?.copy(name = categoryName)
-        state = state.copy(isDirty = true, category = updatedCategory)
-    }
-
-    fun setCategoryColor(color: Color) {
-        val updatedCategory = state.category?.copy(color = color.toArgb().toLong())
-        state = state.copy(isDirty = true, category = updatedCategory)
-    }
-
-    data class State(
-        val isLoading: Boolean = true,
-        val isDirty: Boolean = false,
-        val isNewCategory: Boolean = false,
-        val category: Category? = null
-    )
-}
 
 @Composable
 fun CategoryEditView(

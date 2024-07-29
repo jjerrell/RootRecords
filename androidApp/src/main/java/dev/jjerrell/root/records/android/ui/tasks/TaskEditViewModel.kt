@@ -3,9 +3,13 @@ package dev.jjerrell.root.records.android.ui.tasks
 import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dev.jjerrell.root.records.RootRecordsRepository
 import dev.jjerrell.root.records.db.DriverFactory
 import dev.jjerrell.root.records.model.Task
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalTime
@@ -26,11 +30,15 @@ class TaskEditViewModel : ViewModel() {
         if (!::repository.isInitialized) {
             repository = RootRecordsRepository(DriverFactory(context))
         }
-        repository.getTaskById(taskId).let {
-            _state.value = _state.value.copy(
-                isLoading = false,
-                task = it
-            )
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.getTaskById(taskId).let {
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        task = it
+                    )
+                }
+            }
         }
     }
 
@@ -52,11 +60,15 @@ class TaskEditViewModel : ViewModel() {
         if (!::repository.isInitialized) {
             repository = RootRecordsRepository(DriverFactory(context))
         }
-        state.task?.let {
-            if (state.isNewTask) {
-                repository.insertTask(it)
-            } else {
-                repository.updateTask(it)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                state.task?.let {
+                    if (state.isNewTask) {
+                        repository.insertTask(it)
+                    } else {
+                        repository.updateTask(it)
+                    }
+                }
             }
         }
     }
@@ -109,9 +121,15 @@ class TaskEditViewModel : ViewModel() {
     }
 
     fun setTaskCategoryId(taskCategoryId: String?) {
-        val category = repository.getCategories().find { it.id == taskCategoryId }
-        val updatedTask = _state.value.task?.copy(category = category)
-        _state.value = _state.value.copy(isDirty = true, task = updatedTask)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val category = repository
+                    .getCategories()
+                    .find { it.id == taskCategoryId }
+                val updatedTask = _state.value.task?.copy(category = category)
+                _state.value = _state.value.copy(isDirty = true, task = updatedTask)
+            }
+        }
     }
     //endregion
 
