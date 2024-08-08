@@ -5,8 +5,12 @@ plugins {
     alias(libs.plugins.kotlinAndroid).apply(false)
     alias(libs.plugins.kotlinCompose).apply(false)
     alias(libs.plugins.kotlinMultiplatform).apply(false)
-    alias(libs.plugins.sqlDelight).apply(false)
+    alias(libs.plugins.roomDb).apply(false)
+    alias(libs.plugins.ksp).apply(false)
     alias(libs.plugins.spotless)
+
+    // TODO: Deprecate
+    alias(libs.plugins.sqlDelight).apply(false)
 }
 
 spotless {

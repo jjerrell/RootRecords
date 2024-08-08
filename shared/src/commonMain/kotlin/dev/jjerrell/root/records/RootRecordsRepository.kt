@@ -1,113 +1,102 @@
 package dev.jjerrell.root.records
 
-import dev.jjerrell.root.records.db.CategoryEntity
 import dev.jjerrell.root.records.db.DriverFactory
-import dev.jjerrell.root.records.db.TaskEntity
-import dev.jjerrell.root.records.db.createDatabase
+import dev.jjerrell.root.records.db.createRoomDatabase
 import dev.jjerrell.root.records.model.Category
 import dev.jjerrell.root.records.model.Task
+import dev.jjerrell.root.records.model.db.CategoryDbEntity
+import dev.jjerrell.root.records.model.db.TaskDbEntity
+import dev.jjerrell.root.records.model.db.TaskWithCategory
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 
 class RootRecordsRepository(databaseDriverFactory: DriverFactory) {
-    private val database = createDatabase(databaseDriverFactory)
-    private val categoryQueries = database.categoryEntityQueries
-    private val taskQueries = database.taskEntityQueries
+    private val database = createRoomDatabase(databaseDriverFactory)
 
-    fun getAllTasks(): List<Task> {
-        return taskQueries
-            .selectAll()
-            .executeAsList()
-            .map { taskEntity ->
-                taskEntity.toTask { categoryId ->
-                    categoryId?.let {
-                        categoryQueries.selectById(it)
-                            .executeAsOne()
-                    }
-                }
-            }
+    suspend fun getAllTasks(): List<Task> {
+        return database
+            .taskDao()
+            .getAllTasks()
+            .map { it.map(TaskWithCategory::toTask) }
+            .first()
     }
 
-    fun getTaskById(id: String): Task {
-        return taskQueries.selectTaskById(TaskEntity.Id(id))
-            .executeAsOne()
-            .toTask { categoryId ->
-                categoryId?.let {
-                    categoryQueries.selectById(it)
-                        .executeAsOne()
-                }
-            }
+    suspend fun getTaskById(id: String): Task {
+        return database
+            .taskDao()
+            .getTaskById(id)
+            .map { it.toTask() }
+            .first()
     }
 
-    fun insertTask(item: Task) {
-        return taskQueries.insertFullTaskObject(item.toTaskEntity())
+    suspend fun insertTask(item: Task) {
+        return database
+            .taskDao()
+            .insertTask(item.toTaskDbEntity())
     }
 
-    fun updateTask(item: Task) {
-        return taskQueries.updateByValues(
-            name = item.name,
-            description = item.description,
-            date = item.timestamp.epochSeconds,
-            id = TaskEntity.Id(item.id)
-        )
+    suspend fun updateTask(item: Task) {
+        return database
+            .taskDao()
+            .updateTask(item.toTaskDbEntity())
     }
 
-    fun getCategories(): List<Category> {
-        return categoryQueries
-            .selectAll()
-            .executeAsList()
-            .map(CategoryEntity::toCategory)
+    suspend fun getCategories(): List<Category> {
+        return database
+            .categoryDao()
+            .getAllCategories()
+            .map { it.map(CategoryDbEntity::toCategory) }
+            .first()
     }
 
-    fun getCategoryById(id: String): Category {
-        return categoryQueries
-            .selectById(CategoryEntity.Id(id))
-            .executeAsOne()
-            .toCategory()
+    suspend fun getCategoryById(id: String): Category {
+        return database
+            .categoryDao()
+            .getCategoryById(id)
+            .map { it.toCategory() }
+            .first()
     }
 
-    fun insertCategory(item: Category) {
-        return categoryQueries.insertFullCategoryObject(item.toCategoryEntity())
+    suspend fun insertCategory(item: Category) {
+        return database
+            .categoryDao()
+            .insertCategory(item.toCategoryDbEntity())
     }
 
-    fun updateCategory(item: Category) {
-        return categoryQueries.updateByValues(
-            name = item.name,
-            color = item.color,
-            id = CategoryEntity.Id(item.id)
-        )
+    suspend fun updateCategory(item: Category) {
+        return database
+            .categoryDao()
+            .updateCategory(item.toCategoryDbEntity())
     }
 }
 
-private fun TaskEntity.toTask(
-    categoryQuery: (CategoryEntity.Id?) -> CategoryEntity?
-): Task = Task(
-    id = id.id,
-    name = name,
-    description = description.orEmpty(),
-    timestamp = Instant.fromEpochSeconds(date),
-    category = category_id?.let {
-        categoryQuery(it)
-            ?.toCategory()
-    }
+//region Room
+private fun TaskWithCategory.toTask(): Task = Task(
+    id = this.task.id,
+    name = this.task.name,
+    description = this.task.description,
+    timestamp = Instant.fromEpochSeconds(this.task.date),
+    category =  this.category?.toCategory()
 )
 
-private fun Task.toTaskEntity(): TaskEntity = TaskEntity(
-    id = TaskEntity.Id(id),
+private fun Task.toTaskDbEntity(): TaskDbEntity = TaskDbEntity(
+    id = id,
     name = name,
     description = description,
     date = timestamp.epochSeconds,
-    category_id = category?.id?.let { CategoryEntity.Id(it) }
+    categoryId = category?.id
 )
 
-private fun CategoryEntity.toCategory(): Category = Category(
-    id = id.id,
+private fun CategoryDbEntity.toCategory(): Category = Category(
+    id = id,
     name = name,
     color = color
 )
 
-private fun Category.toCategoryEntity(): CategoryEntity = CategoryEntity(
-    id = CategoryEntity.Id(id),
+private fun Category.toCategoryDbEntity(): CategoryDbEntity = CategoryDbEntity(
+    id = id,
     name = name,
     color = color
-
 )
+//endregion

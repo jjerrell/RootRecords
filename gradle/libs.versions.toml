@@ -9,8 +9,14 @@ androidx-activityCompose = "1.9.1"
 kotlinxDatetime = "0.4.1"
 lifecycleViewmodelCompose = "2.8.4"
 navigationCompose = "2.7.7"
-sql-delight = "2.0.2"
 compose-colorpicker = "1.1.2"
+
+room-db = "2.7.0-alpha05"
+sqlite-bundled = "2.5.0-alpha05"
+ksp = "2.0.0-1.0.23"
+
+# TODO: Deprecate
+sql-delight = "2.0.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -25,6 +31,12 @@ compose-navigation = { module = "androidx.navigation:navigation-compose", versio
 compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "compose-colorpicker" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-db" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-db" }
+room-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite-bundled" }
+
+# TODO: Deprecate
 sql-delight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sql-delight" }
 sql-delight-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sql-delight" }
 sql-delight-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sql-delight" }
@@ -36,5 +48,10 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
-sqlDelight = { id = "app.cash.sqldelight", version.ref = "sql-delight" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+roomDb = { id ="androidx.room", version.ref = "room-db" }
+
+# TODO: Deprecate
+sqlDelight = { id = "app.cash.sqldelight", version.ref = "sql-delight" }
