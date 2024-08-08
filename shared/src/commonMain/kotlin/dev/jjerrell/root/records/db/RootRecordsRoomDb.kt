@@ -1,5 +1,6 @@
 package dev.jjerrell.root.records.db
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import dev.jjerrell.root.records.db.dao.CategoryDao

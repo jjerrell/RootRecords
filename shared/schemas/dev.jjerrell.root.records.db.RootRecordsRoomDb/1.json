@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "69157804771b4c70cc29ee1b6db2a281",
+    "identityHash": "5a2e76977e7f98a80c8b934e8ad4da69",
     "entities": [
       {
         "tableName": "TaskDbEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `date` INTEGER NOT NULL, `cat_id` TEXT, `cat_name` TEXT, `cat_color` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `date` INTEGER NOT NULL, `category_id` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`category_id`) REFERENCES `CategoryDbEntity`(`category_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -33,19 +33,9 @@
             "notNull": true
           },
           {
-            "fieldPath": "category.id",
-            "columnName": "cat_id",
+            "fieldPath": "categoryId",
+            "columnName": "category_id",
             "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "category.name",
-            "columnName": "cat_name",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "category.color",
-            "columnName": "cat_color",
-            "affinity": "INTEGER"
           }
         ],
         "primaryKey": {
@@ -53,15 +43,39 @@
           "columnNames": [
             "id"
           ]
-        }
+        },
+        "indices": [
+          {
+            "name": "index_TaskDbEntity_category_id",
+            "unique": false,
+            "columnNames": [
+              "category_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_TaskDbEntity_category_id` ON `${TABLE_NAME}` (`category_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "CategoryDbEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "category_id"
+            ],
+            "referencedColumns": [
+              "category_id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "CategoryDbEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `color` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category_id` TEXT NOT NULL, `name` TEXT NOT NULL, `color` INTEGER, PRIMARY KEY(`category_id`))",
         "fields": [
           {
             "fieldPath": "id",
-            "columnName": "id",
+            "columnName": "category_id",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -80,14 +94,14 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "id"
+            "category_id"
           ]
         }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '69157804771b4c70cc29ee1b6db2a281')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5a2e76977e7f98a80c8b934e8ad4da69')"
     ]
   }
 }

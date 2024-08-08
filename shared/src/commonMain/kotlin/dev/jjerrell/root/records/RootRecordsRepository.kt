@@ -1,13 +1,12 @@
 package dev.jjerrell.root.records
 
-import dev.jjerrell.root.records.db.CategoryEntity
 import dev.jjerrell.root.records.db.DriverFactory
-import dev.jjerrell.root.records.db.TaskEntity
 import dev.jjerrell.root.records.db.createRoomDatabase
 import dev.jjerrell.root.records.model.Category
 import dev.jjerrell.root.records.model.Task
 import dev.jjerrell.root.records.model.db.CategoryDbEntity
 import dev.jjerrell.root.records.model.db.TaskDbEntity
+import dev.jjerrell.root.records.model.db.TaskWithCategory
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
@@ -19,7 +18,7 @@ class RootRecordsRepository(databaseDriverFactory: DriverFactory) {
         return database
             .taskDao()
             .getAllTasks()
-            .map { it.map(TaskDbEntity::toTask) }
+            .map { it.map(TaskWithCategory::toTask) }
             .first()
     }
 
@@ -73,12 +72,12 @@ class RootRecordsRepository(databaseDriverFactory: DriverFactory) {
 }
 
 //region Room
-private fun TaskDbEntity.toTask(): Task = Task(
-    id = id,
-    name = name,
-    description = description,
-    timestamp = Instant.fromEpochSeconds(date),
-    category = category?.toCategory()
+private fun TaskWithCategory.toTask(): Task = Task(
+    id = this.task.id,
+    name = this.task.name,
+    description = this.task.description,
+    timestamp = Instant.fromEpochSeconds(this.task.date),
+    category =  this.category?.toCategory()
 )
 
 private fun Task.toTaskDbEntity(): TaskDbEntity = TaskDbEntity(
@@ -86,7 +85,7 @@ private fun Task.toTaskDbEntity(): TaskDbEntity = TaskDbEntity(
     name = name,
     description = description,
     date = timestamp.epochSeconds,
-    category = category?.toCategoryDbEntity()
+    categoryId = category?.id
 )
 
 private fun CategoryDbEntity.toCategory(): Category = Category(
