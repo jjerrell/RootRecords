@@ -1,14 +1,14 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.kotlinCompose)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
-    namespace = "dev.jjerrell.root.records.android"
+    namespace = "app.jjerrell.root.records.android"
     compileSdk = 34
     defaultConfig {
-        applicationId = "dev.jjerrell.root.records.android"
+        applicationId = "app.jjerrell.root.records.android"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
@@ -38,19 +38,9 @@ android {
 
 dependencies {
     implementation(projects.shared)
-
-    implementation(enforcedPlatform(libs.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
-    implementation(libs.compose.viewmodel)
-    implementation(libs.compose.navigation)
-
     implementation(libs.androidx.activity.compose)
-
-    implementation(libs.kotlinx.datetime)
-
-    implementation(libs.compose.colorpicker)
-
     debugImplementation(libs.compose.ui.tooling)
 }

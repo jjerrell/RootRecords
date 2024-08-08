@@ -1,6 +1,4 @@
-rootProject.name = "Root_Records"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
 pluginManagement {
     repositories {
         google()
@@ -16,5 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
+rootProject.name = "RootRecords"
 include(":androidApp")
 include(":shared")
