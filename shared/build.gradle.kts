@@ -1,16 +1,12 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.roomDb)
 }
 
 kotlin {
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
-    }
+    androidTarget()
     
     listOf(
         iosX64(),
@@ -24,8 +20,13 @@ kotlin {
     }
 
     sourceSets {
-        commonMain.dependencies {
-            //put your multiplatform dependencies here
+        commonMain {
+            // Adds generated files to sources so Room's `instantiateImpl()` can be located
+            kotlin.srcDir("build/generated/ksp/metadata")
+            dependencies {
+                implementation(libs.room.runtime)
+                implementation(libs.room.sqlite.bundled)
+            }
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -43,4 +44,18 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+}
+
+dependencies {
+    add("kspCommonMainMetadata", libs.room.compiler)
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
+    if (name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
