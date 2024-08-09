@@ -1,16 +1,26 @@
 package app.jjerrell.root.records.db
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import app.jjerrell.root.records.db.dao.CategoryDao
+import app.jjerrell.root.records.db.dao.TaskDao
 import app.jjerrell.root.records.db.entity.CategoryEntity
+import app.jjerrell.root.records.db.entity.TaskEntity
 
 @Database(
-    entities = [CategoryEntity::class],
-    version = 1
+    entities = [
+        CategoryEntity::class,
+        TaskEntity::class
+    ],
+    version = 2,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2)
+    ]
 )
 abstract class RootRecordsRoomDatabase : RoomDatabase(), LocalRoomDb {
     abstract fun categoryDao(): CategoryDao
+    abstract fun taskDao(): TaskDao
 
     override fun clearAllTables() {
         super.clearAllTables()
