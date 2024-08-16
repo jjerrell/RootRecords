@@ -1,11 +1,9 @@
 package app.jjerrell.root.records.db.entity
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import androidx.room.Relation
 
 @Entity(
     foreignKeys = [
@@ -25,13 +23,4 @@ data class TaskEntity(
     val isCompleted: Boolean,
     @ColumnInfo(name = "category_id", index = true)
     val categoryId: Int?
-)
-
-data class TaskWithCategory(
-    @Embedded val task: TaskEntity,
-    @Relation(
-        parentColumn = "category_id",
-        entityColumn = "category_id"
-    )
-    val category: CategoryEntity?
 )
