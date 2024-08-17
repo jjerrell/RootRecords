@@ -1,6 +1,5 @@
 package app.jjerrell.root.records.db
 
-import androidx.room.DatabaseConfiguration
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver

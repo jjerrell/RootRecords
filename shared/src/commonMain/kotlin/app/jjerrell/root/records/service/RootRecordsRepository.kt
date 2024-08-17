@@ -61,7 +61,8 @@ private fun Task.toEntity() =
         title = title,
         description = description,
         isCompleted = isCompleted,
-        categoryId = categoryId?.id)
+        categoryId = categoryId?.id
+    )
 
 private fun TaskWithCategory.toModel() =
     Task(
@@ -69,4 +70,5 @@ private fun TaskWithCategory.toModel() =
         title = task.title,
         description = task.description,
         isCompleted = task.isCompleted,
-        categoryId = category?.toModel())
+        categoryId = category?.toModel()
+    )

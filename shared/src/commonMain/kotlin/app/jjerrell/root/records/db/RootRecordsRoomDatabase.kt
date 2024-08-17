@@ -12,7 +12,8 @@ import app.jjerrell.root.records.db.entity.TaskEntity
 @Database(
     entities = [CategoryEntity::class, TaskEntity::class],
     version = 3,
-    autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3)])
+    autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3)]
+)
 @ConstructedBy(RootRecordsDatabaseConstructor::class)
 abstract class RootRecordsRoomDatabase : RoomDatabase(), LocalRoomDb {
     abstract fun categoryDao(): CategoryDao
