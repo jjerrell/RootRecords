@@ -1,6 +1,7 @@
 package app.jjerrell.root.records.db
 
 import androidx.room.AutoMigration
+import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import app.jjerrell.root.records.db.dao.CategoryDao
@@ -12,6 +13,7 @@ import app.jjerrell.root.records.db.entity.TaskEntity
     entities = [CategoryEntity::class, TaskEntity::class],
     version = 3,
     autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3)])
+@ConstructedBy(RootRecordsDatabaseConstructor::class)
 abstract class RootRecordsRoomDatabase : RoomDatabase(), LocalRoomDb {
     abstract fun categoryDao(): CategoryDao
     abstract fun taskDao(): TaskDao

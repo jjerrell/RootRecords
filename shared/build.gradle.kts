@@ -30,7 +30,7 @@ kotlin {
     sourceSets {
         commonMain {
             // Adds generated files to sources so Room's `instantiateImpl()` can be located
-            kotlin.srcDir("build/generated/ksp/metadata")
+//            kotlin.srcDir("build/generated/ksp/metadata")
             dependencies {
                 implementation(libs.room.runtime)
                 implementation(libs.room.sqlite.bundled)
@@ -55,14 +55,26 @@ android {
 }
 
 dependencies {
-    add("kspCommonMainMetadata", libs.room.compiler)
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
-    if (name != "kspCommonMainKotlinMetadata") {
-        dependsOn("kspCommonMainKotlinMetadata")
+    listOf(
+//        "kspCommonMainMetadata",
+        "kspAndroid",
+        "kspIosSimulatorArm64",
+        "kspIosX64",
+        "kspIosArm64"
+    ).forEach {
+        add(it, libs.room.compiler)
     }
 }
+
+//dependencies {
+//    add("kspCommonMainMetadata", libs.room.compiler)
+//}
+
+//tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
+//    if (name != "kspCommonMainKotlinMetadata") {
+//        dependsOn("kspCommonMainKotlinMetadata")
+//    }
+//}
 
 room {
     schemaDirectory("$projectDir/schemas")
