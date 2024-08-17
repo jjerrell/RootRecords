@@ -1,11 +1,8 @@
 apply plugin:  "com.diffplug.spotless"
 spotless {
     kotlin {
-        ktlint("0.50.0")
-            .userData(
-                "trailing-comma": "disabled"
-            )
-        ratchetFrom("origin/main")
+        ktfmt()
+            .kotlinlangStyle()
         target("src/*/kotlin/**/*.kt")
         targetExclude("${layout.buildDirectory}/**/*.kt")
     }

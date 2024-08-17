@@ -9,7 +9,6 @@ actual class DatabaseFactory(private val context: Context) {
         return Room.databaseBuilder<RootRecordsRoomDatabase>(
             context = context.applicationContext,
             name = "root_records.db",
-            factory = { RootRecordsRoomDatabase::class.instantiateImpl() }
-        )
+            factory = { RootRecordsRoomDatabase::class.instantiateImpl() })
     }
 }
