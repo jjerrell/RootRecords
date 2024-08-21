@@ -6,8 +6,10 @@ import platform.Foundation.NSHomeDirectory
 
 actual class DatabaseFactory {
     actual fun createBuilder(): RoomDatabase.Builder<RootRecordsRoomDatabase> {
-        val dbFilePath = NSHomeDirectory() + "/root_records.db"
+        val dbFilePath = NSHomeDirectory() + "/RootRecords.db"
         return Room.databaseBuilder<RootRecordsRoomDatabase>(
-            name = dbFilePath, factory = { RootRecordsRoomDatabase::class.instantiateImpl() })
+            name = dbFilePath,
+            factory = { RootRecordsRoomDatabase::class.instantiateImpl() }
+        )
     }
 }
