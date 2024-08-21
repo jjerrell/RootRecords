@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -23,12 +22,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import app.jjerrell.root.records.android.feature.category.categoryGraph
+import app.jjerrell.root.records.android.feature.navigation.RootRecordsNavigation
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun MainLayout(
     modifier: Modifier = Modifier,
-    landingScreen: RootRecordsNavigation = RootRecordsNavigation.About //.Tasks
+    landingScreen: RootRecordsNavigation = RootRecordsNavigation.Categories //.Tasks
 ) {
     val controller = rememberNavController()
     val navBackStackEntry by controller.currentBackStackEntryAsState()
@@ -75,20 +76,23 @@ fun MainLayout(
             )
         },
         floatingActionButton = {
-//            if (currentDestination == landingScreen) {
-//                FloatingActionButton(
-//                    onClick = {
-//                        controller.navigate(RootRecordsNavigation.AddTask.route)
-//                    },
-//                    containerColor = MaterialTheme.colorScheme.primary,
-//                    contentColor = MaterialTheme.colorScheme.onPrimary
-//                ) {
-//                    Icon(
-//                        imageVector = Icons.Default.Add,
-//                        contentDescription = stringResource(R.string.add_task_button)
-//                    )
-//                }
-//            }
+            when (val addRouteDestination = currentDestination?.addRoute) {
+                null -> {}
+                else -> {
+                    FloatingActionButton(
+                        onClick = {
+                            controller.navigate(addRouteDestination.route)
+                        },
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = stringResource(addRouteDestination.titleResourceId)
+                        )
+                    }
+                }
+            }
         }
     ) { paddingValues ->
         NavHost(
@@ -99,6 +103,7 @@ fun MainLayout(
             startDestination = landingScreen.name
         ) {
 //            taskGraph(controller)
+            categoryGraph(controller)
 //            settingsGraph(controller)
             composable(RootRecordsNavigation.About.route) {
                 Text("About")

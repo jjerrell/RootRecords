@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fnav_app_name">RootRecords</string>
+    <!-- Page Names -->
+    <string name="fnav_tasks_title">Tasks</string>
+    <string name="fnav_add_task_title">Add Task</string>
+    <string name="fnav_edit_task_title">Edit Task</string>
+    <string name="fnav_categories_title">Categories</string>
+    <string name="fnav_add_category_title">Add Category</string>
+    <string name="fnav_edit_category_title">Edit Category</string>
+    <string name="fnav_settings_title">Settings</string>
+    <string name="fnav_about_title">About</string>
+    <string name="fnav_help_title">Help</string>
+    <!-- Action Buttons -->
+    <string name="fnav_back">Back</string>
+</resources>

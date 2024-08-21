@@ -1,4 +1,4 @@
-package app.jjerrell.root.records.android
+package app.jjerrell.root.records.android.feature.navigation
 
 import androidx.annotation.StringRes
 import androidx.navigation.NavDestination
@@ -7,50 +7,54 @@ sealed class RootRecordsNavigation(
     val name: String,
     @StringRes val titleResourceId: Int,
     val route: String = name.replace(" ", "_"),
+    val addRoute: RootRecordsNavigation? = null
 ) {
     data object Tasks : RootRecordsNavigation(
         name = "Tasks",
-        titleResourceId = R.string.tasks_title,
-        route = "view_tasks"
+        titleResourceId = R.string.fnav_tasks_title,
+        route = "view_tasks",
+        addRoute = AddTask
     )
     data object AddTask : RootRecordsNavigation(
         name = "Add Task",
-        titleResourceId = R.string.add_task_title
+        titleResourceId = R.string.fnav_add_task_title
     )
     data object EditTask : RootRecordsNavigation(
         name = "Edit Task",
-        titleResourceId = R.string.edit_task_title,
+        titleResourceId = R.string.fnav_edit_task_title,
         route = "EditTask/{taskId}"
     ) {
         fun fromTaskId(taskId: String) = EditTask.route.replace("{taskId}", taskId)
     }
     data object Categories : RootRecordsNavigation(
         name = "Categories",
-        titleResourceId = R.string.categories_title
+        titleResourceId = R.string.fnav_categories_title,
+        route = "view_categories",
+        addRoute = AddCategory
     )
     data object AddCategory : RootRecordsNavigation(
         name = "Add Category",
-        titleResourceId = R.string.add_category_title
+        titleResourceId = R.string.fnav_add_category_title
     )
     data object EditCategory : RootRecordsNavigation(
         name = "Edit Category",
-        titleResourceId = R.string.edit_category_title,
+        titleResourceId = R.string.fnav_edit_category_title,
         route = "EditCategory/{categoryId}"
     ) {
         fun fromCategoryId(categoryId: String) = EditCategory.route.replace("{categoryId}", categoryId)
     }
     data object Settings : RootRecordsNavigation(
         name = "Settings",
-        titleResourceId = R.string.settings_title,
+        titleResourceId = R.string.fnav_settings_title,
         route = "view_settings"
     )
     data object About : RootRecordsNavigation(
         name = "About",
-        titleResourceId = R.string.about_title
+        titleResourceId = R.string.fnav_about_title
     )
     data object Help : RootRecordsNavigation(
         name = "Help",
-        titleResourceId = R.string.help_title
+        titleResourceId = R.string.fnav_help_title
     )
 
     companion object {

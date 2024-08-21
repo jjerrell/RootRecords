@@ -1,30 +1,37 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.compose.compiler)
 }
 
 android {
-    namespace = "app.jjerrell.root.records.android"
+    namespace = "app.jjerrell.root.records.android.feature.navigation"
     compileSdk = 34
+
     defaultConfig {
-        applicationId = "app.jjerrell.root.records.android"
         minSdk = 29
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
+
     buildFeatures {
         compose = true
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -40,15 +47,13 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
-    implementation(libs.androidx.activity.compose)
+
     implementation(libs.compose.viewmodel)
     implementation(libs.compose.navigation)
 
-    implementation(projects.shared)
-    implementation(project(":androidApp:ui:theme"))
-
-    implementation(project(":androidApp:feature-category"))
-    implementation(project(":androidApp:feature-navigation"))
-
     debugImplementation(libs.compose.ui.tooling)
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

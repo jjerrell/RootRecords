@@ -1,4 +1,4 @@
-package app.jjerrell.root.records.android
+package app.jjerrell.root.records.android.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
