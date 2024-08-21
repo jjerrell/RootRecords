@@ -12,7 +12,10 @@ import androidx.room.PrimaryKey
                 entity = CategoryEntity::class,
                 parentColumns = ["category_id"],
                 childColumns = ["category_id"],
-                onDelete = ForeignKey.SET_NULL)])
+                onDelete = ForeignKey.SET_NULL
+            )
+        ]
+)
 data class TaskEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
