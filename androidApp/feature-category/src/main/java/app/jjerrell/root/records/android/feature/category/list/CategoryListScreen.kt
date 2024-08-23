@@ -1,13 +1,10 @@
 package app.jjerrell.root.records.android.feature.category.list
 
-import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
-import app.jjerrell.root.records.service.model.Category
 
 @Composable
 internal fun CategoryListScreen(
