@@ -1,17 +1,6 @@
 package app.jjerrell.root.records.android.feature.category
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import android.content.Context
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -34,7 +23,9 @@ fun NavGraphBuilder.categoryGraph(navController: NavController) {
                     viewModel.setLoading(isLoading = true)
                     navController.navigate(RootRecordsNavigation.EditCategory.fromCategoryId(id.toString()))
                 },
-                onCategoryDelete = { id: Int -> }
+                onCategoryDelete = { id: Int ->
+                    viewModel.deleteCategory(id)
+                }
             )
         }
         composable(RootRecordsNavigation.AddCategory.route) {
@@ -52,38 +43,6 @@ fun NavGraphBuilder.categoryGraph(navController: NavController) {
                 categoryId = categoryId?.toIntOrNull(),
                 onClose = navController::popBackStack
             )
-        }
-    }
-}
-
-@Composable
-fun CategoryEditScreen(
-    modifier: Modifier = Modifier,
-    categoryId: Int? = null,
-    viewModel: CategoryViewModel,
-    onClose: () -> Unit
-) {
-    val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        viewModel.selectCategory(context = context, id = categoryId)
-    }
-    val category = remember { mutableStateOf(viewModel.state.selectedCategory) }
-    LazyColumn(modifier = modifier.fillMaxSize()) {
-        item {
-            OutlinedTextField(
-                value = category.value?.name.orEmpty(),
-                onValueChange = viewModel::updateCategoryName
-            )
-        }
-        item {
-            Button(
-                onClick = {
-                    viewModel.saveCategory()
-                    onClose()
-                }
-            ) {
-                Text("Save")
-            }
         }
     }
 }

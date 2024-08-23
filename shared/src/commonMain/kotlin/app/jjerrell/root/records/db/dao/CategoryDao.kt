@@ -19,4 +19,7 @@ interface CategoryDao {
 
     @Query("SELECT * FROM categoryEntity WHERE category_id = :id")
     fun getCategoryById(id: Int): Flow<CategoryEntity>
+
+    @Query("DELETE FROM categoryEntity WHERE category_id = :id")
+    suspend fun deleteCategoryById(id: Int)
 }

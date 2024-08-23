@@ -1,5 +1,6 @@
 package app.jjerrell.root.records.android.feature.category.list
 
+import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,6 +24,6 @@ internal fun CategoryListScreen(
         modifier = modifier.fillMaxSize(),
         categories = viewModel.state.categories,
         onCategoryClick = onCategoryClick,
-        onCategoryDelete = onCategoryDelete
+        onCategoryDelete = { onCategoryDelete(it) }
     )
 }

@@ -39,9 +39,10 @@ fun MainLayout(
         topBar = {
             TopAppBar(
                 title = {
-                    val titleResource = currentDestination?.titleResourceId?.takeUnless {
-                        currentDestination == landingScreen
-                    } ?: R.string.app_name
+//                    val titleResource = currentDestination?.titleResourceId?.takeUnless {
+//                        currentDestination == landingScreen
+//                    } ?: R.string.app_name
+                    val titleResource = currentDestination?.titleResourceId ?: R.string.app_name
                     Text(
                         text = stringResource(id = titleResource)
                     )

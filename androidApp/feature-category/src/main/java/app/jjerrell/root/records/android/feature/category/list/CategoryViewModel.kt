@@ -18,7 +18,7 @@ class CategoryViewModel : ViewModel() {
 
     private lateinit var repository: RootRecordsRepository
 
-    fun loadCategories(context: Context) {
+    fun loadCategories(context: Context, onComplete: () -> Unit = {}) {
         state = state.copy(isLoading = true)
         if (!::repository.isInitialized) {
             repository = RootRecordsRepository(DatabaseFactory(context = context))
@@ -29,6 +29,16 @@ class CategoryViewModel : ViewModel() {
                 isLoading = false,
                 categories = categories ?: emptyList()
             )
+        }.invokeOnCompletion { onComplete() }
+    }
+
+    fun deleteCategory(id: Int) {
+        viewModelScope.launch {
+            async { repository.deleteCategory(id) }.await()
+            state = state.copy(
+                isLoading = false,
+                categories = state.categories.filterNot { it.id == id }
+            )
         }
     }
 
@@ -37,14 +47,13 @@ class CategoryViewModel : ViewModel() {
     }
 
     fun selectCategory(context: Context, id: Int?) {
-        if (!::repository.isInitialized) {
-            repository = RootRecordsRepository(DatabaseFactory(context = context))
+        loadCategories(context) {
+            state = state.copy(
+                isLoading = false,
+                selectedCategory = state.categories
+                    .find { it.id == id } ?: Category(name = "", color = 0)
+            )
         }
-        state = state.copy(
-            isLoading = false,
-            selectedCategory = state.categories
-                .find { it.id == id } ?: Category(name = "", color = 0)
-        )
     }
 
     fun updateCategoryName(name: String) {

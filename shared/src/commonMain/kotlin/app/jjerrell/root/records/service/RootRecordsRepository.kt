@@ -23,6 +23,10 @@ class RootRecordsRepository(
         db.categoryDao().updateCategory(category.toEntity())
     }
 
+    suspend fun deleteCategory(id: Int) {
+        db.categoryDao().deleteCategoryById(id)
+    }
+
     suspend fun getCategories(): List<Category>? {
         return db.categoryDao().getAllCategories().firstOrNull()?.map { it.toModel() }
     }
