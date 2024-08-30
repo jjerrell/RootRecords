@@ -13,6 +13,8 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.jjerrell.root.records.android.ui.theme.RootRecordsTheme
@@ -67,10 +69,10 @@ private fun CategoryListView_Preview() {
         CategoryListView(
             modifier = Modifier.fillMaxWidth(),
             categories = listOf(
-                Category(name = "Work", color = 0xFF000000),
-                Category(name = "Personal", color = 0xFF000000),
-                Category(name = "Family", color = 0xFF000000),
-                Category(name = "Friends", color = 0xFF000000)
+                Category(name = "Work", color = Color.Black.toArgb()),
+                Category(name = "Personal", color = Color.Black.toArgb()),
+                Category(name = "Family", color = Color.Black.toArgb()),
+                Category(name = "Friends", color = Color.Black.toArgb())
             ),
             onCategoryClick = {},
             onCategoryDelete = {}

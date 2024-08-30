@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "app.jjerrell.root.records.android.ui.theme"
+    namespace = "app.jjerrell.root.records.android.ui.core"
     compileSdk = 34
 
     defaultConfig {
@@ -48,7 +48,9 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
 
-    api(libs.colorpicker.compose)
+    implementation(libs.compose.viewmodel)
+
+    implementation(projects.shared)
 
     debugImplementation(libs.compose.ui.tooling)
 

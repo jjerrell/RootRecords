@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 internal fun CategoryListScreen(
     modifier: Modifier = Modifier,
-    viewModel: CategoryViewModel,
+    viewModel: CategoryListViewModel,
     onCategoryClick: (id: Int) -> Unit,
     onCategoryDelete: (id: Int) -> Unit
 ) {

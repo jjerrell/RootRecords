@@ -1,5 +1,6 @@
 [versions]
 agp = "8.3.2"
+colorpickerCompose = "1.1.2"
 kotlin = "2.0.0"
 compose = "1.6.8"
 compose-material3 = "1.2.1"
@@ -19,6 +20,7 @@ appcompat = "1.7.0"
 material = "1.12.0"
 
 [libraries]
+colorpicker-compose = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpickerCompose" }
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }

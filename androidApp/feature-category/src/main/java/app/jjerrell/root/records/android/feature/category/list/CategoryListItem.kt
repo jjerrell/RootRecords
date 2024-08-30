@@ -8,6 +8,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.jjerrell.root.records.android.ui.theme.RootRecordsTheme
@@ -40,7 +42,7 @@ private fun CategoryListItem_Preview() {
     RootRecordsTheme {
         CategoryListItem(
             modifier = Modifier.fillMaxWidth(),
-            category = Category(name = "Work", color = 0xFF000000),
+            category = Category(name = "Work", color = Color.White.toArgb()),
             onCategoryClick = {}
         )
     }
