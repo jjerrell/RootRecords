@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -47,9 +46,9 @@ class CategoryEditViewModel : BaseViewModel() {
         )
     }
 
-    fun updateCategoryColor(color: Color) {
+    fun updateCategoryColor(color: Color?) {
         state = state.copy(
-            selectedCategory = state.selectedCategory?.copy(color = color.toArgb())
+            selectedCategory = state.selectedCategory?.copy(color = color?.toArgb())
         )
     }
 
