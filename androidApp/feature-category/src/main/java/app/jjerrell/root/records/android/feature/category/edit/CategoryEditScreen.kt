@@ -34,23 +34,33 @@ fun CategoryEditScreen(
         newValue = viewModel.state.selectedCategory?.name?.isNotBlank() == true
     )
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        modifier = modifier
+            .padding(vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         TextField(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(horizontal = 16.dp)
                 .fillMaxWidth(),
             value = viewModel.state.selectedCategory?.name.orEmpty(),
             onValueChange = viewModel::updateCategoryName,
             placeholder = {
-                Text("Category Name")
+                Text("Name")
+            }
+        )
+        TextField(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth(),
+            value = viewModel.state.selectedCategory?.description.orEmpty(),
+            onValueChange = viewModel::updateCategoryDescription,
+            placeholder = {
+                Text("Description")
             }
         )
         ColorPickerGrid(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-                .fillMaxWidth(),
+                .padding(horizontal = 16.dp),
             initiallySelectedColor = viewModel.state.selectedCategory?.color?.let { Color(it) },
             onColorChanged = {
                 viewModel.updateCategoryColor(it)
@@ -58,7 +68,7 @@ fun CategoryEditScreen(
         )
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(horizontal = 16.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically

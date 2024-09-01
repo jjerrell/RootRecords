@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,7 +31,15 @@ internal fun CategoryListItem(
             modifier = Modifier
                 .padding(8.dp)
         ) {
-            Text(text = category.name)
+            Text(
+                text = category.name
+            )
+            category.description?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
         }
     }
 }
@@ -42,7 +51,7 @@ private fun CategoryListItem_Preview() {
     RootRecordsTheme {
         CategoryListItem(
             modifier = Modifier.fillMaxWidth(),
-            category = Category(name = "Work", color = Color.White.toArgb()),
+            category = Category(name = "Work", description = "", color = Color.White.toArgb()),
             onCategoryClick = {}
         )
     }

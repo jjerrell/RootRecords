@@ -1,6 +1,7 @@
 package app.jjerrell.root.records.android.feature.category.list
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +31,8 @@ internal fun CategoryListView(
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(items = categories) { category: Category ->
             val swipeState = rememberSwipeToDismissBoxState()
@@ -69,10 +71,10 @@ private fun CategoryListView_Preview() {
         CategoryListView(
             modifier = Modifier.fillMaxWidth(),
             categories = listOf(
-                Category(name = "Work", color = Color.Black.toArgb()),
-                Category(name = "Personal", color = Color.Black.toArgb()),
-                Category(name = "Family", color = Color.Black.toArgb()),
-                Category(name = "Friends", color = Color.Black.toArgb())
+                Category(name = "Work", description = "For things that enable other things", color = Color.Black.toArgb()),
+                Category(name = "Personal", description = "The things you do because you work", color = Color.Black.toArgb()),
+                Category(name = "Family", description = "The people you do the work for", color = Color.Black.toArgb()),
+                Category(name = "Friends", description = "People that also work so they can do things that you maybe do together", color = Color.Black.toArgb())
             ),
             onCategoryClick = {},
             onCategoryDelete = {}

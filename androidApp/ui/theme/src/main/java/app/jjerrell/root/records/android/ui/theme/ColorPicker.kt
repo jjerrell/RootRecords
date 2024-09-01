@@ -33,7 +33,7 @@ fun ColorPicker(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         val pickerSize = remember { mutableStateOf(Size(1f, 1f)) }
         Box(

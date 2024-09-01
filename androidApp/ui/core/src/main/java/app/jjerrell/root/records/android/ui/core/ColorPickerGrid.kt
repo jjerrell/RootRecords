@@ -7,7 +7,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -44,12 +46,14 @@ fun ColorPickerGrid(
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxWidth(),
                 columns = GridCells.Adaptive(minSize = 50.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
                 userScrollEnabled = false,
             ) {
                 itemsIndexed(viewModel.state) { index, titleColorPair ->
                     SelectableBox(
+                        modifier = Modifier
+                            .size(50.dp),
                         titleColorPair = titleColorPair,
                         isSelected = viewModel.selectedIndex == index,
                         onSelected = {
@@ -69,6 +73,13 @@ fun ColorPickerGrid(
         } else {
             val selectedPair = viewModel.selectedIndex?.let { viewModel.state[it] }
             SelectableBox(
+                modifier = Modifier.let {
+                    if (selectedPair == null) {
+                        it.wrapContentWidth()
+                    } else {
+                        it.size(50.dp)
+                    }
+                },
                 titleColorPair = selectedPair,
                 isSelected = true,
                 onSelected = {
@@ -77,6 +88,7 @@ fun ColorPickerGrid(
             ) {
                 if (selectedPair == null) {
                     Text(
+                        modifier = Modifier.padding(8.dp),
                         text = "Select Color",
                         textAlign = TextAlign.Center
                     )
@@ -88,6 +100,7 @@ fun ColorPickerGrid(
 
 @Composable
 private fun SelectableBox(
+    modifier: Modifier = Modifier,
     titleColorPair: Pair<String, Color>?,
     isSelected: Boolean,
     onSelected: () -> Unit,
@@ -95,8 +108,7 @@ private fun SelectableBox(
 ) {
     val borderSize = if (isSelected) 2.dp else 0.dp
     Box(
-        modifier = Modifier
-            .requiredSize(50.dp)
+        modifier = modifier
             .clip(RoundedCornerShape(20))
             .border(borderSize, MaterialTheme.colorScheme.primary, RoundedCornerShape(20))
             .let {

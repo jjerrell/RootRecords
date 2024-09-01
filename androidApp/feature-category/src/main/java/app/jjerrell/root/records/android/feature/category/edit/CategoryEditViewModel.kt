@@ -32,7 +32,7 @@ class CategoryEditViewModel : BaseViewModel() {
         viewModelScope.launch {
             val category = id?.let {
                 async { repository.getCategoryById(id) }.await()
-            } ?: Category(name = "", color = 0)
+            } ?: Category(name = "", description = "", color = 0)
             state = state.copy(
                 isLoading = false,
                 selectedCategory = category
@@ -43,6 +43,12 @@ class CategoryEditViewModel : BaseViewModel() {
     fun updateCategoryName(name: String) {
         state = state.copy(
             selectedCategory = state.selectedCategory?.copy(name = name)
+        )
+    }
+
+    fun updateCategoryDescription(description: String) {
+        state = state.copy(
+            selectedCategory = state.selectedCategory?.copy(description = description)
         )
     }
 

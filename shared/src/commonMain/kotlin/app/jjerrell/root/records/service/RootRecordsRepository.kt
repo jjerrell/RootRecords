@@ -55,9 +55,11 @@ class RootRecordsRepository(
     // endregion
 }
 
-private fun Category.toEntity() = CategoryEntity(id = id ?: 0, name = name, color = color)
+private fun Category.toEntity() =
+    CategoryEntity(id = id ?: 0, name = name, description = description, color = color)
 
-private fun CategoryEntity.toModel() = Category(id = id, name = name, color = color)
+private fun CategoryEntity.toModel() =
+    Category(id = id, name = name, description = description, color = color)
 
 private fun Task.toEntity() =
     TaskEntity(
