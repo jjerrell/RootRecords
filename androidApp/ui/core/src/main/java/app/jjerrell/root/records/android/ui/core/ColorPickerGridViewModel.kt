@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import app.jjerrell.root.records.service.model.Category
 
 internal class ColorPickerGridViewModel : ViewModel() {
     val state = mutableStateListOf<Pair<String, Color>?>(
@@ -48,3 +49,6 @@ internal class ColorPickerGridViewModel : ViewModel() {
         isSelectingColor = value
     }
 }
+
+val Category.color: Color?
+    get() = colorValue?.let { Color(it) }

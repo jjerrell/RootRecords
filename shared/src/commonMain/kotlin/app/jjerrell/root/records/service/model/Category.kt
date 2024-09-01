@@ -4,5 +4,5 @@ data class Category(
     val id: Int? = null,
     val name: String,
     val description: String?,
-    val color: Int?
+    val colorValue: Int?
 )

@@ -5,14 +5,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import app.jjerrell.root.records.android.ui.core.color
 import app.jjerrell.root.records.android.ui.theme.RootRecordsTheme
 import app.jjerrell.root.records.service.model.Category
 
@@ -25,6 +28,12 @@ internal fun CategoryListItem(
     Card(
         modifier = modifier
             .fillMaxWidth(),
+        colors = category.color?.let {
+            CardDefaults.cardColors(
+                containerColor = it.copy(alpha = 0.25f),
+                contentColor = contentColorFor(it)
+            )
+        } ?: CardDefaults.cardColors(),
         onClick = onCategoryClick
     ) {
         Column(
@@ -34,7 +43,7 @@ internal fun CategoryListItem(
             Text(
                 text = category.name
             )
-            category.description?.let {
+            category.description?.takeUnless { it.isBlank() }?.let {
                 Text(
                     text = it,
                     style = MaterialTheme.typography.bodySmall
@@ -51,7 +60,7 @@ private fun CategoryListItem_Preview() {
     RootRecordsTheme {
         CategoryListItem(
             modifier = Modifier.fillMaxWidth(),
-            category = Category(name = "Work", description = "", color = Color.White.toArgb()),
+            category = Category(name = "Work", description = "", colorValue = Color.White.toArgb()),
             onCategoryClick = {}
         )
     }

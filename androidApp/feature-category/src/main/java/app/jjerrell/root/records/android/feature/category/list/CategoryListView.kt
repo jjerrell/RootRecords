@@ -71,10 +71,10 @@ private fun CategoryListView_Preview() {
         CategoryListView(
             modifier = Modifier.fillMaxWidth(),
             categories = listOf(
-                Category(name = "Work", description = "For things that enable other things", color = Color.Black.toArgb()),
-                Category(name = "Personal", description = "The things you do because you work", color = Color.Black.toArgb()),
-                Category(name = "Family", description = "The people you do the work for", color = Color.Black.toArgb()),
-                Category(name = "Friends", description = "People that also work so they can do things that you maybe do together", color = Color.Black.toArgb())
+                Category(name = "Work", description = "For things that enable other things", colorValue = Color.Black.toArgb()),
+                Category(name = "Personal", description = "The things you do because you work", colorValue = Color.Black.toArgb()),
+                Category(name = "Family", description = "The people you do the work for", colorValue = Color.Black.toArgb()),
+                Category(name = "Friends", description = "People that also work so they can do things that you maybe do together", colorValue = Color.Black.toArgb())
             ),
             onCategoryClick = {},
             onCategoryDelete = {}

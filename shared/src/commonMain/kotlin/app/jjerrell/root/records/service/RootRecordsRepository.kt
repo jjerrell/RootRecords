@@ -56,10 +56,10 @@ class RootRecordsRepository(
 }
 
 private fun Category.toEntity() =
-    CategoryEntity(id = id ?: 0, name = name, description = description, color = color)
+    CategoryEntity(id = id ?: 0, name = name, description = description, color = colorValue)
 
 private fun CategoryEntity.toModel() =
-    Category(id = id, name = name, description = description, color = color)
+    Category(id = id, name = name, description = description, colorValue = color)
 
 private fun Task.toEntity() =
     TaskEntity(

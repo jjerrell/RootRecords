@@ -61,7 +61,7 @@ fun CategoryEditScreen(
         ColorPickerGrid(
             modifier = Modifier
                 .padding(horizontal = 16.dp),
-            initiallySelectedColor = viewModel.state.selectedCategory?.color?.let { Color(it) },
+            initiallySelectedColor = viewModel.state.selectedCategory?.colorValue?.let { Color(it) },
             onColorChanged = {
                 viewModel.updateCategoryColor(it)
             }
