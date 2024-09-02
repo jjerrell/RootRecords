@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -23,7 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.jjerrell.root.records.android.feature.category.categoryGraph
-import app.jjerrell.root.records.android.feature.navigation.RootRecordsNavigation
+import app.jjerrell.root.records.android.ui.navigation.RootRecordsNavigation
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,14 +59,14 @@ fun MainLayout(
                     }
                 },
                 actions = {
-//                    if (currentDestination == landingScreen) {
-//                        IconButton(onClick = { controller.navigate(RootRecordsNavigation.Settings.route) }) {
-//                            Icon(
-//                                imageVector = Icons.Filled.Settings,
-//                                contentDescription = stringResource(id = R.string.back)
-//                            )
-//                        }
-//                    }
+                    if (currentDestination == landingScreen) {
+                        IconButton(onClick = { controller.navigate(RootRecordsNavigation.Settings.route) }) {
+                            Icon(
+                                imageVector = Icons.Filled.Settings,
+                                contentDescription = stringResource(id = R.string.back)
+                            )
+                        }
+                    }
                 },
                 colors = TopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,

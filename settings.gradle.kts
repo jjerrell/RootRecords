@@ -18,6 +18,8 @@ rootProject.name = "RootRecords"
 include(":androidApp")
 include(":shared")
 include(":androidApp:feature-category")
-include(":androidApp:feature-navigation")
+include(":androidApp:feature-settings")
+
+include(":androidApp:ui:navigation")
 include(":androidApp:ui:theme")
 include(":androidApp:ui:core")

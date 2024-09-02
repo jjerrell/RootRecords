@@ -9,7 +9,7 @@ import app.jjerrell.root.records.android.feature.category.edit.CategoryEditScree
 import app.jjerrell.root.records.android.feature.category.edit.CategoryEditViewModel
 import app.jjerrell.root.records.android.feature.category.list.CategoryListScreen
 import app.jjerrell.root.records.android.feature.category.list.CategoryListViewModel
-import app.jjerrell.root.records.android.ui.navigation.RootRecordsNavigation
+import app.jjerrell.root.records.android.feature.navigation.RootRecordsNavigation
 
 fun NavGraphBuilder.categoryGraph(navController: NavController) {
     navigation(

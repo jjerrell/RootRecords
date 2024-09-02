@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "app.jjerrell.root.records.android.feature.category"
+    namespace = "app.jjerrell.root.records.android.feature.settings"
     compileSdk = 34
 
     defaultConfig {

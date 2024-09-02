@@ -46,9 +46,9 @@ dependencies {
 
     implementation(projects.shared)
     implementation(project(":androidApp:ui:theme"))
+    implementation(project(":androidApp:ui:navigation"))
 
     implementation(project(":androidApp:feature-category"))
-    implementation(project(":androidApp:feature-navigation"))
 
     debugImplementation(libs.compose.ui.tooling)
 }

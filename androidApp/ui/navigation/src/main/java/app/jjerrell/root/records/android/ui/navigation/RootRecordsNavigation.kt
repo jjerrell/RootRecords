@@ -1,7 +1,8 @@
-package app.jjerrell.root.records.android.feature.navigation
+package app.jjerrell.root.records.android.ui.navigation
 
 import androidx.annotation.StringRes
 import androidx.navigation.NavDestination
+import app.jjerrell.root.records.android.feature.navigation.R
 
 sealed class RootRecordsNavigation(
     val name: String,
