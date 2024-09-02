@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
@@ -50,6 +51,8 @@ dependencies {
 
     implementation(libs.compose.viewmodel)
     implementation(libs.compose.navigation)
+
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(projects.shared)
     implementation(project(":androidApp:ui:theme"))

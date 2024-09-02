@@ -1,0 +1,98 @@
+[
+    {
+        "id": 2,
+        "name": "Root Vegetables",
+        "description": "Plants that primarily grow underground and are harvested for their roots. They often require loose, well-drained soil.",
+        "colorValue": -31461
+    },
+    {
+        "id": 3,
+        "name": "Leafy Greens",
+        "description": "Vegetables grown for their edible leaves. These plants usually need consistent moisture and are often sensitive to heat.",
+        "colorValue": -13710272
+    },
+    {
+        "id": 4,
+        "name": "Fruit Vegetables",
+        "description": "These plants produce fruits that are consumed as vegetables. They typically need plenty of sunlight and regular watering.",
+        "colorValue": -48842
+    },
+    {
+        "id": 5,
+        "name": "Legumes",
+        "description": "Plants that fix nitrogen in the soil, improving fertility. They are often grown in rotation with other crops to maintain soil health.",
+        "colorValue": -12989236
+    },
+    {
+        "id": 6,
+        "name": "Herbs",
+        "description": "Plants grown for their aromatic leaves and are often used in cooking and medicinal purposes. They can be grown in containers or in-ground.",
+        "colorValue": -12740240
+    },
+    {
+        "id": 7,
+        "name": "Flowers",
+        "description": "Plants grown primarily for their ornamental flowers. They can attract pollinators and beneficial insects or repel pests.",
+        "colorValue": -38476
+    },
+    {
+        "id": 9,
+        "name": "Vines and Climbers",
+        "description": "Plants that require support to grow vertically. They are ideal for maximizing space in small gardens by growing upward.",
+        "colorValue": -10496
+    },
+    {
+        "id": 10,
+        "name": "Brassicas",
+        "description": "Cool-season vegetables that are members of the cabbage family. They can be susceptible to pests like aphids and cabbage worms.",
+        "colorValue": -5592406
+    },
+    {
+        "id": 11,
+        "name": "Bulbs and Tubers",
+        "description": "Underground storage organs. They often require well-drained soil and are planted at specific times of the year for optimal growth.",
+        "colorValue": -8055733
+    },
+    {
+        "id": 12,
+        "name": "Perennials",
+        "description": "Plants that grow back every year without needing to be replanted. They are great for low-maintenance gardening and providing continuous harvests.",
+        "colorValue": -16747303
+    },
+    {
+        "id": 13,
+        "name": "Medicinals and Aromatics",
+        "description": "Plants that have medicinal properties or aromatic uses. They are often grown in separate beds or containers due to their specific needs and uses.",
+        "colorValue": -1043778
+    },
+    {
+        "id": 14,
+        "name": "Cover Crops",
+        "description": "Plants grown to cover the soil rather than for harvest. They help improve soil health, suppress weeds, and prevent erosion.",
+        "colorValue": -8397825
+    },
+    {
+        "id": 15,
+        "name": "Companion Plants",
+        "description": "Plants grown together to benefit each other, either by deterring pests, attracting beneficial insects, or enhancing growth.",
+        "colorValue": -9216
+    },
+    {
+        "id": 16,
+        "name": "Shade-Tolerant Plants",
+        "description": "Plants that can thrive in shaded or partially shaded areas of the garden. They are ideal for spaces that do not receive full sun.",
+        "colorValue": -16777216
+    },
+    {
+        "id": 17,
+        "name": "Pollinator Attractors",
+        "description": "Plants specifically chosen to attract pollinators like bees, butterflies, and hummingbirds, enhancing the garden’s ecological balance.",
+        "colorValue": -1
+    },
+    {
+        "id": 18,
+        "name": "Berry Bushes",
+        "description": "Small fruit-bearing plants that produce berries. They often require acidic soil and consistent watering.",
+        "colorValue": -5173815
+    }
+]

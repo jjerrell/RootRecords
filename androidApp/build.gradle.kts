@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":androidApp:ui:navigation"))
 
     implementation(project(":androidApp:feature-category"))
+    implementation(project(":androidApp:feature-settings"))
 
     debugImplementation(libs.compose.ui.tooling)
 }

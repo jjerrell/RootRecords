@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.roomDb)
 }
@@ -34,6 +35,7 @@ kotlin {
             dependencies {
                 implementation(libs.room.runtime)
                 implementation(libs.room.sqlite.bundled)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
         commonTest.dependencies {

@@ -24,6 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.jjerrell.root.records.android.feature.category.categoryGraph
+import app.jjerrell.root.records.android.feature.settings.settingsGraph
 import app.jjerrell.root.records.android.ui.navigation.RootRecordsNavigation
 
 @Composable
@@ -63,7 +64,7 @@ fun MainLayout(
                         IconButton(onClick = { controller.navigate(RootRecordsNavigation.Settings.route) }) {
                             Icon(
                                 imageVector = Icons.Filled.Settings,
-                                contentDescription = stringResource(id = R.string.back)
+                                contentDescription = stringResource(id = R.string.settings_title)
                             )
                         }
                     }
@@ -106,13 +107,7 @@ fun MainLayout(
         ) {
 //            taskGraph(controller)
             categoryGraph(controller)
-//            settingsGraph(controller)
-            composable(RootRecordsNavigation.About.route) {
-                Text("About")
-            }
-            composable(RootRecordsNavigation.Help.route) {
-                Text("Help")
-            }
+            settingsGraph(controller)
         }
     }
 }
