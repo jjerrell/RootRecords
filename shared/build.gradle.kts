@@ -36,6 +36,7 @@ kotlin {
                 implementation(libs.room.runtime)
                 implementation(libs.room.sqlite.bundled)
                 implementation(libs.kotlinx.serialization.json)
+                implementation(libs.androidx.datastore.preferences.core)
             }
         }
         commonTest.dependencies {

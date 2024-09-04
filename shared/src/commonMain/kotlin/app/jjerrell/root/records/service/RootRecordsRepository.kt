@@ -1,5 +1,9 @@
 package app.jjerrell.root.records.service
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
 import app.jjerrell.root.records.db.DatabaseFactory
 import app.jjerrell.root.records.db.createDatabase
 import app.jjerrell.root.records.db.entity.CategoryEntity
@@ -7,10 +11,16 @@ import app.jjerrell.root.records.db.entity.TaskEntity
 import app.jjerrell.root.records.db.entity.TaskWithCategory
 import app.jjerrell.root.records.service.model.Category
 import app.jjerrell.root.records.service.model.Task
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.serialization.json.Json
+
+private const val HAS_ASKED_FOR_DEFAULT_CATEGORIES = "has_asked_for_default_categories"
 
 class RootRecordsRepository(
     factory: DatabaseFactory,
+    private val preferences: DataStore<Preferences>
 ) {
     private val db = createDatabase(factory)
 
@@ -33,6 +43,23 @@ class RootRecordsRepository(
 
     suspend fun getCategoryById(id: Int): Category? {
         return db.categoryDao().getCategoryById(id).firstOrNull()?.toModel()
+    }
+
+    suspend fun checkShouldLoadDefaults(): Boolean {
+        val defaultCategoriesKey = booleanPreferencesKey(HAS_ASKED_FOR_DEFAULT_CATEGORIES)
+        return preferences.data
+            .map { preferences -> preferences[defaultCategoriesKey] ?: true }
+            .first()
+    }
+
+    suspend fun setShouldNotLoadDefaults() {
+        val defaultCategoriesKey = booleanPreferencesKey(HAS_ASKED_FOR_DEFAULT_CATEGORIES)
+        preferences.edit { preferences -> preferences[defaultCategoriesKey] = false }
+    }
+
+    suspend fun populateCategories(jsonString: String) {
+        val categories = Json.decodeFromString<List<Category>>(jsonString)
+        categories.forEach { db.categoryDao().insertCategory(it.toEntity()) }
     }
     // endregion
 

@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.compose.material3)
 
     implementation(libs.compose.viewmodel)
+    implementation(libs.androidx.datastore.preferences.android)
 
     implementation(projects.shared)
 
