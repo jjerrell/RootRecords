@@ -17,7 +17,7 @@ subprojects {
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         kotlin {
             target("**/*.kt")
-            targetExclude("${layout.buildDirectory}/**/*.kt")
+            targetExclude("${layout.buildDirectory}/**/*.kt", "build-support/**/*.kt")
             ktfmt()
                 .kotlinlangStyle()
             licenseHeaderFile(rootProject.file("build-support/copyright.kt"))
@@ -26,13 +26,13 @@ subprojects {
         }
         kotlinGradle {
             target("**/*.gradle.kts")
-            targetExclude("${layout.buildDirectory}/**/*.gradle.kts")
+            targetExclude("${layout.buildDirectory}/**/*.gradle.kts", "build-support/**/*.gradle.kts")
             ktfmt()
                 .kotlinlangStyle()
         }
         format("xml") {
             target("**/*.xml")
-            targetExclude("**/build/**/*.xml")
+            targetExclude("**/build/**/*.xml", "build-support/**/*.xml")
             // Look for the first XML tag that isn't a comment (<!--) or the xml declaration (<?xml)
             licenseHeaderFile(rootProject.file("build-support/copyright.xml"), "(<[^!?])")
             trimTrailingWhitespace()
