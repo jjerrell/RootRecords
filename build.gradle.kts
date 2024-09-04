@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid).apply(false)
     alias(libs.plugins.kotlinMultiplatform).apply(false)
     alias(libs.plugins.kotlinSerialization).apply(false)
-    alias(libs.plugins.compose.compiler).apply(false)
+    alias(libs.plugins.kotlinCompose).apply(false)
     alias(libs.plugins.roomDb).apply(false)
     alias(libs.plugins.ksp).apply(false)
     alias(libs.plugins.spotless)

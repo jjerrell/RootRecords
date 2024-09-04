@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinCompose)
 }
 
 android {
@@ -41,8 +41,8 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.compose.viewmodel)
-    implementation(libs.compose.navigation)
+    implementation(libs.androidx.compose.viewmodel)
+    implementation(libs.androidx.compose.navigation)
 
     implementation(projects.shared)
     implementation(project(":androidApp:ui:theme"))

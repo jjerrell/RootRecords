@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinCompose)
     alias(libs.plugins.kotlinSerialization)
 }
 
@@ -49,8 +49,8 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
 
-    implementation(libs.compose.viewmodel)
-    implementation(libs.compose.navigation)
+    implementation(libs.androidx.compose.viewmodel)
+    implementation(libs.androidx.compose.navigation)
 
     implementation(libs.kotlinx.serialization.json)
 
@@ -61,7 +61,7 @@ dependencies {
 
     debugImplementation(libs.compose.ui.tooling)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.junit.core)
+    androidTestImplementation(libs.junit.ext)
+    androidTestImplementation(libs.espresso.core)
 }
