@@ -1,3 +1,20 @@
+/*
+ * RootRecords
+ * Copyright (C) 2024  Jacob Jerrell (@jjerrell)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.jjerrell.root.records.android.feature.category.list
 
 import BaseViewModel
@@ -20,13 +37,12 @@ class CategoryListViewModel : BaseViewModel() {
     fun loadCategories(context: Context, onComplete: () -> Unit = {}) {
         state = state.copy(isLoading = true)
         init(context)
-        viewModelScope.launch {
-            val categories = repository.getCategories()
-            state = state.copy(
-                isLoading = false,
-                categories = categories ?: emptyList()
-            )
-        }.invokeOnCompletion { onComplete() }
+        viewModelScope
+            .launch {
+                val categories = repository.getCategories()
+                state = state.copy(isLoading = false, categories = categories ?: emptyList())
+            }
+            .invokeOnCompletion { onComplete() }
     }
 
     fun checkShouldLoadDefaults() {
@@ -49,30 +65,30 @@ class CategoryListViewModel : BaseViewModel() {
         viewModelScope.launch {
             Log.d("CategoryListViewModel", "insertDefaultCategories: $jsonString")
             async { repository.populateCategories(jsonString) }.await()
-            state = state.copy(
-                isLoading = false,
-                showLoadDefaultsPrompt = false,
-                categories = repository.getCategories() ?: emptyList()
-            )
+            state =
+                state.copy(
+                    isLoading = false,
+                    showLoadDefaultsPrompt = false,
+                    categories = repository.getCategories() ?: emptyList()
+                )
             Log.d("CategoryListViewModel", "insertDefaultCategories: ${state.categories}")
         }
     }
 
     fun dismissPrompt() {
         Log.d("CategoryListViewModel", "dismissPrompt")
-        viewModelScope.launch {
-            repository.setShouldNotLoadDefaults()
-        }
+        viewModelScope.launch { repository.setShouldNotLoadDefaults() }
         state = state.copy(showLoadDefaultsPrompt = false)
     }
 
     fun deleteCategory(id: Int) {
         viewModelScope.launch {
             async { repository.deleteCategory(id) }.await()
-            state = state.copy(
-                isLoading = false,
-                categories = state.categories.filterNot { it.id == id }
-            )
+            state =
+                state.copy(
+                    isLoading = false,
+                    categories = state.categories.filterNot { it.id == id }
+                )
         }
     }
 

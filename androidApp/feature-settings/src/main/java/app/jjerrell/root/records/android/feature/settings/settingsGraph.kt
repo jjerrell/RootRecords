@@ -1,3 +1,20 @@
+/*
+ * RootRecords
+ * Copyright (C) 2024  Jacob Jerrell (@jjerrell)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.jjerrell.root.records.android.feature.settings
 
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,14 +35,10 @@ fun NavGraphBuilder.settingsGraph(navController: NavController) {
         composable(RootRecordsNavigation.Settings.route) {
             SettingsListView(
                 modifier = Modifier.fillMaxSize(),
-//                onBackClick = { navController.popBackStack() }
+                //                onBackClick = { navController.popBackStack() }
             )
         }
-        composable(RootRecordsNavigation.Help.route) {
-            Text("Help")
-        }
-        composable(RootRecordsNavigation.About.route) {
-            Text("About")
-        }
+        composable(RootRecordsNavigation.Help.route) { Text("Help") }
+        composable(RootRecordsNavigation.About.route) { Text("About") }
     }
 }

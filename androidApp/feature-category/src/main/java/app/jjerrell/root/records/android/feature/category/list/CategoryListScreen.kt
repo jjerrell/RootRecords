@@ -1,3 +1,20 @@
+/*
+ * RootRecords
+ * Copyright (C) 2024  Jacob Jerrell (@jjerrell)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.jjerrell.root.records.android.feature.category.list
 
 import android.util.Log
@@ -19,9 +36,7 @@ internal fun CategoryListScreen(
 ) {
     val context = LocalContext.current
     LaunchedEffect(Unit) {
-        viewModel.loadCategories(context) {
-            viewModel.checkShouldLoadDefaults()
-        }
+        viewModel.loadCategories(context) { viewModel.checkShouldLoadDefaults() }
     }
     CategoryListView(
         modifier = modifier.fillMaxSize(),
@@ -34,24 +49,14 @@ internal fun CategoryListScreen(
         AlertDialog(
             onDismissRequest = viewModel::dismissPrompt,
             dismissButton = {
-                TextButton(
-                    onClick = viewModel::dismissPrompt
-                ) {
-                    Text(text = "Dismiss")
-                }
+                TextButton(onClick = viewModel::dismissPrompt) { Text(text = "Dismiss") }
             },
             confirmButton = {
-                TextButton(
-                    onClick = {
-                        viewModel.insertDefaultCategories(context)
-                    }
-                ) {
+                TextButton(onClick = { viewModel.insertDefaultCategories(context) }) {
                     Text(text = "Confirm")
                 }
             },
-            text = {
-                Text(text = "Load default gardening categories?")
-            }
+            text = { Text(text = "Load default gardening categories?") }
         )
     }
 }

@@ -1,3 +1,20 @@
+/*
+ * RootRecords
+ * Copyright (C) 2024  Jacob Jerrell (@jjerrell)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.jjerrell.root.records.android.feature.settings.list
 
 import android.content.Context
@@ -17,9 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun SettingsListView(
-    modifier: Modifier = Modifier
-) {
+fun SettingsListView(modifier: Modifier = Modifier) {
     val viewModel: SettingsListViewModel = viewModel()
     val context = LocalContext.current
     LazyColumn(
@@ -27,10 +42,7 @@ fun SettingsListView(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        developerOptionsItems(
-            context = context,
-            viewModel = viewModel
-        )
+        developerOptionsItems(context = context, viewModel = viewModel)
     }
 }
 
@@ -39,19 +51,13 @@ private fun LazyListScope.developerOptionsItems(
     context: Context,
     viewModel: SettingsListViewModel
 ) {
-    stickyHeader {
-        Text("Developer Options")
-    }
+    stickyHeader { Text("Developer Options") }
     item {
         SettingsListItem(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 viewModel.exportDatabaseToJSON(context)
-                Toast.makeText(
-                    context,
-                    "Exporting...",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(context, "Exporting...", Toast.LENGTH_SHORT).show()
             }
         ) {
             Text(
@@ -65,11 +71,7 @@ private fun LazyListScope.developerOptionsItems(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 viewModel.clearCategories(context)
-                Toast.makeText(
-                    context,
-                    "Clearing categories...",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(context, "Clearing categories...", Toast.LENGTH_SHORT).show()
             }
         ) {
             Text(
@@ -83,11 +85,7 @@ private fun LazyListScope.developerOptionsItems(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 viewModel.resetPreferences(context)
-                Toast.makeText(
-                    context,
-                    "Clearing user preferences...",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(context, "Clearing user preferences...", Toast.LENGTH_SHORT).show()
             }
         ) {
             Text(

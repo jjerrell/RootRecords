@@ -1,3 +1,20 @@
+/*
+ * RootRecords
+ * Copyright (C) 2024  Jacob Jerrell (@jjerrell)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package app.jjerrell.root.records.android.ui.theme
 
 import androidx.compose.foundation.border
@@ -31,32 +48,29 @@ fun ColorPicker(
     controller: ColorPickerController,
     onColorChanged: (Color) -> Unit
 ) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         val pickerSize = remember { mutableStateOf(Size(1f, 1f)) }
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(35.dp)
-                .clip(RoundedCornerShape(20))
-                .border(1.dp, Color.LightGray, RoundedCornerShape(20))
-                .layout { measurable, constraints ->
-                    val placeable = measurable.measure(constraints)
-                    pickerSize.value = Size(placeable.width.toFloat(), placeable.height.toFloat())
-                    layout(placeable.width, placeable.height) {
-                        placeable.placeRelative(0, 0)
+            modifier =
+                Modifier.fillMaxWidth()
+                    .height(35.dp)
+                    .clip(RoundedCornerShape(20))
+                    .border(1.dp, Color.LightGray, RoundedCornerShape(20))
+                    .layout { measurable, constraints ->
+                        val placeable = measurable.measure(constraints)
+                        pickerSize.value =
+                            Size(placeable.width.toFloat(), placeable.height.toFloat())
+                        layout(placeable.width, placeable.height) { placeable.placeRelative(0, 0) }
                     }
-                }
         ) {
             ImageColorPicker(
-                modifier = Modifier
-                    .size(pickerSize.value.width.dp, pickerSize.value.height.dp),
-                paletteImageBitmap = createColorSliderBitmap(
-                    height = pickerSize.value.height.roundToInt(),
-                    width = pickerSize.value.width.roundToInt(),
-                ).asImageBitmap(),
+                modifier = Modifier.size(pickerSize.value.width.dp, pickerSize.value.height.dp),
+                paletteImageBitmap =
+                    createColorSliderBitmap(
+                            height = pickerSize.value.height.roundToInt(),
+                            width = pickerSize.value.width.roundToInt(),
+                        )
+                        .asImageBitmap(),
                 controller = controller,
                 onColorChanged = { colorEnvelope: ColorEnvelope ->
                     onColorChanged(colorEnvelope.color)
@@ -64,18 +78,8 @@ fun ColorPicker(
             )
         }
 
-        AlphaSlider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(35.dp),
-            controller = controller
-        )
+        AlphaSlider(modifier = Modifier.fillMaxWidth().height(35.dp), controller = controller)
 
-        BrightnessSlider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(35.dp),
-            controller = controller
-        )
+        BrightnessSlider(modifier = Modifier.fillMaxWidth().height(35.dp), controller = controller)
     }
 }
