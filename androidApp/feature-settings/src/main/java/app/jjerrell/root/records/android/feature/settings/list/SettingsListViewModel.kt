@@ -24,4 +24,21 @@ class SettingsListViewModel : BaseViewModel() {
             }
         }
     }
+
+    fun clearCategories(context: Context) {
+        init(context)
+        viewModelScope.launch {
+            Log.d("SettingsListViewModel", "clearCategories")
+            repository.getCategories()?.forEach { category ->
+                category.id?.let { categoryId -> repository.deleteCategory(categoryId) }
+            }
+        }
+    }
+
+    fun resetPreferences(context: Context) {
+        init(context)
+        viewModelScope.launch {
+            repository.clearPreferences()
+        }
+    }
 }

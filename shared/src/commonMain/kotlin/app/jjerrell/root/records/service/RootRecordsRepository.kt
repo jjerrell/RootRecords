@@ -80,6 +80,12 @@ class RootRecordsRepository(
         return db.taskDao().getTaskById(id).firstOrNull()?.toModel()
     }
     // endregion
+
+    //region Maintenance
+    suspend fun clearPreferences() {
+        preferences.edit { preferences -> preferences.clear() }
+    }
+    //endregion
 }
 
 private fun Category.toEntity() =
