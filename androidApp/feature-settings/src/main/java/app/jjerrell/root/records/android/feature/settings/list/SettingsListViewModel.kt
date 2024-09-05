@@ -49,6 +49,7 @@ class SettingsListViewModel : BaseViewModel() {
             repository.getCategories()?.forEach { category ->
                 category.id?.let { categoryId -> repository.deleteCategory(categoryId) }
             }
+            repository.setShouldAskAboutDefaults(true)
         }
     }
 

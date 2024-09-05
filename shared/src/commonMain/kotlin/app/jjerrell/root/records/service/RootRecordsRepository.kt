@@ -69,9 +69,9 @@ class RootRecordsRepository(
             .first()
     }
 
-    suspend fun setShouldNotLoadDefaults() {
+    suspend fun setShouldAskAboutDefaults(value: Boolean) {
         val defaultCategoriesKey = booleanPreferencesKey(HAS_ASKED_FOR_DEFAULT_CATEGORIES)
-        preferences.edit { preferences -> preferences[defaultCategoriesKey] = false }
+        preferences.edit { preferences -> preferences[defaultCategoriesKey] = value }
     }
 
     suspend fun populateCategories(jsonString: String) {
