@@ -61,9 +61,10 @@ fun MainLayout(
             TopAppBar(
                 title = {
                     val titleResource =
- currentDestination?.titleResourceId?.takeUnless {
-                        currentDestination == landingScreen
-                    } ?: R.string.app_name
+                        currentDestination?.titleResourceId?.takeUnless {
+                            currentDestination == landingScreen
+                        }
+                            ?: R.string.app_name
                     Text(text = stringResource(id = titleResource))
                 },
                 navigationIcon = {
@@ -89,7 +90,9 @@ fun MainLayout(
                     }
                     if (currentDestination == RootRecordsNavigation.Tasks) {
                         IconButton(
-                            onClick = { controller.navigate(RootRecordsNavigation.Categories.route) }
+                            onClick = {
+                                controller.navigate(RootRecordsNavigation.Categories.route)
+                            }
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.Menu,
