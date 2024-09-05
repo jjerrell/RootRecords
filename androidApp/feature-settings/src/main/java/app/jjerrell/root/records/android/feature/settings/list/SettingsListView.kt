@@ -26,6 +26,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -35,6 +37,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import app.jjerrell.root.records.BuildConfig
 
 @Composable
+@OptIn(ExperimentalFoundationApi::class)
 fun SettingsListView(modifier: Modifier = Modifier) {
     val viewModel: SettingsListViewModel = viewModel()
     val context = LocalContext.current
@@ -45,16 +48,25 @@ fun SettingsListView(modifier: Modifier = Modifier) {
     ) {
         if (BuildConfig.DEBUG) {
             developerOptionsItems(context = context, viewModel = viewModel)
+        } else {
+            dangerZoneItems(
+                context = context,
+                isDeveloperOptions = false,
+                viewModel = viewModel
+            )
         }
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@ExperimentalFoundationApi
 private fun LazyListScope.developerOptionsItems(
     context: Context,
     viewModel: SettingsListViewModel
 ) {
-    stickyHeader { Text("Developer Options") }
+    stickyHeader {
+        Text("Developer Options")
+        HorizontalDivider()
+    }
     item {
         SettingsListItem(
             modifier = Modifier.fillMaxWidth(),
@@ -69,6 +81,34 @@ private fun LazyListScope.developerOptionsItems(
         }
     }
 
+    dangerZoneItems(
+        context = context,
+        isDeveloperOptions = true,
+        viewModel = viewModel
+    )
+}
+
+@ExperimentalFoundationApi
+private fun LazyListScope.dangerZoneItems(
+    context: Context,
+    isDeveloperOptions: Boolean,
+    viewModel: SettingsListViewModel
+) {
+    if (!isDeveloperOptions) {
+        stickyHeader {
+            Text(
+                text = "Danger Zone",
+                color = MaterialTheme.colorScheme.error
+            )
+            HorizontalDivider(color = MaterialTheme.colorScheme.error)
+        }
+        item {
+            Text(
+                text = "WARNING: The options in this section could be destructive and cannot be reversed!",
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+    }
     item {
         SettingsListItem(
             modifier = Modifier.fillMaxWidth(),
