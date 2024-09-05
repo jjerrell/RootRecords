@@ -15,10 +15,12 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "RootRecords"
-include(":androidApp")
 include(":shared")
+
+include(":androidApp")
 include(":androidApp:feature-category")
 include(":androidApp:feature-settings")
+include(":androidApp:feature-task")
 
 include(":androidApp:ui:navigation")
 include(":androidApp:ui:theme")

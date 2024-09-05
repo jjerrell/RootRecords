@@ -15,15 +15,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package app.jjerrell.root.records.service.model
+package app.jjerrell.root.records.android.feature.task
 
-import kotlinx.serialization.Serializable
+import org.junit.Assert.*
+import org.junit.Test
 
-@Serializable
-data class Task(
-    val id: Int? = null,
-    val title: String,
-    val description: String,
-    val isCompleted: Boolean,
-    val category: Category?
-)
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(4, 2 + 2)
+    }
+}

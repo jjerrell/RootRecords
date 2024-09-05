@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 
 private const val HAS_ASKED_FOR_DEFAULT_CATEGORIES = "has_asked_for_default_categories"
+private const val HAS_ASKED_FOR_DEFAULT_TASKS = "has_asked_for_default_tasks"
 
 class RootRecordsRepository(
     factory: DatabaseFactory,
@@ -89,12 +90,33 @@ class RootRecordsRepository(
         db.taskDao().updateTask(task.toEntity())
     }
 
+    suspend fun deleteTask(id: Int) {
+        db.taskDao().deleteTaskById(id)
+    }
+
     suspend fun getTasks(): List<Task>? {
         return db.taskDao().getAllTasks().firstOrNull()?.map { it.toModel() }
     }
 
     suspend fun getTaskById(id: Int): Task? {
         return db.taskDao().getTaskById(id).firstOrNull()?.toModel()
+    }
+
+    suspend fun checkShouldLoadDefaultTasks(): Boolean {
+        val defaultTasksKey = booleanPreferencesKey(HAS_ASKED_FOR_DEFAULT_TASKS)
+        return preferences.data
+            .map { preferences -> preferences[defaultTasksKey] ?: true }
+            .first()
+    }
+
+    suspend fun setShouldAskAboutDefaultTasks(value: Boolean) {
+        val defaultTasksKey = booleanPreferencesKey(HAS_ASKED_FOR_DEFAULT_TASKS)
+        preferences.edit { preferences -> preferences[defaultTasksKey] = value }
+    }
+
+    suspend fun populateTasks(jsonString: String) {
+        val tasks = Json.decodeFromString<List<Task>>(jsonString)
+        tasks.forEach { db.taskDao().insertTask(it.toEntity()) }
     }
     // endregion
 
@@ -117,7 +139,7 @@ private fun Task.toEntity() =
         title = title,
         description = description,
         isCompleted = isCompleted,
-        categoryId = categoryId?.id
+        categoryId = category?.id
     )
 
 private fun TaskWithCategory.toModel() =
@@ -126,5 +148,5 @@ private fun TaskWithCategory.toModel() =
         title = task.title,
         description = task.description,
         isCompleted = task.isCompleted,
-        categoryId = category?.toModel()
+        category = category?.toModel()
     )
