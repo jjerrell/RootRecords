@@ -49,6 +49,7 @@ dependencies {
 
     implementation(project(":androidApp:feature-category"))
     implementation(project(":androidApp:feature-settings"))
+    implementation(project(":androidApp:feature-task"))
 
     debugImplementation(libs.compose.ui.tooling)
 }

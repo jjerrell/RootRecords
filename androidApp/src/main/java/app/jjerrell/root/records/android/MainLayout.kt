@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -41,13 +42,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.jjerrell.root.records.android.feature.category.categoryGraph
 import app.jjerrell.root.records.android.feature.settings.settingsGraph
+import app.jjerrell.root.records.android.feature.task.taskGraph
 import app.jjerrell.root.records.android.ui.navigation.RootRecordsNavigation
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun MainLayout(
     modifier: Modifier = Modifier,
-    landingScreen: RootRecordsNavigation = RootRecordsNavigation.Categories // .Tasks
+    landingScreen: RootRecordsNavigation = RootRecordsNavigation.Tasks
 ) {
     val controller = rememberNavController()
     val navBackStackEntry by controller.currentBackStackEntryAsState()
@@ -58,11 +60,10 @@ fun MainLayout(
         topBar = {
             TopAppBar(
                 title = {
-                    //                    val titleResource =
-                    // currentDestination?.titleResourceId?.takeUnless {
-                    //                        currentDestination == landingScreen
-                    //                    } ?: R.string.app_name
-                    val titleResource = currentDestination?.titleResourceId ?: R.string.app_name
+                    val titleResource =
+ currentDestination?.titleResourceId?.takeUnless {
+                        currentDestination == landingScreen
+                    } ?: R.string.app_name
                     Text(text = stringResource(id = titleResource))
                 },
                 navigationIcon = {
@@ -83,6 +84,16 @@ fun MainLayout(
                             Icon(
                                 imageVector = Icons.Filled.Settings,
                                 contentDescription = stringResource(id = R.string.settings_title)
+                            )
+                        }
+                    }
+                    if (currentDestination == RootRecordsNavigation.Tasks) {
+                        IconButton(
+                            onClick = { controller.navigate(RootRecordsNavigation.Categories.route) }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Menu,
+                                contentDescription = stringResource(id = R.string.categories_title)
                             )
                         }
                     }
@@ -120,7 +131,7 @@ fun MainLayout(
             navController = controller,
             startDestination = landingScreen.name
         ) {
-            //            taskGraph(controller)
+            taskGraph(controller)
             categoryGraph(controller)
             settingsGraph(controller)
         }
