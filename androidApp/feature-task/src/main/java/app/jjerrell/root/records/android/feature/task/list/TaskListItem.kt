@@ -35,11 +35,7 @@ import app.jjerrell.root.records.android.ui.theme.RootRecordsTheme
 import app.jjerrell.root.records.service.model.Task
 
 @Composable
-internal fun TaskListItem(
-    modifier: Modifier = Modifier,
-    task: Task,
-    onTaskClick: () -> Unit
-) {
+internal fun TaskListItem(modifier: Modifier = Modifier, task: Task, onTaskClick: () -> Unit) {
     Card(
         modifier = modifier.fillMaxWidth(),
         colors =

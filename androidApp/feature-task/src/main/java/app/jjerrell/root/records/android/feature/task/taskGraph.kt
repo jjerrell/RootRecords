@@ -38,9 +38,7 @@ fun NavGraphBuilder.taskGraph(navController: NavController) {
             TaskListScreen(
                 viewModel = viewModel,
                 onTaskClick = { id: Int ->
-                    navController.navigate(
-                        RootRecordsNavigation.EditTask.fromTaskId(id.toString())
-                    )
+                    navController.navigate(RootRecordsNavigation.EditTask.fromTaskId(id.toString()))
                 },
                 onTaskDelete = { id: Int -> viewModel.deleteTask(id) }
             )

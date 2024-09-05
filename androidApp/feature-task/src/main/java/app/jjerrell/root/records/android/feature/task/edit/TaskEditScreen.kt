@@ -45,25 +45,19 @@ fun TaskEditScreen(
     val context = LocalContext.current
     LaunchedEffect(Unit) { viewModel.loadTask(context = context, id = taskId) }
     val canSaveTask: Boolean by
-        rememberUpdatedState(
-            newValue = viewModel.state.selectedTask?.title?.isNotBlank() == true
-        )
+        rememberUpdatedState(newValue = viewModel.state.selectedTask?.title?.isNotBlank() == true)
     Column(
         modifier = modifier.padding(vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         TextField(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
+            modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
             value = viewModel.state.selectedTask?.title.orEmpty(),
             onValueChange = viewModel::updateTaskTitle,
             placeholder = { Text("Name") }
         )
         TextField(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
+            modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
             value = viewModel.state.selectedTask?.description.orEmpty(),
             onValueChange = viewModel::updateTaskDescription,
             placeholder = { Text("Description") }
@@ -74,9 +68,7 @@ fun TaskEditScreen(
         )
         // TODO: Enable changing categories
         Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
+            modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
         ) {

@@ -104,9 +104,7 @@ class RootRecordsRepository(
 
     suspend fun checkShouldLoadDefaultTasks(): Boolean {
         val defaultTasksKey = booleanPreferencesKey(HAS_ASKED_FOR_DEFAULT_TASKS)
-        return preferences.data
-            .map { preferences -> preferences[defaultTasksKey] ?: true }
-            .first()
+        return preferences.data.map { preferences -> preferences[defaultTasksKey] ?: true }.first()
     }
 
     suspend fun setShouldAskAboutDefaultTasks(value: Boolean) {

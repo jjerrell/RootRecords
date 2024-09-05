@@ -85,11 +85,7 @@ class TaskListViewModel : BaseViewModel() {
     fun deleteTask(id: Int) {
         viewModelScope.launch {
             async { repository.deleteTask(id) }.await()
-            state =
-                state.copy(
-                    isLoading = false,
-                    tasks = state.tasks.filterNot { it.id == id }
-                )
+            state = state.copy(isLoading = false, tasks = state.tasks.filterNot { it.id == id })
         }
     }
 

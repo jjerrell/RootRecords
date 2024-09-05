@@ -34,9 +34,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals(
-            "app.jjerrell.root.records.android.feature.task.test",
-            appContext.packageName
-        )
+        assertEquals("app.jjerrell.root.records.android.feature.task.test", appContext.packageName)
     }
 }

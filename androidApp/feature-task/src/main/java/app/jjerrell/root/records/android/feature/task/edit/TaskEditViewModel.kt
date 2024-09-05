@@ -48,20 +48,15 @@ class TaskEditViewModel : BaseViewModel() {
     }
 
     fun updateTaskDescription(description: String) {
-        state =
-            state.copy(selectedTask = state.selectedTask?.copy(description = description))
+        state = state.copy(selectedTask = state.selectedTask?.copy(description = description))
     }
 
     fun updateSelectedCategory(category: Category?) {
-        state =
-            state.copy(
-                selectedTask = state.selectedTask?.copy(category = category)
-            )
+        state = state.copy(selectedTask = state.selectedTask?.copy(category = category))
     }
 
     fun setTaskCompleted(completed: Boolean) {
-        state =
-            state.copy(selectedTask = state.selectedTask?.copy(isCompleted = completed))
+        state = state.copy(selectedTask = state.selectedTask?.copy(isCompleted = completed))
     }
 
     fun saveTask() {

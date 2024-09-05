@@ -43,6 +43,5 @@ interface TaskDao {
     @Query("SELECT * FROM taskEntity WHERE id = :id")
     fun getTaskById(id: Int): Flow<TaskWithCategory>
 
-    @Query("DELETE FROM taskEntity WHERE id = :id")
-    suspend fun deleteTaskById(id: Int)
+    @Query("DELETE FROM taskEntity WHERE id = :id") suspend fun deleteTaskById(id: Int)
 }

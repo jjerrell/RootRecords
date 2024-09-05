@@ -67,12 +67,7 @@ internal fun TaskListView(
                 backgroundContent = {
                     // TODO?
                 },
-                content = {
-                    TaskListItem(
-                        task = task,
-                        onTaskClick = { onTaskClick(task.id!!) }
-                    )
-                }
+                content = { TaskListItem(task = task, onTaskClick = { onTaskClick(task.id!!) }) }
             )
         }
     }
