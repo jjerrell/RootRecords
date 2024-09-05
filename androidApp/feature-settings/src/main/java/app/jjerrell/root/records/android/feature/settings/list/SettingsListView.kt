@@ -49,11 +49,7 @@ fun SettingsListView(modifier: Modifier = Modifier) {
         if (BuildConfig.DEBUG) {
             developerOptionsItems(context = context, viewModel = viewModel)
         } else {
-            dangerZoneItems(
-                context = context,
-                isDeveloperOptions = false,
-                viewModel = viewModel
-            )
+            dangerZoneItems(context = context, isDeveloperOptions = false, viewModel = viewModel)
         }
     }
 }
@@ -81,11 +77,7 @@ private fun LazyListScope.developerOptionsItems(
         }
     }
 
-    dangerZoneItems(
-        context = context,
-        isDeveloperOptions = true,
-        viewModel = viewModel
-    )
+    dangerZoneItems(context = context, isDeveloperOptions = true, viewModel = viewModel)
 }
 
 @ExperimentalFoundationApi
@@ -96,15 +88,13 @@ private fun LazyListScope.dangerZoneItems(
 ) {
     if (!isDeveloperOptions) {
         stickyHeader {
-            Text(
-                text = "Danger Zone",
-                color = MaterialTheme.colorScheme.error
-            )
+            Text(text = "Danger Zone", color = MaterialTheme.colorScheme.error)
             HorizontalDivider(color = MaterialTheme.colorScheme.error)
         }
         item {
             Text(
-                text = "WARNING: The options in this section could be destructive and cannot be reversed!",
+                text =
+                    "WARNING: The options in this section could be destructive and cannot be reversed!",
                 color = MaterialTheme.colorScheme.error
             )
         }

@@ -50,7 +50,9 @@ fun ColorPickerGrid(
     onColorChanged: (Color?) -> Unit
 ) {
     val viewModel: ColorPickerGridViewModel = viewModel()
-    LaunchedEffect(Unit) { viewModel.updateRootSelectedColor(initiallySelectedColor) }
+    LaunchedEffect(initiallySelectedColor) {
+        viewModel.updateRootSelectedColor(initiallySelectedColor)
+    }
 
     AnimatedContent(
         targetState = viewModel.isSelectingColor,
