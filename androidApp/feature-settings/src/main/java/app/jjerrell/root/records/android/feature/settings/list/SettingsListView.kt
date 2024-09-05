@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.jjerrell.root.records.BuildConfig
 
 @Composable
 fun SettingsListView(modifier: Modifier = Modifier) {
@@ -42,7 +43,9 @@ fun SettingsListView(modifier: Modifier = Modifier) {
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        developerOptionsItems(context = context, viewModel = viewModel)
+        if (BuildConfig.DEBUG) {
+            developerOptionsItems(context = context, viewModel = viewModel)
+        }
     }
 }
 
