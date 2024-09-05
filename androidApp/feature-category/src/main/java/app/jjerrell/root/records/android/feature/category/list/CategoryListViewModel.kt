@@ -49,7 +49,7 @@ class CategoryListViewModel : BaseViewModel() {
         Log.d("CategoryListViewModel", "checkShouldLoadDefaults")
         if (state.categories.isEmpty()) {
             viewModelScope.launch {
-                repository.checkShouldLoadDefaults().let {
+                repository.checkShouldLoadDefaultCategories().let {
                     Log.d("CategoryListViewModel", "checkShouldLoadDefaults: $it")
                     state = state.copy(showLoadDefaultsPrompt = it)
                 }
@@ -64,7 +64,7 @@ class CategoryListViewModel : BaseViewModel() {
         val jsonString = categories.bufferedReader().use { it.readText() }
         viewModelScope.launch {
             Log.d("CategoryListViewModel", "insertDefaultCategories: $jsonString")
-            repository.setShouldAskAboutDefaults(false)
+            repository.setShouldAskAboutDefaultCategories(false)
             async { repository.populateCategories(jsonString) }.await()
             state =
                 state.copy(
@@ -78,7 +78,7 @@ class CategoryListViewModel : BaseViewModel() {
 
     fun dismissPrompt() {
         Log.d("CategoryListViewModel", "dismissPrompt")
-        viewModelScope.launch { repository.setShouldAskAboutDefaults(false) }
+        viewModelScope.launch { repository.setShouldAskAboutDefaultCategories(false) }
         state = state.copy(showLoadDefaultsPrompt = false)
     }
 

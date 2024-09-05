@@ -62,14 +62,14 @@ class RootRecordsRepository(
         return db.categoryDao().getCategoryById(id).firstOrNull()?.toModel()
     }
 
-    suspend fun checkShouldLoadDefaults(): Boolean {
+    suspend fun checkShouldLoadDefaultCategories(): Boolean {
         val defaultCategoriesKey = booleanPreferencesKey(HAS_ASKED_FOR_DEFAULT_CATEGORIES)
         return preferences.data
             .map { preferences -> preferences[defaultCategoriesKey] ?: true }
             .first()
     }
 
-    suspend fun setShouldAskAboutDefaults(value: Boolean) {
+    suspend fun setShouldAskAboutDefaultCategories(value: Boolean) {
         val defaultCategoriesKey = booleanPreferencesKey(HAS_ASKED_FOR_DEFAULT_CATEGORIES)
         preferences.edit { preferences -> preferences[defaultCategoriesKey] = value }
     }
