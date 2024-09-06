@@ -60,7 +60,7 @@ internal class ColorPickerGridViewModel : ViewModel() {
     }
 
     fun updateRootSelectedColor(color: Color?) {
-        selectedIndex = state.indexOfFirst { it?.second == color }
+        selectedIndex = state.indexOfFirst { it?.second == color }.takeUnless { it == -1 }
     }
 
     fun updateIsSelectingColor(value: Boolean) {
