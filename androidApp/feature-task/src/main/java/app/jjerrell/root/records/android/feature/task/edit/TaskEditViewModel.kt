@@ -19,6 +19,7 @@ package app.jjerrell.root.records.android.feature.task.edit
 
 import BaseViewModel
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -51,8 +52,29 @@ class TaskEditViewModel : BaseViewModel() {
         state = state.copy(selectedTask = state.selectedTask?.copy(description = description))
     }
 
+    fun beginSelectingCategory(context: Context) {
+        init(context)
+        if (state.categories.isNullOrEmpty()) {
+            viewModelScope.launch {
+                val categories = repository.getCategories()
+                Log.d("TaskEditViewModel", "categories: $categories")
+                state = state.copy(categories = categories, isSelectingCategory = true)
+            }
+        } else {
+            state = state.copy(isSelectingCategory = true)
+        }
+    }
+
+    fun stopSelectingCategory() {
+        state = state.copy(isSelectingCategory = false)
+    }
+
     fun updateSelectedCategory(category: Category?) {
-        state = state.copy(selectedTask = state.selectedTask?.copy(category = category))
+        state =
+            state.copy(
+                isSelectingCategory = false,
+                selectedTask = state.selectedTask?.copy(category = category)
+            )
     }
 
     fun setTaskCompleted(completed: Boolean) {
@@ -66,5 +88,10 @@ class TaskEditViewModel : BaseViewModel() {
         }
     }
 
-    data class State(val isLoading: Boolean = false, val selectedTask: Task? = null)
+    data class State(
+        val isLoading: Boolean = false,
+        val isSelectingCategory: Boolean = false,
+        val selectedTask: Task? = null,
+        val categories: List<Category>? = null
+    )
 }
