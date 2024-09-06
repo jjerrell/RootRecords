@@ -64,7 +64,6 @@ class CategoryListViewModel : BaseViewModel() {
         val jsonString = categories.bufferedReader().use { it.readText() }
         viewModelScope.launch {
             Log.d("CategoryListViewModel", "insertDefaultCategories: $jsonString")
-            repository.setShouldAskAboutDefaultCategories(false)
             async { repository.populateCategories(jsonString) }.await()
             state =
                 state.copy(
@@ -73,6 +72,7 @@ class CategoryListViewModel : BaseViewModel() {
                     categories = repository.getCategories() ?: emptyList()
                 )
             Log.d("CategoryListViewModel", "insertDefaultCategories: ${state.categories}")
+            repository.setShouldAskAboutDefaultCategories(false)
         }
     }
 

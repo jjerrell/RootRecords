@@ -117,6 +117,20 @@ private fun LazyListScope.dangerZoneItems(
         SettingsListItem(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
+                viewModel.clearTasks(context)
+                Toast.makeText(context, "Clearing tasks...", Toast.LENGTH_SHORT).show()
+            }
+        ) {
+            Text(
+                text = "Remove all tasks",
+            )
+        }
+    }
+
+    item {
+        SettingsListItem(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = {
                 viewModel.resetPreferences(context)
                 Toast.makeText(context, "Clearing user preferences...", Toast.LENGTH_SHORT).show()
             }

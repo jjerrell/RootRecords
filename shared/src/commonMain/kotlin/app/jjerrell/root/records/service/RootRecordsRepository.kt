@@ -113,7 +113,14 @@ class RootRecordsRepository(
     }
 
     suspend fun populateTasks(jsonString: String) {
-        val tasks = Json.decodeFromString<List<Task>>(jsonString)
+        val categories = getCategories()
+        val tasks = Json.decodeFromString<List<Task>>(jsonString).let {
+            if (categories.isNullOrEmpty()) {
+                it.map { task -> task.copy(category = null) }
+            } else {
+                it
+            }
+        }
         tasks.forEach { db.taskDao().insertTask(it.toEntity()) }
     }
     // endregion

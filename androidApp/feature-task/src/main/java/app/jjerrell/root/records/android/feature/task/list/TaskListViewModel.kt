@@ -64,7 +64,6 @@ class TaskListViewModel : BaseViewModel() {
         val jsonString = tasks.bufferedReader().use { it.readText() }
         viewModelScope.launch {
             Log.d("TaskListViewModel", "insertDefaultTasks: $jsonString")
-            repository.setShouldAskAboutDefaultTasks(false)
             async { repository.populateTasks(jsonString) }.await()
             state =
                 state.copy(
@@ -73,6 +72,7 @@ class TaskListViewModel : BaseViewModel() {
                     tasks = repository.getTasks() ?: emptyList()
                 )
             Log.d("TaskListViewModel", "insertDefaultTasks: ${state.tasks}")
+            repository.setShouldAskAboutDefaultTasks(false)
         }
     }
 

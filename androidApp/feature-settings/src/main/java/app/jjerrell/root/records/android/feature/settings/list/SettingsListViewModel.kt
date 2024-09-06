@@ -52,6 +52,16 @@ class SettingsListViewModel : BaseViewModel() {
         }
     }
 
+    fun clearTasks(context: Context) {
+        init(context)
+        viewModelScope.launch {
+            Log.d("SettingsListViewModel", "clearTasks")
+            repository.getTasks()?.forEach { task ->
+                task.id?.let { taskId -> repository.deleteTask(taskId) }
+            }
+        }
+    }
+
     fun resetPreferences(context: Context) {
         init(context)
         viewModelScope.launch { repository.clearPreferences() }

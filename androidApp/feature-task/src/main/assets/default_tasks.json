@@ -1,114 +1,194 @@
 [
     {
         "id": 2,
-        "title": "Root Vegetables",
-        "description": "Plants that primarily grow underground and are harvested for their roots. They often require loose, well-drained soil.",
+        "title": "Carrots",
+        "description": "Carrots are root vegetables that require loose, well-drained soil. They are harvested for their edible roots.",
         "isCompleted": false,
-        "categoryId": 2
+        "category": {
+            "id": 2,
+            "name": "Root Vegetables",
+            "description": "Plants that primarily grow underground and are harvested for their roots. They often require loose, well-drained soil.",
+            "colorValue": -31461
+        }
     },
     {
         "id": 3,
-        "title": "Leafy Greens",
-        "description": "Vegetables grown for their edible leaves. These plants usually need consistent moisture and are often sensitive to heat.",
+        "title": "Spinach",
+        "description": "Spinach is a leafy green vegetable that needs consistent moisture and grows best in cool weather.",
         "isCompleted": false,
-        "categoryId": 3
+        "category": {
+            "id": 3,
+            "name": "Leafy Greens",
+            "description": "Vegetables grown for their edible leaves. These plants usually need consistent moisture and are often sensitive to heat.",
+            "colorValue": -13710272
+        }
     },
     {
         "id": 4,
-        "title": "Fruit Vegetables",
-        "description": "These plants produce fruits that are consumed as vegetables. They typically need plenty of sunlight and regular watering.",
+        "title": "Tomatoes",
+        "description": "Tomatoes are fruit vegetables that thrive in sunlight and require regular watering to produce healthy fruits.",
         "isCompleted": false,
-        "categoryId": 4
+        "category": {
+            "id": 4,
+            "name": "Fruit Vegetables",
+            "description": "These plants produce fruits that are consumed as vegetables. They typically need plenty of sunlight and regular watering.",
+            "colorValue": -48842
+        }
     },
     {
         "id": 5,
-        "title": "Legumes",
-        "description": "Plants that fix nitrogen in the soil, improving fertility. They are often grown in rotation with other crops to maintain soil health.",
+        "title": "Peas",
+        "description": "Peas are legumes that improve soil fertility by fixing nitrogen. They are often grown in rotation with other crops.",
         "isCompleted": false,
-        "categoryId": 5
+        "category": {
+            "id": 5,
+            "name": "Legumes",
+            "description": "Plants that fix nitrogen in the soil, improving fertility. They are often grown in rotation with other crops to maintain soil health.",
+            "colorValue": -12989236
+        }
     },
     {
         "id": 6,
-        "title": "Herbs",
-        "description": "Plants grown for their aromatic leaves and are often used in cooking and medicinal purposes. They can be grown in containers or in-ground.",
+        "title": "Basil",
+        "description": "Basil is a popular herb used in cooking for its aromatic leaves. It can be grown in containers or in the ground.",
         "isCompleted": false,
-        "categoryId": 6
+        "category": {
+            "id": 6,
+            "name": "Herbs",
+            "description": "Plants grown for their aromatic leaves and are often used in cooking and medicinal purposes. They can be grown in containers or in-ground.",
+            "colorValue": -12740240
+        }
     },
     {
         "id": 7,
-        "title": "Flowers",
-        "description": "Plants grown primarily for their ornamental flowers. They can attract pollinators and beneficial insects or repel pests.",
+        "title": "Marigolds",
+        "description": "Marigolds are flowers that attract beneficial insects and can also help repel pests from the garden.",
         "isCompleted": false,
-        "categoryId": 7
+        "category": {
+            "id": 7,
+            "name": "Flowers",
+            "description": "Plants grown primarily for their ornamental flowers. They can attract pollinators and beneficial insects or repel pests.",
+            "colorValue": -38476
+        }
     },
     {
         "id": 9,
-        "title": "Vines and Climbers",
-        "description": "Plants that require support to grow vertically. They are ideal for maximizing space in small gardens by growing upward.",
+        "title": "Cucumbers",
+        "description": "Cucumbers are vines that require support to grow vertically. They are ideal for maximizing space in small gardens.",
         "isCompleted": false,
-        "categoryId": 9
+        "category": {
+            "id": 9,
+            "name": "Vines and Climbers",
+            "description": "Plants that require support to grow vertically. They are ideal for maximizing space in small gardens by growing upward.",
+            "colorValue": -10496
+        }
     },
     {
         "id": 10,
-        "title": "Brassicas",
-        "description": "Cool-season vegetables that are members of the cabbage family. They can be susceptible to pests like aphids and cabbage worms.",
+        "title": "Cabbage",
+        "description": "Cabbage is a brassica vegetable that grows best in cool weather and may require protection from pests like aphids.",
         "isCompleted": false,
-        "categoryId": 10
+        "category": {
+            "id": 10,
+            "name": "Brassicas",
+            "description": "Cool-season vegetables that are members of the cabbage family. They can be susceptible to pests like aphids and cabbage worms.",
+            "colorValue": -5592406
+        }
     },
     {
         "id": 11,
-        "title": "Bulbs and Tubers",
-        "description": "Underground storage organs. They often require well-drained soil and are planted at specific times of the year for optimal growth.",
+        "title": "Potatoes",
+        "description": "Potatoes are tubers that grow underground. They require well-drained soil and proper timing for optimal growth.",
         "isCompleted": false,
-        "categoryId": 11
+        "category": {
+            "id": 11,
+            "name": "Bulbs and Tubers",
+            "description": "Underground storage organs. They often require well-drained soil and are planted at specific times of the year for optimal growth.",
+            "colorValue": -8055733
+        }
     },
     {
         "id": 12,
-        "title": "Perennials",
-        "description": "Plants that grow back every year without needing to be replanted. They are great for low-maintenance gardening and providing continuous harvests.",
+        "title": "Asparagus",
+        "description": "Asparagus is a perennial vegetable that grows back every year, providing a continuous harvest.",
         "isCompleted": false,
-        "categoryId": 12
+        "category": {
+            "id": 12,
+            "name": "Perennials",
+            "description": "Plants that grow back every year without needing to be replanted. They are great for low-maintenance gardening and providing continuous harvests.",
+            "colorValue": -16747303
+        }
     },
     {
         "id": 13,
-        "title": "Medicinals and Aromatics",
-        "description": "Plants that have medicinal properties or aromatic uses. They are often grown in separate beds or containers due to their specific needs and uses.",
+        "title": "Lavender",
+        "description": "Lavender is an aromatic herb known for its soothing scent and medicinal uses.",
         "isCompleted": false,
-        "categoryId": 13
+        "category": {
+            "id": 13,
+            "name": "Medicinals and Aromatics",
+            "description": "Plants that have medicinal properties or aromatic uses. They are often grown in separate beds or containers due to their specific needs and uses.",
+            "colorValue": -1043778
+        }
     },
     {
         "id": 14,
-        "title": "Cover Crops",
-        "description": "Plants grown to cover the soil rather than for harvest. They help improve soil health, suppress weeds, and prevent erosion.",
+        "title": "Clover",
+        "description": "Clover is a cover crop used to improve soil health, suppress weeds, and prevent erosion in gardens.",
         "isCompleted": false,
-        "categoryId": 14
+        "category": {
+            "id": 14,
+            "name": "Cover Crops",
+            "description": "Plants grown to cover the soil rather than for harvest. They help improve soil health, suppress weeds, and prevent erosion.",
+            "colorValue": -8397825
+        }
     },
     {
         "id": 15,
-        "title": "Companion Plants",
-        "description": "Plants grown together to benefit each other, either by deterring pests, attracting beneficial insects, or enhancing growth.",
+        "title": "Borage",
+        "description": "Borage is a companion plant known for attracting pollinators and improving the health of nearby plants.",
         "isCompleted": false,
-        "categoryId": 15
+        "category": {
+            "id": 15,
+            "name": "Companion Plants",
+            "description": "Plants grown together to benefit each other, either by deterring pests, attracting beneficial insects, or enhancing growth.",
+            "colorValue": -9216
+        }
     },
     {
         "id": 16,
-        "title": "Shade-Tolerant Plants",
-        "description": "Plants that can thrive in shaded or partially shaded areas of the garden. They are ideal for spaces that do not receive full sun.",
+        "title": "Hostas",
+        "description": "Hostas are shade-tolerant plants that thrive in areas with limited sunlight, making them perfect for shaded gardens.",
         "isCompleted": false,
-        "categoryId": 16
+        "category": {
+            "id": 16,
+            "name": "Shade-Tolerant Plants",
+            "description": "Plants that can thrive in shaded or partially shaded areas of the garden. They are ideal for spaces that do not receive full sun.",
+            "colorValue": -16777216
+        }
     },
     {
         "id": 17,
-        "title": "Pollinator Attractors",
-        "description": "Plants specifically chosen to attract pollinators like bees, butterflies, and hummingbirds, enhancing the garden’s ecological balance.",
+        "title": "Bee Balm",
+        "description": "Bee Balm is a pollinator attractor that draws in bees and butterflies, enhancing pollination in the garden.",
         "isCompleted": false,
-        "categoryId": 17
+        "category": {
+            "id": 17,
+            "name": "Pollinator Attractors",
+            "description": "Plants specifically chosen to attract pollinators like bees, butterflies, and hummingbirds, enhancing the garden’s ecological balance.",
+            "colorValue": -1
+        }
     },
     {
         "id": 18,
-        "title": "Berry Bushes",
-        "description": "Small fruit-bearing plants that produce berries. They often require acidic soil and consistent watering.",
+        "title": "Blueberries",
+        "description": "Blueberries are berry bushes that produce small, delicious fruits and often require acidic soil.",
         "isCompleted": false,
-        "categoryId": 18
+        "category": {
+            "id": 18,
+            "name": "Berry Bushes",
+            "description": "Small fruit-bearing plants that produce berries. They often require acidic soil and consistent watering.",
+            "colorValue": -5173815
+        }
     }
 ]
