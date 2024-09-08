@@ -41,7 +41,7 @@ dependencies {
 
     // Transitive dependencies per build-health plugin
     api(libs.compose.runtime)
-    implementation(libs.compose.foundation)
+    implementation(libs.compose.foundation.core)
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.ui.text)
     implementation(libs.compose.ui.unit)

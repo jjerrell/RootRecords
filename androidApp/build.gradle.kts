@@ -42,15 +42,15 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     // Transitive dependencies per build-health plugin
-    implementation("androidx.activity:activity:1.9.2")
-    implementation("androidx.compose.foundation:foundation-layout:1.7.0")
-    implementation(libs.compose.foundation)
-    implementation("androidx.compose.material:material-icons-core:1.7.0")
+    implementation(libs.androidx.activity)
+    implementation(libs.compose.foundation.layout)
+    implementation(libs.compose.foundation.core)
+    implementation(libs.compose.material.icons.core)
     implementation(libs.compose.runtime)
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.ui.text)
     implementation(libs.androidx.navigation.common)
-    implementation("androidx.navigation:navigation-runtime:2.8.0")
+    implementation(libs.androidx.navigation.runtime)
 
 //    implementation(projects.shared)
     implementation(project(":androidApp:ui:theme"))

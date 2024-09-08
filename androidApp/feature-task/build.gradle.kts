@@ -50,12 +50,12 @@ dependencies {
     implementation(project(":androidApp:ui:navigation"))
 
     // Transitive dependencies per build-health plugin
-    api("androidx.compose.foundation:foundation-layout:1.7.0")
-    api(libs.compose.foundation)
+    api(libs.compose.foundation.layout)
+    api(libs.compose.foundation.core)
     api(libs.compose.runtime)
     api(libs.androidx.navigation.common)
-    api("androidx.navigation:navigation-runtime:2.8.0")
-    implementation("androidx.compose.animation:animation:1.7.0")
+    api(libs.androidx.navigation.runtime)
+    implementation(libs.compose.animation)
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.ui.text)
     implementation(libs.compose.ui.unit)

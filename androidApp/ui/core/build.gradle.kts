@@ -37,7 +37,6 @@ android {
 
 dependencies {
     implementation(libs.compose.ui.core)
-//    implementation(libs.compose.ui.tooling.preview)
     implementation(libs.androidx.material3.compose)
 
     implementation(libs.androidx.viewmodel.compose)
@@ -49,9 +48,9 @@ dependencies {
     api(libs.compose.runtime)
     api(libs.compose.ui.graphics)
     api(libs.androidx.viewmodel.lifecycle)
-    implementation("androidx.compose.animation:animation:1.7.0")
-    implementation("androidx.compose.foundation:foundation-layout:1.7.0")
-    implementation(libs.compose.foundation)
+    implementation(libs.compose.animation)
+    implementation(libs.compose.foundation.layout)
+    implementation(libs.compose.foundation.core)
     implementation(libs.compose.ui.text)
     implementation(libs.compose.ui.unit)
     implementation(libs.androidx.datastore.core)
@@ -64,5 +63,4 @@ dependencies {
 
     testImplementation(libs.junit.core)
     androidTestImplementation(libs.junit.ext)
-//    androidTestImplementation(libs.espresso.core)
 }
