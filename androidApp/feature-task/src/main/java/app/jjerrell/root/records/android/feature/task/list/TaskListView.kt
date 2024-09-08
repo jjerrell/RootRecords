@@ -18,8 +18,6 @@
 package app.jjerrell.root.records.android.feature.task.list
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,7 +26,7 @@ import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import app.jjerrell.root.records.android.ui.core.RootDefaults
 import app.jjerrell.root.records.android.ui.core.component.RootSwipeToDismiss
 import app.jjerrell.root.records.android.ui.theme.RootRecordsTheme
 import app.jjerrell.root.records.service.model.Task
@@ -41,9 +39,9 @@ internal fun TaskListView(
     onTaskDelete: (id: Int) -> Unit
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = modifier,
+        contentPadding = RootDefaults.contentPadding,
+        verticalArrangement = RootDefaults.defaultArrangement
     ) {
         items(items = tasks) { task: Task ->
             RootSwipeToDismiss(
@@ -70,7 +68,7 @@ internal fun TaskListView(
 private fun TaskListView_Preview() {
     RootRecordsTheme {
         TaskListView(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
             tasks =
                 listOf(
                     Task(

@@ -35,9 +35,7 @@ internal fun CategoryListScreen(
     onCategoryDelete: (id: Int) -> Unit
 ) {
     val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        viewModel.loadCategories(context) { viewModel.checkShouldLoadDefaults() }
-    }
+    LaunchedEffect(Unit) { viewModel.loadCategories(context) { viewModel.checkShouldLoadDefaults() } }
     CategoryListView(
         modifier = modifier.fillMaxSize(),
         categories = viewModel.state.categories,

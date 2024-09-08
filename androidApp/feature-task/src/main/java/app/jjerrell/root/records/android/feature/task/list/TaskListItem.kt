@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import app.jjerrell.root.records.android.ui.core.RootDefaults
 import app.jjerrell.root.records.android.ui.core.component.RootCard
 import app.jjerrell.root.records.android.ui.core.view.color
 import app.jjerrell.root.records.android.ui.theme.RootRecordsTheme
@@ -41,7 +42,7 @@ internal fun TaskListItem(modifier: Modifier = Modifier, task: Task, onTaskClick
     RootCard(modifier = modifier, backgroundColor = task.category?.color, onClick = onTaskClick) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = RootDefaults.defaultArrangement
         ) {
             Checkbox(checked = task.isCompleted, onCheckedChange = null)
             Column(modifier = Modifier.padding(8.dp)) {

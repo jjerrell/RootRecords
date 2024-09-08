@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.jjerrell.root.records.android.ui.core.RootDefaults
 
 @Composable
 fun ColorPickerGrid(
@@ -63,8 +64,8 @@ fun ColorPickerGrid(
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxWidth(),
                 columns = GridCells.Adaptive(minSize = 50.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = RootDefaults.defaultArrangement,
+                verticalArrangement = RootDefaults.defaultArrangement,
                 userScrollEnabled = false,
             ) {
                 itemsIndexed(viewModel.state) { index, titleColorPair ->

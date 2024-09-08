@@ -44,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import app.jjerrell.root.records.android.ui.core.RootDefaults
 import app.jjerrell.root.records.service.model.Category
 
 @Composable
@@ -86,7 +87,7 @@ fun TaskEditScreen(
                         onClick = { viewModel.setTaskCompleted(!isCompleted) }
                     ),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = RootDefaults.defaultArrangement
         ) {
             Checkbox(
                 checked = isCompleted,
