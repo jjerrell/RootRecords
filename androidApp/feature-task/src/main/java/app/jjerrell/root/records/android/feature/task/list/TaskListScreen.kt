@@ -17,15 +17,12 @@
  */
 package app.jjerrell.root.records.android.feature.task.list
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import app.jjerrell.root.records.android.ui.core.component.RootDialog
 
 @Composable
 internal fun TaskListScreen(
@@ -42,19 +39,10 @@ internal fun TaskListScreen(
         onTaskClick = onTaskClick,
         onTaskDelete = { onTaskDelete(it) }
     )
-    if (viewModel.state.showLoadDefaultsPrompt) {
-        Log.d("TaskListScreen", "Showing prompt")
-        AlertDialog(
-            onDismissRequest = viewModel::dismissPrompt,
-            dismissButton = {
-                TextButton(onClick = viewModel::dismissPrompt) { Text(text = "Dismiss") }
-            },
-            confirmButton = {
-                TextButton(onClick = { viewModel.insertDefaultTasks(context) }) {
-                    Text(text = "Confirm")
-                }
-            },
-            text = { Text(text = "Load example gardening tasks?") }
-        )
-    }
+    RootDialog(
+        isVisible = viewModel.state.showLoadDefaultsPrompt,
+        onDismiss = viewModel::dismissPrompt,
+        onConfirm = { viewModel.insertDefaultTasks(context) },
+        text = "Load example gardening tasks?"
+    )
 }
