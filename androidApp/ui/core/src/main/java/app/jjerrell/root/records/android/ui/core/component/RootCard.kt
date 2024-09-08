@@ -20,6 +20,7 @@ package app.jjerrell.root.records.android.ui.core.component
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
@@ -27,12 +28,15 @@ import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun RootCard(
     modifier: Modifier = Modifier,
     backgroundColor: Color? = null,
+    shape: Shape = RoundedCornerShape(8.dp),
+    enabled: Boolean = true,
     onClick: () -> Unit,
     content: @Composable ColumnScope.() -> Unit
 ) =
@@ -46,6 +50,8 @@ fun RootCard(
                 )
             }
                 ?: CardDefaults.cardColors(),
+        shape = shape,
+        enabled = enabled,
         onClick = onClick,
         content = content
     )
@@ -54,10 +60,18 @@ fun RootCard(
 fun RootCard(
     modifier: Modifier = Modifier,
     cardColors: CardColors = CardDefaults.cardColors(),
+    shape: Shape = RoundedCornerShape(8.dp),
+    enabled: Boolean = true,
     onClick: () -> Unit,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Card(modifier = modifier, colors = cardColors, onClick = onClick) {
+    Card(
+        modifier = modifier,
+        colors = cardColors,
+        shape = shape,
+        enabled = enabled,
+        onClick = onClick
+    ) {
         Column(modifier = Modifier.padding(8.dp), content = content)
     }
 }
