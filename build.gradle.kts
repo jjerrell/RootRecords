@@ -8,10 +8,12 @@ plugins {
     alias(libs.plugins.kotlinCompose).apply(false)
     alias(libs.plugins.roomDb).apply(false)
     alias(libs.plugins.ksp).apply(false)
+    id("com.autonomousapps.dependency-analysis").version("2.0.1")
     alias(libs.plugins.spotless)
 }
 
 subprojects {
+    apply(plugin = "com.autonomousapps.dependency-analysis")
     apply(plugin = rootProject.libs.plugins.spotless.get().pluginId)
 
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {

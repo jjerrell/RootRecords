@@ -33,6 +33,16 @@ kotlin {
                 implementation(libs.room.sqlite.bundled)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.androidx.datastore.preferences.core)
+
+                // Transitive dependencies per build-health plugin
+                api(libs.androidx.datastore.core)
+                api(libs.kotlin.stdlib)
+                api(libs.kotlinx.coroutines.core)
+                api(libs.kotlinx.serialization.core)
+                implementation(libs.androidx.annotation)
+                implementation(libs.androidx.collection)
+                implementation(libs.room.common)
+                implementation(libs.room.sqlite.core)
             }
         }
         commonTest.dependencies { implementation(libs.kotlin.test) }

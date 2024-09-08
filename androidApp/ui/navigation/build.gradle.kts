@@ -36,16 +36,14 @@ android {
 }
 
 dependencies {
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.material3)
-
-    implementation(libs.androidx.compose.viewmodel)
-    implementation(libs.androidx.compose.navigation)
+    api(libs.androidx.navigation.common)
+    implementation(libs.androidx.annotation)
+    implementation(libs.compose.runtime)
+    androidTestImplementation(libs.androidx.test.monitor)
+    androidTestImplementation(libs.junit.core)
 
     debugImplementation(libs.compose.ui.tooling)
 
     testImplementation(libs.junit.core)
     androidTestImplementation(libs.junit.ext)
-    androidTestImplementation(libs.espresso.core)
 }

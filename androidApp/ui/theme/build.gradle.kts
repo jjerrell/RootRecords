@@ -36,13 +36,20 @@ android {
 }
 
 dependencies {
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.material3)
+    implementation(libs.compose.ui.core)
+    implementation(libs.androidx.material3.compose)
+
+    // Transitive dependencies per build-health plugin
+    api(libs.compose.runtime)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.ui.text)
+    implementation(libs.compose.ui.unit)
+    androidTestImplementation(libs.androidx.test.monitor)
+    androidTestImplementation(libs.junit.core)
 
     debugImplementation(libs.compose.ui.tooling)
 
     testImplementation(libs.junit.core)
     androidTestImplementation(libs.junit.ext)
-    androidTestImplementation(libs.espresso.core)
 }

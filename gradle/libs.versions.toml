@@ -1,49 +1,75 @@
 [versions]
 # Plugins
-agp = "8.3.2"
-kotlin = "2.0.0"
-ksp = "2.0.0-1.0.23"
+agp = "8.5.2"
+kotlinPlugin = "2.0.20"
+ksp = "2.0.20-1.0.25"
 
 # Libraries
+androidx-annotation = "1.8.2"
+androidx-collection = "1.4.3"
+androidx-compose = "1.7.0"
 androidx-datastore = "1.1.1"
-compose = "1.6.8"
+androidx-navigation = "2.8.0"
+androidx-test-monitor = "1.7.2"
+androidx-viewmodel = "2.8.5"
+
+kotlinx-coroutines = "1.7.3"
+kotlinx-serialization = "1.7.2"
+
 room-db-core = "2.7.0-alpha05"
 room-db-sqlite = "2.5.0-alpha05"
 
 [libraries]
-androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.9.1" }
-androidx-compose-navigation = { module = "androidx.navigation:navigation-compose", version = "2.7.7" }
-androidx-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version = "2.8.4" }
-
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.9.2" }
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
+androidx-collection = { module = "androidx.collection:collection", version.ref = "androidx-collection" }
+androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "androidx-datastore" }
 androidx-datastore-preferences-android = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
 androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "androidx-datastore" }
+androidx-material3-compose = { module = "androidx.compose.material3:material3", version = "1.3.0" }
+androidx-navigation-common = { module = "androidx.navigation:navigation-common", version.ref = "androidx-navigation" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+androidx-test-monitor = { module = "androidx.test:monitor", version.ref = "androidx-test-monitor" }
+androidx-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-viewmodel" }
+androidx-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-viewmodel" }
 
-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
-compose-material3 = { module = "androidx.compose.material3:material3", version = "1.2.1" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "androidx-compose" }
+compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "androidx-compose" }
+compose-ui-core = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose" }
+compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics", version.ref = "androidx-compose" }
+compose-ui-text = { module = "androidx.compose.ui:ui-text", version.ref = "androidx-compose" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "androidx-compose" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "androidx-compose" }
+compose-ui-unit = { module = "androidx.compose.ui:ui-unit", version.ref = "androidx-compose" }
 
-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-db-core" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinPlugin" }
+
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
+room-common = { module = "androidx.room:room-common", version.ref = "room-db-core" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-db-core" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-db-core" }
 room-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "room-db-sqlite" }
-
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.7.2" }
+room-sqlite-core = { module = "androidx.sqlite:sqlite", version.ref = "room-db-sqlite" }
 
 # Testing
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinPlugin" }
 junit-core = { group = "junit", name = "junit", version = "4.13.2" }
 junit-ext = { group = "androidx.test.ext", name = "junit", version = "1.2.1" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.6.1" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
-kotlinCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-spotless = { id = "com.diffplug.spotless", version = "6.15.0" }
+
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinPlugin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinPlugin" }
+kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlinPlugin" }
+kotlinCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinPlugin" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinPlugin" }
+
+spotless = { id = "com.diffplug.spotless", version = "6.21.0" }
 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 roomDb = { id ="androidx.room", version.ref = "room-db-core" }

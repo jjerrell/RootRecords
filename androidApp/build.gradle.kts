@@ -36,14 +36,23 @@ android {
 }
 
 dependencies {
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.material3)
+    implementation(libs.compose.ui.core)
+    implementation(libs.androidx.material3.compose)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.compose.viewmodel)
-    implementation(libs.androidx.compose.navigation)
+    implementation(libs.androidx.navigation.compose)
 
-    implementation(projects.shared)
+    // Transitive dependencies per build-health plugin
+    implementation("androidx.activity:activity:1.9.2")
+    implementation("androidx.compose.foundation:foundation-layout:1.7.0")
+    implementation(libs.compose.foundation)
+    implementation("androidx.compose.material:material-icons-core:1.7.0")
+    implementation(libs.compose.runtime)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.ui.text)
+    implementation(libs.androidx.navigation.common)
+    implementation("androidx.navigation:navigation-runtime:2.8.0")
+
+//    implementation(projects.shared)
     implementation(project(":androidApp:ui:theme"))
     implementation(project(":androidApp:ui:navigation"))
 
