@@ -34,8 +34,10 @@ sealed class RootRecordsNavigation(
             route = "view_tasks",
             addRoute = AddTask
         )
+
     data object AddTask :
         RootRecordsNavigation(name = "Add Task", titleResourceId = R.string.fnav_add_task_title)
+
     data object EditTask :
         RootRecordsNavigation(
             name = "Edit Task",
@@ -44,6 +46,7 @@ sealed class RootRecordsNavigation(
         ) {
         fun fromTaskId(taskId: String) = EditTask.route.replace("{taskId}", taskId)
     }
+
     data object Categories :
         RootRecordsNavigation(
             name = "Categories",
@@ -51,11 +54,13 @@ sealed class RootRecordsNavigation(
             route = "view_categories",
             addRoute = AddCategory
         )
+
     data object AddCategory :
         RootRecordsNavigation(
             name = "Add Category",
             titleResourceId = R.string.fnav_add_category_title
         )
+
     data object EditCategory :
         RootRecordsNavigation(
             name = "Edit Category",
@@ -65,14 +70,17 @@ sealed class RootRecordsNavigation(
         fun fromCategoryId(categoryId: String) =
             EditCategory.route.replace("{categoryId}", categoryId)
     }
+
     data object Settings :
         RootRecordsNavigation(
             name = "Settings",
             titleResourceId = R.string.fnav_settings_title,
             route = "view_settings"
         )
+
     data object About :
         RootRecordsNavigation(name = "About", titleResourceId = R.string.fnav_about_title)
+
     data object Help :
         RootRecordsNavigation(name = "Help", titleResourceId = R.string.fnav_help_title)
 

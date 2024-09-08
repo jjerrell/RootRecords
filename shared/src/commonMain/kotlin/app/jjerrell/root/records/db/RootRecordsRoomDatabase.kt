@@ -40,6 +40,7 @@ import app.jjerrell.root.records.db.entity.TaskEntity
 )
 abstract class RootRecordsRoomDatabase : RoomDatabase(), LocalRoomDb {
     abstract fun categoryDao(): CategoryDao
+
     abstract fun taskDao(): TaskDao
 
     override fun clearAllTables() {

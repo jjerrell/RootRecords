@@ -62,7 +62,6 @@ dependencies {
     api(project(":androidApp:ui:core"))
     implementation(project(":androidApp:ui:navigation"))
 
-
     debugImplementation(libs.compose.ui.tooling)
 
     testImplementation(libs.junit.core)
