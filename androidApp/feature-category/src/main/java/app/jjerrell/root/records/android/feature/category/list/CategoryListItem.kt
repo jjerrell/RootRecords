@@ -32,7 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import app.jjerrell.root.records.android.ui.core.color
+import app.jjerrell.root.records.android.ui.core.view.color
 import app.jjerrell.root.records.android.ui.theme.RootRecordsTheme
 import app.jjerrell.root.records.service.model.Category
 
