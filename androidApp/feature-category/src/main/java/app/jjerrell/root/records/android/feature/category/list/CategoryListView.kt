@@ -56,6 +56,7 @@ internal fun CategoryListView(
                 },
                 content = {
                     CategoryListItem(
+                        modifier = Modifier.fillMaxWidth(),
                         category = category,
                         onCategoryClick = { onCategoryClick(category.id!!) }
                     )

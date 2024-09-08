@@ -52,7 +52,13 @@ internal fun TaskListView(
                         onTaskDelete(task.id!!)
                     }
                 },
-                content = { TaskListItem(task = task, onTaskClick = { onTaskClick(task.id!!) }) }
+                content = {
+                    TaskListItem(
+                        modifier = Modifier.fillMaxWidth(),
+                        task = task,
+                        onTaskClick = { onTaskClick(task.id!!) }
+                    )
+                }
             )
         }
     }
