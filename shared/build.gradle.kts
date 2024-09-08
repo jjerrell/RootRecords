@@ -29,20 +29,21 @@ kotlin {
             // Adds generated files to sources so Room's `instantiateImpl()` can be located
             kotlin.srcDir("build/generated/ksp/metadata")
             dependencies {
-                implementation(libs.room.runtime)
-                implementation(libs.room.sqlite.bundled)
-                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.androidx.annotation)
+                implementation(libs.androidx.collection)
+
+                api(libs.androidx.datastore.core)
                 implementation(libs.androidx.datastore.preferences.core)
 
-                // Transitive dependencies per build-health plugin
-                api(libs.androidx.datastore.core)
                 api(libs.kotlin.stdlib)
                 api(libs.kotlinx.coroutines.core)
                 api(libs.kotlinx.serialization.core)
-                implementation(libs.androidx.annotation)
-                implementation(libs.androidx.collection)
+                implementation(libs.kotlinx.serialization.json)
+
                 implementation(libs.room.common)
+                implementation(libs.room.runtime)
                 implementation(libs.room.sqlite.core)
+                implementation(libs.room.sqlite.bundled)
             }
         }
         commonTest.dependencies { implementation(libs.kotlin.test) }

@@ -36,35 +36,35 @@ android {
 }
 
 dependencies {
-    implementation(libs.compose.ui.core)
-    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.androidx.material3.compose)
-
     implementation(libs.androidx.viewmodel.compose)
+    implementation(libs.androidx.viewmodel.lifecycle)
+
+    api(libs.androidx.navigation.common)
+    api(libs.androidx.navigation.runtime)
     implementation(libs.androidx.navigation.compose)
+
+    api(libs.compose.foundation.layout)
+    api(libs.compose.runtime)
+    api(libs.compose.ui.graphics)
+    implementation(libs.compose.animation)
+    implementation(libs.compose.foundation.core)
+    implementation(libs.compose.ui.core)
+    implementation(libs.compose.ui.text)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.ui.unit)
 
     api(projects.shared)
     api(project(":androidApp:ui:core"))
     implementation(project(":androidApp:ui:theme"))
     implementation(project(":androidApp:ui:navigation"))
 
-    // Transitive dependencies per build-health plugin
-    api(libs.compose.foundation.layout)
-    api(libs.compose.runtime)
-    api(libs.compose.ui.graphics)
-    api(libs.androidx.navigation.common)
-    api(libs.androidx.navigation.runtime)
-    implementation(libs.compose.animation)
-    implementation(libs.compose.foundation.core)
-    implementation(libs.compose.ui.text)
-    implementation(libs.compose.ui.unit)
-    implementation(libs.androidx.viewmodel.lifecycle)
-    implementation(libs.kotlinx.coroutines.core)
-    androidTestImplementation(libs.androidx.test.monitor)
-    androidTestImplementation(libs.junit.core)
-
     debugImplementation(libs.compose.ui.tooling)
 
     testImplementation(libs.junit.core)
+
     androidTestImplementation(libs.junit.ext)
+    androidTestImplementation(libs.androidx.test.monitor)
+    androidTestImplementation(libs.junit.core)
 }

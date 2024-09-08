@@ -36,31 +36,33 @@ android {
 }
 
 dependencies {
-    implementation(libs.compose.ui.core)
     implementation(libs.androidx.material3.compose)
 
+    api(libs.androidx.viewmodel.lifecycle)
     implementation(libs.androidx.viewmodel.compose)
+
+    implementation(libs.androidx.datastore.core)
+    implementation(libs.androidx.datastore.preferences.core)
     implementation(libs.androidx.datastore.preferences.android)
 
-    api(projects.shared)
-
-    // Transitive dependencies per build-health plugin
     api(libs.compose.runtime)
     api(libs.compose.ui.graphics)
-    api(libs.androidx.viewmodel.lifecycle)
     implementation(libs.compose.animation)
     implementation(libs.compose.foundation.layout)
     implementation(libs.compose.foundation.core)
+    implementation(libs.compose.ui.core)
     implementation(libs.compose.ui.text)
     implementation(libs.compose.ui.unit)
-    implementation(libs.androidx.datastore.core)
+
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.androidx.datastore.preferences.core)
-    androidTestImplementation(libs.androidx.test.monitor)
-    androidTestImplementation(libs.junit.core)
+
+    api(projects.shared)
 
     debugImplementation(libs.compose.ui.tooling)
 
     testImplementation(libs.junit.core)
+
+    androidTestImplementation(libs.junit.core)
     androidTestImplementation(libs.junit.ext)
+    androidTestImplementation(libs.androidx.test.monitor)
 }

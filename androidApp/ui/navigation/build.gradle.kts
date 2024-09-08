@@ -38,12 +38,14 @@ android {
 dependencies {
     api(libs.androidx.navigation.common)
     implementation(libs.androidx.annotation)
+
     implementation(libs.compose.runtime)
-    androidTestImplementation(libs.androidx.test.monitor)
-    androidTestImplementation(libs.junit.core)
 
     debugImplementation(libs.compose.ui.tooling)
 
     testImplementation(libs.junit.core)
+
+    androidTestImplementation(libs.junit.core)
     androidTestImplementation(libs.junit.ext)
+    androidTestImplementation(libs.androidx.test.monitor)
 }
