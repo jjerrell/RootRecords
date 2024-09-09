@@ -49,7 +49,7 @@ class CategoryListViewModel : BaseViewModel() {
         Log.d("CategoryListViewModel", "checkShouldLoadDefaults")
         if (state.categories.isEmpty()) {
             viewModelScope.launch {
-                repository.checkShouldLoadDefaultCategories().let {
+                preferencesRepository.checkShouldLoadDefaultCategories().let {
                     Log.d("CategoryListViewModel", "checkShouldLoadDefaults: $it")
                     state = state.copy(showLoadDefaultsPrompt = it)
                 }
@@ -72,13 +72,13 @@ class CategoryListViewModel : BaseViewModel() {
                     categories = repository.getCategories() ?: emptyList()
                 )
             Log.d("CategoryListViewModel", "insertDefaultCategories: ${state.categories}")
-            repository.setShouldAskAboutDefaultCategories(false)
+            preferencesRepository.setShouldAskAboutDefaultCategories(false)
         }
     }
 
     fun dismissPrompt() {
         Log.d("CategoryListViewModel", "dismissPrompt")
-        viewModelScope.launch { repository.setShouldAskAboutDefaultCategories(false) }
+        viewModelScope.launch { preferencesRepository.setShouldAskAboutDefaultCategories(false) }
         state = state.copy(showLoadDefaultsPrompt = false)
     }
 
