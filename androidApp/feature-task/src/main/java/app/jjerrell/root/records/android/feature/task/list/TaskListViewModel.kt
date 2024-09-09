@@ -29,6 +29,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 private const val DEFAULT_TASKS_JSON = "default_tasks.json"
+private const val DEFAULT_CATEGORIES_JSON = "default_categories.json"
 
 class TaskListViewModel : BaseViewModel() {
     var state by mutableStateOf(State())
@@ -62,8 +63,15 @@ class TaskListViewModel : BaseViewModel() {
         state = state.copy(isLoading = true)
         val tasks = context.assets.open(DEFAULT_TASKS_JSON)
         val jsonString = tasks.bufferedReader().use { it.readText() }
+
+        val categories = context.assets.open(DEFAULT_CATEGORIES_JSON)
+        val categoriesJsonString = categories.bufferedReader().use { it.readText() }
         viewModelScope.launch {
             Log.d("TaskListViewModel", "insertDefaultTasks: $jsonString")
+            val categoriesAreEmpty = async { repository.getCategories().isNullOrEmpty() }.await()
+            if (categoriesAreEmpty) {
+                async { repository.populateCategories(categoriesJsonString) }.await()
+            }
             async { repository.populateTasks(jsonString) }.await()
             state =
                 state.copy(
