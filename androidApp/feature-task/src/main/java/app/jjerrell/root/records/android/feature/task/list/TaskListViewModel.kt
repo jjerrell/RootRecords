@@ -50,7 +50,7 @@ class TaskListViewModel : BaseViewModel() {
         Log.d("TaskListViewModel", "checkShouldLoadDefaults")
         if (state.tasks.isEmpty()) {
             viewModelScope.launch {
-                repository.checkShouldLoadDefaultTasks().let {
+                preferencesRepository.checkShouldLoadDefaultTasks().let {
                     Log.d("TaskListViewModel", "checkShouldLoadDefaults: $it")
                     state = state.copy(showLoadDefaultsPrompt = it)
                 }
@@ -80,13 +80,13 @@ class TaskListViewModel : BaseViewModel() {
                     tasks = repository.getTasks() ?: emptyList()
                 )
             Log.d("TaskListViewModel", "insertDefaultTasks: ${state.tasks}")
-            repository.setShouldAskAboutDefaultTasks(false)
+            preferencesRepository.setShouldAskAboutDefaultTasks(false)
         }
     }
 
     fun dismissPrompt() {
         Log.d("TaskListViewModel", "dismissPrompt")
-        viewModelScope.launch { repository.setShouldAskAboutDefaultTasks(false) }
+        viewModelScope.launch { preferencesRepository.setShouldAskAboutDefaultTasks(false) }
         state = state.copy(showLoadDefaultsPrompt = false)
     }
 

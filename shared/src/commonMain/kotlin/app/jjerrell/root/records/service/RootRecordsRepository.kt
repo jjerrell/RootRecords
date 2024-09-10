@@ -17,30 +17,17 @@
  */
 package app.jjerrell.root.records.service
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
 import app.jjerrell.root.records.db.DatabaseFactory
-import app.jjerrell.root.records.db.createDatabase
 import app.jjerrell.root.records.db.entity.CategoryEntity
 import app.jjerrell.root.records.db.entity.TaskEntity
 import app.jjerrell.root.records.db.entity.TaskWithCategory
 import app.jjerrell.root.records.service.model.Category
 import app.jjerrell.root.records.service.model.Task
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 
-private const val HAS_ASKED_FOR_DEFAULT_CATEGORIES = "has_asked_for_default_categories"
-private const val HAS_ASKED_FOR_DEFAULT_TASKS = "has_asked_for_default_tasks"
-
-class RootRecordsRepository(
-    factory: DatabaseFactory,
-    private val preferences: DataStore<Preferences>
-) {
-    private val db = createDatabase(factory)
+class RootRecordsRepository(factory: DatabaseFactory) {
+    private val db = factory.createBuilder("RootRecords.db").build()
 
     // region Category
     suspend fun insertCategory(category: Category) {
@@ -61,18 +48,6 @@ class RootRecordsRepository(
 
     suspend fun getCategoryById(id: Int): Category? {
         return db.categoryDao().getCategoryById(id).firstOrNull()?.toModel()
-    }
-
-    suspend fun checkShouldLoadDefaultCategories(): Boolean {
-        val defaultCategoriesKey = booleanPreferencesKey(HAS_ASKED_FOR_DEFAULT_CATEGORIES)
-        return preferences.data
-            .map { preferences -> preferences[defaultCategoriesKey] ?: true }
-            .first()
-    }
-
-    suspend fun setShouldAskAboutDefaultCategories(value: Boolean) {
-        val defaultCategoriesKey = booleanPreferencesKey(HAS_ASKED_FOR_DEFAULT_CATEGORIES)
-        preferences.edit { preferences -> preferences[defaultCategoriesKey] = value }
     }
 
     suspend fun populateCategories(jsonString: String) {
@@ -102,16 +77,6 @@ class RootRecordsRepository(
         return db.taskDao().getTaskById(id).firstOrNull()?.toModel()
     }
 
-    suspend fun checkShouldLoadDefaultTasks(): Boolean {
-        val defaultTasksKey = booleanPreferencesKey(HAS_ASKED_FOR_DEFAULT_TASKS)
-        return preferences.data.map { preferences -> preferences[defaultTasksKey] ?: true }.first()
-    }
-
-    suspend fun setShouldAskAboutDefaultTasks(value: Boolean) {
-        val defaultTasksKey = booleanPreferencesKey(HAS_ASKED_FOR_DEFAULT_TASKS)
-        preferences.edit { preferences -> preferences[defaultTasksKey] = value }
-    }
-
     suspend fun populateTasks(jsonString: String) {
         val categories = getCategories()
         val tasks =
@@ -123,12 +88,6 @@ class RootRecordsRepository(
                 }
             }
         tasks.forEach { db.taskDao().insertTask(it.toEntity()) }
-    }
-    // endregion
-
-    // region Maintenance
-    suspend fun clearPreferences() {
-        preferences.edit { preferences -> preferences.clear() }
     }
     // endregion
 }

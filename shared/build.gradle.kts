@@ -26,8 +26,6 @@ kotlin {
 
     sourceSets {
         commonMain {
-            // Adds generated files to sources so Room's `instantiateImpl()` can be located
-            kotlin.srcDir("build/generated/ksp/metadata")
             dependencies {
                 implementation(libs.androidx.annotation)
                 implementation(libs.androidx.collection)
@@ -61,11 +59,9 @@ android {
     }
 }
 
-dependencies { add("kspCommonMainMetadata", libs.room.compiler) }
-
-tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
-    if (name != "kspCommonMainKotlinMetadata") {
-        dependsOn("kspCommonMainKotlinMetadata")
+dependencies {
+    listOf("kspAndroid", "kspIosSimulatorArm64", "kspIosX64", "kspIosArm64").forEach {
+        add(it, libs.room.compiler)
     }
 }
 

@@ -19,14 +19,29 @@ package app.jjerrell.root.records.db
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import platform.Foundation.NSHomeDirectory
+import kotlinx.cinterop.ExperimentalForeignApi
+import platform.Foundation.NSDocumentDirectory
+import platform.Foundation.NSFileManager
+import platform.Foundation.NSUserDomainMask
 
 actual class DatabaseFactory {
-    actual fun createBuilder(): RoomDatabase.Builder<RootRecordsRoomDatabase> {
-        val dbFilePath = NSHomeDirectory() + "/RootRecords.db"
+    actual fun createBuilder(fileName: String): RoomDatabase.Builder<RootRecordsRoomDatabase> {
+        val dbFilePath = documentDirectory() + fileName
         return Room.databaseBuilder<RootRecordsRoomDatabase>(
             name = dbFilePath,
-            factory = { RootRecordsRoomDatabase::class.instantiateImpl() }
         )
     }
+}
+
+@OptIn(ExperimentalForeignApi::class)
+private fun documentDirectory(): String {
+    val documentDirectory =
+        NSFileManager.defaultManager.URLForDirectory(
+            directory = NSDocumentDirectory,
+            inDomain = NSUserDomainMask,
+            appropriateForURL = null,
+            create = false,
+            error = null,
+        )
+    return requireNotNull(documentDirectory?.path)
 }

@@ -64,6 +64,6 @@ class SettingsListViewModel : BaseViewModel() {
 
     fun resetPreferences(context: Context) {
         init(context)
-        viewModelScope.launch { repository.clearPreferences() }
+        viewModelScope.launch { preferencesRepository.clearPreferences() }
     }
 }

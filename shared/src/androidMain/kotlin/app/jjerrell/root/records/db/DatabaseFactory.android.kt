@@ -20,15 +20,20 @@ package app.jjerrell.root.records.db
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import kotlinx.coroutines.Dispatchers
 
 actual class DatabaseFactory(private val context: Context) {
-    actual fun createBuilder(): RoomDatabase.Builder<RootRecordsRoomDatabase> {
-        val path = context.getDatabasePath("RootRecords.db").absolutePath
-        return Room.databaseBuilder<RootRecordsRoomDatabase>(
-                context = context.applicationContext,
-                name = path,
-                factory = { RootRecordsRoomDatabase::class.instantiateImpl() }
+    actual fun createBuilder(fileName: String): RoomDatabase.Builder<RootRecordsRoomDatabase> {
+        val appContext = context.applicationContext
+        val dbFile = appContext.getDatabasePath(fileName)
+        return Room.databaseBuilder(
+                appContext,
+                RootRecordsRoomDatabase::class.java,
+                dbFile.absolutePath
             )
-            .enableMultiInstanceInvalidation()
+            .fallbackToDestructiveMigrationOnDowngrade(dropAllTables = true)
+            .setDriver(BundledSQLiteDriver())
+            .setQueryCoroutineContext(Dispatchers.IO)
     }
 }
