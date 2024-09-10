@@ -18,18 +18,16 @@
 package app.jjerrell.root.records.service
 
 import app.jjerrell.root.records.db.DatabaseFactory
-import app.jjerrell.root.records.db.createDatabase
 import app.jjerrell.root.records.db.entity.CategoryEntity
 import app.jjerrell.root.records.db.entity.TaskEntity
 import app.jjerrell.root.records.db.entity.TaskWithCategory
 import app.jjerrell.root.records.service.model.Category
 import app.jjerrell.root.records.service.model.Task
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 
 class RootRecordsRepository(factory: DatabaseFactory) {
-    private val db = createDatabase(factory)
+    private val db = factory.createBuilder("RootRecords.db").build()
 
     // region Category
     suspend fun insertCategory(category: Category) {
