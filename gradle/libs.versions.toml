@@ -32,7 +32,6 @@ androidx-material3-compose = { module = "androidx.compose.material3:material3", 
 androidx-navigation-common = { module = "androidx.navigation:navigation-common", version.ref = "androidx-navigation" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
 androidx-navigation-runtime = { module = "androidx.navigation:navigation-runtime", version.ref = "androidx-navigation" }
-androidx-test-monitor = { module = "androidx.test:monitor", version.ref = "androidx-test-monitor" }
 androidx-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-viewmodel" }
 androidx-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-viewmodel" }
 
@@ -61,6 +60,7 @@ room-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref =
 room-sqlite-core = { module = "androidx.sqlite:sqlite", version.ref = "room-db-sqlite" }
 
 # Testing
+androidx-test-monitor = { module = "androidx.test:monitor", version.ref = "androidx-test-monitor" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinPlugin" }
 junit-core = { group = "junit", name = "junit", version = "4.13.2" }
 junit-ext = { group = "androidx.test.ext", name = "junit", version = "1.2.1" }
