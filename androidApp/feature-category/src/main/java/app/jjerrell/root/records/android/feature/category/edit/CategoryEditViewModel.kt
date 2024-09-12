@@ -17,25 +17,24 @@
  */
 package app.jjerrell.root.records.android.feature.category.edit
 
-import BaseViewModel
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.jjerrell.root.records.service.RootRecordsRepository
 import app.jjerrell.root.records.service.model.Category
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class CategoryEditViewModel : BaseViewModel() {
+class CategoryEditViewModel(private val repository: RootRecordsRepository) : ViewModel() {
     var state by mutableStateOf(State())
         private set
 
-    fun loadCategory(context: Context, id: Int?) {
+    fun loadCategory(id: Int?) {
         state = state.copy(isLoading = true)
-        init(context)
         viewModelScope.launch {
             val category =
                 id?.let { async { repository.getCategoryById(id) }.await() }

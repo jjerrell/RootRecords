@@ -25,7 +25,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import app.jjerrell.root.records.android.feature.settings.list.SettingsListView
+import app.jjerrell.root.records.android.feature.settings.list.SettingsListViewModel
 import app.jjerrell.root.records.android.ui.navigation.RootRecordsNavigation
+import org.koin.androidx.compose.koinViewModel
 
 fun NavGraphBuilder.settingsGraph(navController: NavController) {
     navigation(
@@ -33,10 +35,8 @@ fun NavGraphBuilder.settingsGraph(navController: NavController) {
         route = RootRecordsNavigation.Settings.name
     ) {
         composable(RootRecordsNavigation.Settings.route) {
-            SettingsListView(
-                modifier = Modifier.fillMaxSize(),
-                //                onBackClick = { navController.popBackStack() }
-            )
+            val viewModel: SettingsListViewModel = koinViewModel()
+            SettingsListView(modifier = Modifier.fillMaxSize(), viewModel = viewModel)
         }
         composable(RootRecordsNavigation.Help.route) { Text("Help") }
         composable(RootRecordsNavigation.About.route) { Text("About") }

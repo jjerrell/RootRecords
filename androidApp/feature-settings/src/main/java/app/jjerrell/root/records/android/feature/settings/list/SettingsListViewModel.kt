@@ -17,18 +17,22 @@
  */
 package app.jjerrell.root.records.android.feature.settings.list
 
-import BaseViewModel
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.jjerrell.root.records.service.RootPreferencesRepository
+import app.jjerrell.root.records.service.RootRecordsRepository
 import java.io.File
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class SettingsListViewModel : BaseViewModel() {
+class SettingsListViewModel(
+    private val repository: RootRecordsRepository,
+    private val preferencesRepository: RootPreferencesRepository
+) : ViewModel() {
     fun exportDatabaseToJSON(context: Context) {
-        init(context)
         viewModelScope.launch {
             repository.getCategories()?.let {
                 val jsonString = Json.encodeToString(it)
@@ -42,8 +46,7 @@ class SettingsListViewModel : BaseViewModel() {
         }
     }
 
-    fun clearCategories(context: Context) {
-        init(context)
+    fun clearCategories() {
         viewModelScope.launch {
             Log.d("SettingsListViewModel", "clearCategories")
             repository.getCategories()?.forEach { category ->
@@ -52,8 +55,7 @@ class SettingsListViewModel : BaseViewModel() {
         }
     }
 
-    fun clearTasks(context: Context) {
-        init(context)
+    fun clearTasks() {
         viewModelScope.launch {
             Log.d("SettingsListViewModel", "clearTasks")
             repository.getTasks()?.forEach { task ->
@@ -62,8 +64,7 @@ class SettingsListViewModel : BaseViewModel() {
         }
     }
 
-    fun resetPreferences(context: Context) {
-        init(context)
+    fun resetPreferences() {
         viewModelScope.launch { preferencesRepository.clearPreferences() }
     }
 }

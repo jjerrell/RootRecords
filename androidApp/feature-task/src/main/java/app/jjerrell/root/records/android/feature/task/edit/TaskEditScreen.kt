@@ -42,7 +42,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import app.jjerrell.root.records.android.ui.core.RootDefaults
 import app.jjerrell.root.records.service.model.Category
@@ -54,8 +53,7 @@ fun TaskEditScreen(
     viewModel: TaskEditViewModel,
     onClose: () -> Unit
 ) {
-    val context = LocalContext.current
-    LaunchedEffect(Unit) { viewModel.loadTask(context = context, id = taskId) }
+    LaunchedEffect(Unit) { viewModel.loadTask(id = taskId) }
 
     val canSaveTask: Boolean by
         rememberUpdatedState(newValue = viewModel.state.selectedTask?.title?.isNotBlank() == true)
@@ -98,7 +96,7 @@ fun TaskEditScreen(
         }
         TextButton(
             modifier = Modifier.padding(horizontal = 16.dp),
-            onClick = { viewModel.beginSelectingCategory(context) },
+            onClick = { viewModel.beginSelectingCategory() },
             enabled = !viewModel.state.isSelectingCategory
         ) {
             Text(viewModel.state.selectedTask?.category?.name ?: "Select category")

@@ -17,13 +17,15 @@
  */
 package app.jjerrell.root.records.android.feature.task.list
 
-import BaseViewModel
 import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.jjerrell.root.records.service.RootPreferencesRepository
+import app.jjerrell.root.records.service.RootRecordsRepository
 import app.jjerrell.root.records.service.model.Task
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -31,13 +33,15 @@ import kotlinx.coroutines.launch
 private const val DEFAULT_TASKS_JSON = "default_tasks.json"
 private const val DEFAULT_CATEGORIES_JSON = "default_categories.json"
 
-class TaskListViewModel : BaseViewModel() {
+class TaskListViewModel(
+    private val repository: RootRecordsRepository,
+    private val preferencesRepository: RootPreferencesRepository
+) : ViewModel() {
     var state by mutableStateOf(State())
         private set
 
-    fun loadTasks(context: Context, onComplete: () -> Unit = {}) {
+    fun loadTasks(onComplete: () -> Unit = {}) {
         state = state.copy(isLoading = true)
-        init(context)
         viewModelScope
             .launch {
                 val tasks = repository.getTasks()

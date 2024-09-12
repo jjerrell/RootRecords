@@ -17,7 +17,6 @@
  */
 package app.jjerrell.root.records.android.feature.task
 
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -27,6 +26,7 @@ import app.jjerrell.root.records.android.feature.task.edit.TaskEditViewModel
 import app.jjerrell.root.records.android.feature.task.list.TaskListScreen
 import app.jjerrell.root.records.android.feature.task.list.TaskListViewModel
 import app.jjerrell.root.records.android.ui.navigation.RootRecordsNavigation
+import org.koin.androidx.compose.koinViewModel
 
 fun NavGraphBuilder.taskGraph(navController: NavController) {
     navigation(
@@ -34,7 +34,7 @@ fun NavGraphBuilder.taskGraph(navController: NavController) {
         route = RootRecordsNavigation.Tasks.name
     ) {
         composable(RootRecordsNavigation.Tasks.route) {
-            val viewModel: TaskListViewModel = viewModel()
+            val viewModel: TaskListViewModel = koinViewModel()
             TaskListScreen(
                 viewModel = viewModel,
                 onTaskClick = { id: Int ->
@@ -44,12 +44,12 @@ fun NavGraphBuilder.taskGraph(navController: NavController) {
             )
         }
         composable(RootRecordsNavigation.AddTask.route) {
-            val viewModel: TaskEditViewModel = viewModel()
+            val viewModel: TaskEditViewModel = koinViewModel()
             TaskEditScreen(viewModel = viewModel, onClose = navController::popBackStack)
         }
         composable(RootRecordsNavigation.EditTask.route) {
             val taskId = it.arguments?.getString("taskId")
-            val viewModel: TaskEditViewModel = viewModel()
+            val viewModel: TaskEditViewModel = koinViewModel()
             TaskEditScreen(
                 viewModel = viewModel,
                 taskId = taskId?.toIntOrNull(),

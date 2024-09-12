@@ -43,6 +43,10 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.runtime)
 
+    implementation(libs.androidx.datastore.core)
+    implementation(libs.androidx.datastore.preferences.core)
+    implementation(libs.androidx.datastore.preferences.android)
+
     // Transitive dependencies per build-health plugin
     implementation(libs.compose.foundation.layout)
     implementation(libs.compose.foundation.core)
@@ -51,6 +55,9 @@ dependencies {
     implementation(libs.compose.ui.core)
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.ui.text)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 
     implementation(project(":androidApp:ui:theme"))
     implementation(project(":androidApp:ui:navigation"))

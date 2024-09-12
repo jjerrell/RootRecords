@@ -36,8 +36,7 @@ import app.jjerrell.root.records.android.ui.core.RootDefaults
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
-fun SettingsListView(modifier: Modifier = Modifier) {
-    val viewModel: SettingsListViewModel = viewModel()
+fun SettingsListView(modifier: Modifier = Modifier, viewModel: SettingsListViewModel) {
     val context = LocalContext.current
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -101,7 +100,7 @@ private fun LazyListScope.dangerZoneItems(
         SettingsListItem(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                viewModel.clearCategories(context)
+                viewModel.clearCategories()
                 Toast.makeText(context, "Clearing categories...", Toast.LENGTH_SHORT).show()
             }
         ) {
@@ -115,7 +114,7 @@ private fun LazyListScope.dangerZoneItems(
         SettingsListItem(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                viewModel.clearTasks(context)
+                viewModel.clearTasks()
                 Toast.makeText(context, "Clearing tasks...", Toast.LENGTH_SHORT).show()
             }
         ) {
@@ -129,7 +128,7 @@ private fun LazyListScope.dangerZoneItems(
         SettingsListItem(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                viewModel.resetPreferences(context)
+                viewModel.resetPreferences()
                 Toast.makeText(context, "Clearing user preferences...", Toast.LENGTH_SHORT).show()
             }
         ) {

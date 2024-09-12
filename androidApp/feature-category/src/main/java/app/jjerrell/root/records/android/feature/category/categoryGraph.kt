@@ -27,6 +27,7 @@ import app.jjerrell.root.records.android.feature.category.edit.CategoryEditViewM
 import app.jjerrell.root.records.android.feature.category.list.CategoryListScreen
 import app.jjerrell.root.records.android.feature.category.list.CategoryListViewModel
 import app.jjerrell.root.records.android.ui.navigation.RootRecordsNavigation
+import org.koin.androidx.compose.koinViewModel
 
 fun NavGraphBuilder.categoryGraph(navController: NavController) {
     navigation(
@@ -34,7 +35,7 @@ fun NavGraphBuilder.categoryGraph(navController: NavController) {
         route = RootRecordsNavigation.Categories.name
     ) {
         composable(RootRecordsNavigation.Categories.route) {
-            val viewModel: CategoryListViewModel = viewModel()
+            val viewModel: CategoryListViewModel = koinViewModel()
             CategoryListScreen(
                 viewModel = viewModel,
                 onCategoryClick = { id: Int ->
@@ -46,12 +47,12 @@ fun NavGraphBuilder.categoryGraph(navController: NavController) {
             )
         }
         composable(RootRecordsNavigation.AddCategory.route) {
-            val viewModel: CategoryEditViewModel = viewModel()
+            val viewModel: CategoryEditViewModel = koinViewModel()
             CategoryEditScreen(viewModel = viewModel, onClose = navController::popBackStack)
         }
         composable(RootRecordsNavigation.EditCategory.route) {
             val categoryId = it.arguments?.getString("categoryId")
-            val viewModel: CategoryEditViewModel = viewModel()
+            val viewModel: CategoryEditViewModel = koinViewModel()
             CategoryEditScreen(
                 viewModel = viewModel,
                 categoryId = categoryId?.toIntOrNull(),

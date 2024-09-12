@@ -32,7 +32,7 @@ internal fun TaskListScreen(
     onTaskDelete: (id: Int) -> Unit
 ) {
     val context = LocalContext.current
-    LaunchedEffect(Unit) { viewModel.loadTasks(context) { viewModel.checkShouldLoadDefaults() } }
+    LaunchedEffect(Unit) { viewModel.loadTasks { viewModel.checkShouldLoadDefaults() } }
     TaskListView(
         modifier = modifier.fillMaxSize(),
         tasks = viewModel.state.tasks,

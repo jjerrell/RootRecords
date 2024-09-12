@@ -54,6 +54,9 @@ dependencies {
     implementation(libs.compose.ui.text)
     implementation(libs.compose.ui.unit)
 
+    implementation(libs.koin.core)
+    implementation(libs.koin.viewmodel)
+
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.kotlinx.serialization.json)
