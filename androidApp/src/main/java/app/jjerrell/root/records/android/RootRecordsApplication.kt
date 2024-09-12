@@ -19,9 +19,12 @@ package app.jjerrell.root.records.android
 
 import android.app.Application
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import app.jjerrell.root.records.android.feature.category.di.categoryModule
+import app.jjerrell.root.records.android.feature.settings.settingsModule
 import app.jjerrell.root.records.android.feature.task.di.taskModule
-import app.jjerrell.root.records.android.ui.core.dataStore
 import app.jjerrell.root.records.db.DatabaseFactory
 import app.jjerrell.root.records.di.sharedModule
 import org.koin.android.ext.koin.androidContext
@@ -29,7 +32,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
-// private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("root_records")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("root_records")
 
 fun appModule() = module {
     single { DatabaseFactory(context = get()) }
@@ -42,7 +45,7 @@ class RootRecordsApplication : Application() {
         startKoin {
             androidContext(this@RootRecordsApplication)
             androidLogger()
-            modules(appModule() + sharedModule + categoryModule + taskModule)
+            modules(appModule() + sharedModule + categoryModule + taskModule + settingsModule)
         }
     }
 }
