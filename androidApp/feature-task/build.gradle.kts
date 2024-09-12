@@ -58,6 +58,8 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.core)
 
+    implementation(libs.koin.viewmodel)
+
     api(projects.shared)
     api(project(":androidApp:ui:core"))
     implementation(project(":androidApp:ui:theme"))

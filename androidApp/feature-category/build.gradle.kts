@@ -55,6 +55,9 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.ui.unit)
 
+    implementation(libs.koin.core)
+    implementation(libs.koin.viewmodel)
+
     api(projects.shared)
     api(project(":androidApp:ui:core"))
     implementation(project(":androidApp:ui:theme"))

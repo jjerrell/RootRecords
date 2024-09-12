@@ -15,6 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package app.jjerrell.root.records.android.ui.core
+
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -24,7 +26,7 @@ import app.jjerrell.root.records.db.DatabaseFactory
 import app.jjerrell.root.records.service.RootPreferencesRepository
 import app.jjerrell.root.records.service.RootRecordsRepository
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("root_records")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore("root_records")
 
 abstract class BaseViewModel : ViewModel() {
     protected lateinit var repository: RootRecordsRepository

@@ -42,6 +42,9 @@ kotlin {
                 implementation(libs.room.runtime)
                 implementation(libs.room.sqlite.core)
                 implementation(libs.room.sqlite.bundled)
+
+                api(libs.koin.core)
+                api(libs.koin.test)
             }
         }
         commonTest.dependencies { implementation(libs.kotlin.test) }

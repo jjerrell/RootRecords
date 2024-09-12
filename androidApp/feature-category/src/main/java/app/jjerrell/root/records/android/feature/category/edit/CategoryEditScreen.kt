@@ -31,7 +31,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import app.jjerrell.root.records.android.ui.core.view.ColorPickerGrid
 import app.jjerrell.root.records.android.ui.core.view.color
@@ -43,8 +42,7 @@ fun CategoryEditScreen(
     viewModel: CategoryEditViewModel,
     onClose: () -> Unit
 ) {
-    val context = LocalContext.current
-    LaunchedEffect(Unit) { viewModel.loadCategory(context = context, id = categoryId) }
+    LaunchedEffect(Unit) { viewModel.loadCategory(id = categoryId) }
     val canSaveCategory: Boolean by
         rememberUpdatedState(
             newValue = viewModel.state.selectedCategory?.name?.isNotBlank() == true

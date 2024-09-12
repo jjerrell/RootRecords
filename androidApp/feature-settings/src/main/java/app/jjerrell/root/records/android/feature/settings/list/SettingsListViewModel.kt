@@ -17,10 +17,10 @@
  */
 package app.jjerrell.root.records.android.feature.settings.list
 
-import BaseViewModel
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import app.jjerrell.root.records.android.ui.core.BaseViewModel
 import java.io.File
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString

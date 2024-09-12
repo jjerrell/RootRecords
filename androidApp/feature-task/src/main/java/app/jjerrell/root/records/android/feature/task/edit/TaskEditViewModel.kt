@@ -17,25 +17,24 @@
  */
 package app.jjerrell.root.records.android.feature.task.edit
 
-import BaseViewModel
-import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.jjerrell.root.records.service.RootRecordsRepository
 import app.jjerrell.root.records.service.model.Category
 import app.jjerrell.root.records.service.model.Task
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class TaskEditViewModel : BaseViewModel() {
+class TaskEditViewModel(private val repository: RootRecordsRepository) : ViewModel() {
     var state by mutableStateOf(State())
         private set
 
-    fun loadTask(context: Context, id: Int?) {
+    fun loadTask(id: Int?) {
         state = state.copy(isLoading = true)
-        init(context)
         viewModelScope.launch {
             val task =
                 id?.let { async { repository.getTaskById(id) }.await() }
@@ -52,8 +51,7 @@ class TaskEditViewModel : BaseViewModel() {
         state = state.copy(selectedTask = state.selectedTask?.copy(description = description))
     }
 
-    fun beginSelectingCategory(context: Context) {
-        init(context)
+    fun beginSelectingCategory() {
         if (state.categories.isNullOrEmpty()) {
             viewModelScope.launch {
                 val categories = repository.getCategories()

@@ -17,26 +17,30 @@
  */
 package app.jjerrell.root.records.android.feature.category.list
 
-import BaseViewModel
 import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.jjerrell.root.records.service.RootPreferencesRepository
+import app.jjerrell.root.records.service.RootRecordsRepository
 import app.jjerrell.root.records.service.model.Category
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 private const val DEFAULT_CATEGORIES_JSON = "default_categories.json"
 
-class CategoryListViewModel : BaseViewModel() {
+class CategoryListViewModel(
+    private val repository: RootRecordsRepository,
+    private val preferencesRepository: RootPreferencesRepository
+) : ViewModel() {
     var state by mutableStateOf(State())
         private set
 
-    fun loadCategories(context: Context, onComplete: () -> Unit = {}) {
+    fun loadCategories(onComplete: () -> Unit = {}) {
         state = state.copy(isLoading = true)
-        init(context)
         viewModelScope
             .launch {
                 val categories = repository.getCategories()
