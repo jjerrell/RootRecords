@@ -38,7 +38,7 @@ class TaskEditViewModel(private val repository: RootRecordsRepository) : ViewMod
         viewModelScope.launch {
             val task =
                 id?.let { async { repository.getTaskById(id) }.await() }
-                    ?: Task(title = "", description = "", isCompleted = false, category = null)
+                    ?: Task(title = "", description = "", isCompleted = false, category = null, events = emptyList())
             state = state.copy(isLoading = false, selectedTask = task)
         }
     }

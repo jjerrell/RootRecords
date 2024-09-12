@@ -40,3 +40,4 @@ data class TaskEntity(
     val isCompleted: Boolean,
     @ColumnInfo(name = "category_id", index = true) val categoryId: Int?
 )
+

@@ -20,8 +20,10 @@ package app.jjerrell.root.records.db.entity
 import androidx.room.Embedded
 import androidx.room.Relation
 
-data class TaskWithCategory(
+data class TaskWithCategoryAndEvents(
     @Embedded val task: TaskEntity,
     @Relation(parentColumn = "category_id", entityColumn = "category_id")
-    val category: CategoryEntity?
+    val category: CategoryEntity?,
+    @Relation(parentColumn = "id", entityColumn = "task_id")
+    val events: List<EventEntity>
 )

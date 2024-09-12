@@ -19,10 +19,12 @@ package app.jjerrell.root.records.service
 
 import app.jjerrell.root.records.db.DatabaseFactory
 import app.jjerrell.root.records.db.entity.CategoryEntity
+import app.jjerrell.root.records.db.entity.EventEntity
 import app.jjerrell.root.records.db.entity.TaskEntity
-import app.jjerrell.root.records.db.entity.TaskWithCategory
+import app.jjerrell.root.records.db.entity.TaskWithCategoryAndEvents
 import app.jjerrell.root.records.service.model.Category
 import app.jjerrell.root.records.service.model.Task
+import app.jjerrell.root.records.service.model.TaskEvent
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.serialization.json.Json
 
@@ -118,11 +120,19 @@ private fun Task.toEntity() =
         categoryId = category?.id
     )
 
-private fun TaskWithCategory.toModel() =
+private fun TaskWithCategoryAndEvents.toModel() =
     Task(
         id = task.id,
         title = task.title,
         description = task.description,
         isCompleted = task.isCompleted,
-        category = category?.toModel()
+        category = category?.toModel(),
+        events = events.map { it.toModel() }
+    )
+
+private fun EventEntity.toModel() =
+    TaskEvent(
+        id = id,
+        name = name,
+        timestampSeconds = timestampSeconds
     )

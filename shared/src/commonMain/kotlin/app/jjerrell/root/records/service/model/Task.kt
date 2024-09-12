@@ -25,5 +25,6 @@ data class Task(
     val title: String,
     val description: String,
     val isCompleted: Boolean,
-    val category: Category?
+    val category: Category?,
+    val events: List<TaskEvent>? = null
 )

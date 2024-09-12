@@ -75,26 +75,30 @@ private fun TaskListView_Preview() {
                         title = "Work",
                         description = "For things that enable other things",
                         isCompleted = false,
-                        category = null
+                        category = null,
+                        events = emptyList()
                     ),
                     Task(
                         title = "Personal",
                         description = "The things you do because you work",
                         isCompleted = false,
-                        category = null
+                        category = null,
+                        events = emptyList()
                     ),
                     Task(
                         title = "Family",
                         description = "The people you do the work for",
                         isCompleted = true,
-                        category = null
+                        category = null,
+                        events = emptyList()
                     ),
                     Task(
                         title = "Friends",
                         description =
                             "People that also work so they can do things that you maybe do together",
                         isCompleted = false,
-                        category = null
+                        category = null,
+                        events = emptyList()
                     )
                 ),
             onTaskClick = {},

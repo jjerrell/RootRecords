@@ -61,7 +61,7 @@ private fun TaskListItem_Preview() {
     RootRecordsTheme {
         TaskListItem(
             modifier = Modifier.fillMaxWidth(),
-            task = Task(title = "Work", description = "", isCompleted = false, category = null),
+            task = Task(title = "Work", description = "", isCompleted = false, category = null, events = emptyList()),
             onTaskClick = {}
         )
     }
