@@ -51,11 +51,9 @@ class TaskListViewModel(
     }
 
     fun checkShouldLoadDefaults() {
-        Log.d("TaskListViewModel", "checkShouldLoadDefaults")
         if (state.tasks.isEmpty()) {
             viewModelScope.launch {
                 preferencesRepository.checkShouldLoadDefaultTasks().let {
-                    Log.d("TaskListViewModel", "checkShouldLoadDefaults: $it")
                     state = state.copy(showLoadDefaultsPrompt = it)
                 }
             }
@@ -63,33 +61,24 @@ class TaskListViewModel(
     }
 
     fun insertDefaultTasks(context: Context) {
-        Log.d("TaskListViewModel", "insertDefaultTasks")
         state = state.copy(isLoading = true)
-        val tasks = context.assets.open(DEFAULT_TASKS_JSON)
-        val jsonString = tasks.bufferedReader().use { it.readText() }
-
-        val categories = context.assets.open(DEFAULT_CATEGORIES_JSON)
-        val categoriesJsonString = categories.bufferedReader().use { it.readText() }
         viewModelScope.launch {
-            Log.d("TaskListViewModel", "insertDefaultTasks: $jsonString")
             val categoriesAreEmpty = async { repository.getCategories().isNullOrEmpty() }.await()
             if (categoriesAreEmpty) {
-                async { repository.populateCategories(categoriesJsonString) }.await()
+                async { repository.populateCategoriesFromFile(DEFAULT_CATEGORIES_JSON) }.await()
             }
-            async { repository.populateTasks(jsonString) }.await()
+            async { repository.populateTasksFromFile(DEFAULT_TASKS_JSON) }.await()
             state =
                 state.copy(
                     isLoading = false,
                     showLoadDefaultsPrompt = false,
                     tasks = repository.getTasks() ?: emptyList()
                 )
-            Log.d("TaskListViewModel", "insertDefaultTasks: ${state.tasks}")
             preferencesRepository.setShouldAskAboutDefaultTasks(false)
         }
     }
 
     fun dismissPrompt() {
-        Log.d("TaskListViewModel", "dismissPrompt")
         viewModelScope.launch { preferencesRepository.setShouldAskAboutDefaultTasks(false) }
         state = state.copy(showLoadDefaultsPrompt = false)
     }

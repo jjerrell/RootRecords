@@ -27,6 +27,7 @@ import app.jjerrell.root.records.android.feature.settings.settingsModule
 import app.jjerrell.root.records.android.feature.task.di.taskModule
 import app.jjerrell.root.records.db.DatabaseFactory
 import app.jjerrell.root.records.di.sharedModule
+import app.jjerrell.root.records.service.FileReaderService
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -35,6 +36,7 @@ import org.koin.dsl.module
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("root_records")
 
 fun appModule() = module {
+    single { FileReaderService(context = get()) }
     single { DatabaseFactory(context = get()) }
     single { get<Context>().dataStore }
 }

@@ -22,6 +22,6 @@ import app.jjerrell.root.records.service.RootRecordsRepository
 import org.koin.dsl.module
 
 val sharedModule = module {
-    factory { RootRecordsRepository(factory = get()) }
-    factory { RootPreferencesRepository(dataStore = get()) }
+    single { RootRecordsRepository(factory = get(), fileReaderService = get()) }
+    single { RootPreferencesRepository(dataStore = get()) }
 }

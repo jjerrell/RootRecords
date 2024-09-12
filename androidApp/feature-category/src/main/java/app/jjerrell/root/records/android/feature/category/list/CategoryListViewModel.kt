@@ -18,7 +18,6 @@
 package app.jjerrell.root.records.android.feature.category.list
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -50,11 +49,9 @@ class CategoryListViewModel(
     }
 
     fun checkShouldLoadDefaults() {
-        Log.d("CategoryListViewModel", "checkShouldLoadDefaults")
         if (state.categories.isEmpty()) {
             viewModelScope.launch {
                 preferencesRepository.checkShouldLoadDefaultCategories().let {
-                    Log.d("CategoryListViewModel", "checkShouldLoadDefaults: $it")
                     state = state.copy(showLoadDefaultsPrompt = it)
                 }
             }
@@ -62,26 +59,20 @@ class CategoryListViewModel(
     }
 
     fun insertDefaultCategories(context: Context) {
-        Log.d("CategoryListViewModel", "insertDefaultCategories")
         state = state.copy(isLoading = true)
-        val categories = context.assets.open(DEFAULT_CATEGORIES_JSON)
-        val jsonString = categories.bufferedReader().use { it.readText() }
         viewModelScope.launch {
-            Log.d("CategoryListViewModel", "insertDefaultCategories: $jsonString")
-            async { repository.populateCategories(jsonString) }.await()
+            async { repository.populateCategoriesFromFile(DEFAULT_CATEGORIES_JSON) }.await()
             state =
                 state.copy(
                     isLoading = false,
                     showLoadDefaultsPrompt = false,
                     categories = repository.getCategories() ?: emptyList()
                 )
-            Log.d("CategoryListViewModel", "insertDefaultCategories: ${state.categories}")
             preferencesRepository.setShouldAskAboutDefaultCategories(false)
         }
     }
 
     fun dismissPrompt() {
-        Log.d("CategoryListViewModel", "dismissPrompt")
         viewModelScope.launch { preferencesRepository.setShouldAskAboutDefaultCategories(false) }
         state = state.copy(showLoadDefaultsPrompt = false)
     }

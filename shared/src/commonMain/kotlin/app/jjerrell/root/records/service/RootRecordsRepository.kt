@@ -26,7 +26,10 @@ import app.jjerrell.root.records.service.model.Task
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.serialization.json.Json
 
-class RootRecordsRepository(factory: DatabaseFactory) {
+class RootRecordsRepository(
+    factory: DatabaseFactory,
+    private val fileReaderService: FileReaderService
+) {
     private val db = factory.createBuilder("RootRecords.db").build()
 
     // region Category
@@ -50,7 +53,11 @@ class RootRecordsRepository(factory: DatabaseFactory) {
         return db.categoryDao().getCategoryById(id).firstOrNull()?.toModel()
     }
 
-    suspend fun populateCategories(jsonString: String) {
+    suspend fun populateCategoriesFromFile(path: String) {
+        fileReaderService.readFile(path)?.let { populateCategories(it) }
+    }
+
+    private suspend fun populateCategories(jsonString: String) {
         val categories = Json.decodeFromString<List<Category>>(jsonString)
         categories.forEach { db.categoryDao().insertCategory(it.toEntity()) }
     }
@@ -77,7 +84,11 @@ class RootRecordsRepository(factory: DatabaseFactory) {
         return db.taskDao().getTaskById(id).firstOrNull()?.toModel()
     }
 
-    suspend fun populateTasks(jsonString: String) {
+    suspend fun populateTasksFromFile(path: String) {
+        fileReaderService.readFile(path)?.let { populateTasks(it) }
+    }
+
+    private suspend fun populateTasks(jsonString: String) {
         val categories = getCategories()
         val tasks =
             Json.decodeFromString<List<Task>>(jsonString).let {
