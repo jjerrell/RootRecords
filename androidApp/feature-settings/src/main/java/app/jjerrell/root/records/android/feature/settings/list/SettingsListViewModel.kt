@@ -38,17 +38,12 @@ class SettingsListViewModel(
                 val jsonString = Json.encodeToString(it)
                 val file = File(context.getExternalFilesDir(null), "categories.json")
                 file.writeText(jsonString)
-                Log.d(
-                    "SettingsListViewModel",
-                    "Categories exported to JSON File:\n${file.absolutePath}"
-                )
             }
         }
     }
 
     fun clearCategories() {
         viewModelScope.launch {
-            Log.d("SettingsListViewModel", "clearCategories")
             repository.getCategories()?.forEach { category ->
                 category.id?.let { categoryId -> repository.deleteCategory(categoryId) }
             }
@@ -57,7 +52,6 @@ class SettingsListViewModel(
 
     fun clearTasks() {
         viewModelScope.launch {
-            Log.d("SettingsListViewModel", "clearTasks")
             repository.getTasks()?.forEach { task ->
                 task.id?.let { taskId -> repository.deleteTask(taskId) }
             }
