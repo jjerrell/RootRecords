@@ -55,7 +55,6 @@ class TaskEditViewModel(private val repository: RootRecordsRepository) : ViewMod
         if (state.categories.isNullOrEmpty()) {
             viewModelScope.launch {
                 val categories = repository.getCategories()
-                Log.d("TaskEditViewModel", "categories: $categories")
                 state = state.copy(categories = categories, isSelectingCategory = true)
             }
         } else {
@@ -82,7 +81,13 @@ class TaskEditViewModel(private val repository: RootRecordsRepository) : ViewMod
     fun saveTask() {
         state = state.copy(isLoading = true)
         state.selectedTask?.let {
-            viewModelScope.launch { async { repository.insertTask(it) }.await() }
+            viewModelScope.launch {
+                if (it.id == null) {
+                    repository.insertTask(it)
+                } else {
+                    repository.updateTask(it)
+                }
+            }
         }
     }
 

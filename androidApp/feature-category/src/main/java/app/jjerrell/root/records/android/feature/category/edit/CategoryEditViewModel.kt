@@ -62,7 +62,13 @@ class CategoryEditViewModel(private val repository: RootRecordsRepository) : Vie
     fun saveCategory() {
         state = state.copy(isLoading = true)
         state.selectedCategory?.let {
-            viewModelScope.launch { async { repository.insertCategory(it) }.await() }
+            viewModelScope.launch {
+                if (it.id == null) {
+                    repository.insertCategory(it)
+                } else {
+                    repository.updateCategory(it)
+                }
+            }
         }
     }
 
