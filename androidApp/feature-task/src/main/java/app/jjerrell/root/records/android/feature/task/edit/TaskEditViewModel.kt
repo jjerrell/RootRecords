@@ -17,7 +17,6 @@
  */
 package app.jjerrell.root.records.android.feature.task.edit
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -26,6 +25,7 @@ import androidx.lifecycle.viewModelScope
 import app.jjerrell.root.records.service.RootRecordsRepository
 import app.jjerrell.root.records.service.model.Category
 import app.jjerrell.root.records.service.model.Task
+import app.jjerrell.root.records.service.model.TaskEvent
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -38,7 +38,13 @@ class TaskEditViewModel(private val repository: RootRecordsRepository) : ViewMod
         viewModelScope.launch {
             val task =
                 id?.let { async { repository.getTaskById(id) }.await() }
-                    ?: Task(title = "", description = "", isCompleted = false, category = null, events = emptyList())
+                    ?: Task(
+                        title = "",
+                        description = "",
+                        isCompleted = false,
+                        category = null,
+                        events = emptyList()
+                    )
             state = state.copy(isLoading = false, selectedTask = task)
         }
     }
@@ -61,6 +67,25 @@ class TaskEditViewModel(private val repository: RootRecordsRepository) : ViewMod
             state = state.copy(isSelectingCategory = true)
         }
     }
+
+    // region Task Event
+    fun createNewEvent() {
+        state = state.copy(newEvent = TaskEvent(name = "", timeStampMillis = 0))
+    }
+
+    fun updateNewEventName(name: String) {
+        state = state.copy(newEvent = state.newEvent?.copy(name = name))
+    }
+
+    fun saveNewTaskEvent() {
+        state.newEvent?.copy(timeStampMillis = System.currentTimeMillis())?.let { newEvent ->
+            val updatedTask =
+                state.selectedTask?.copy(events = state.selectedTask?.events.orEmpty() + newEvent)
+
+            state = state.copy(selectedTask = updatedTask, newEvent = null)
+        }
+    }
+    // endregion
 
     fun stopSelectingCategory() {
         state = state.copy(isSelectingCategory = false)
@@ -95,6 +120,7 @@ class TaskEditViewModel(private val repository: RootRecordsRepository) : ViewMod
         val isLoading: Boolean = false,
         val isSelectingCategory: Boolean = false,
         val selectedTask: Task? = null,
-        val categories: List<Category>? = null
+        val categories: List<Category>? = null,
+        val newEvent: TaskEvent? = null
     )
 }

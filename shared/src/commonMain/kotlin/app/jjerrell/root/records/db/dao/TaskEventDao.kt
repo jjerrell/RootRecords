@@ -21,29 +21,22 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import androidx.room.Update
-import app.jjerrell.root.records.db.entity.TaskEntity
-import app.jjerrell.root.records.db.entity.TaskWithCategoryAndEvents
-import kotlinx.coroutines.flow.Flow
+import app.jjerrell.root.records.db.entity.EventEntity
 
 @Dao
-interface TaskDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertTask(task: TaskEntity)
+interface TaskEventDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertEvent(event: EventEntity)
 
-    @Update suspend fun updateTask(task: TaskEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertEvents(events: List<EventEntity>)
 
-    @Transaction
-    @Query("SELECT * FROM taskEntity")
-    fun getAllTasks(): Flow<List<TaskWithCategoryAndEvents>>
+    @Update suspend fun updateEvent(event: EventEntity)
 
-    @Transaction
-    @Query("SELECT * FROM taskEntity WHERE category_id = :id")
-    fun getAllTasksByCategory(id: Int): Flow<List<TaskWithCategoryAndEvents>>
+    @Update suspend fun updateEvents(events: List<EventEntity>)
 
-    @Transaction
-    @Query("SELECT * FROM taskEntity WHERE id = :id")
-    fun getTaskById(id: Int): Flow<TaskWithCategoryAndEvents>
+    @Query("SELECT * FROM eventEntity WHERE task_id = :taskId")
+    suspend fun getEventsByTaskId(taskId: Int): List<EventEntity>
 
-    @Query("DELETE FROM taskEntity WHERE id = :id") suspend fun deleteTaskById(id: Int)
+    @Query("DELETE FROM eventEntity WHERE id = :id") suspend fun deleteEventById(id: Int)
 }

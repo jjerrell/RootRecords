@@ -67,11 +67,20 @@ class RootRecordsRepository(
 
     // region Task
     suspend fun insertTask(task: Task) {
-        db.taskDao().insertTask(task.toEntity())
+        val taskAndEvents = task.toEntity()
+        db.taskDao().insertTask(taskAndEvents.first)
+        taskAndEvents.second?.let { db.taskEventDao().insertEvents(it) }
     }
 
     suspend fun updateTask(task: Task) {
-        db.taskDao().updateTask(task.toEntity())
+        val taskAndEvents = task.toEntity()
+        db.taskDao().updateTask(taskAndEvents.first)
+        taskAndEvents.second
+            ?.partition { it.id == 0 }
+            ?.let {
+                db.taskEventDao().insertEvents(it.first)
+                db.taskEventDao().updateEvents(it.second)
+            }
     }
 
     suspend fun deleteTask(id: Int) {
@@ -93,14 +102,16 @@ class RootRecordsRepository(
     private suspend fun populateTasks(jsonString: String) {
         val categories = getCategories()
         val tasks =
-            Json.decodeFromString<List<Task>>(jsonString).let {
-                if (categories.isNullOrEmpty()) {
-                    it.map { task -> task.copy(category = null) }
-                } else {
-                    it
+            Json.decodeFromString<List<Task>>(jsonString)
+                .let {
+                    if (categories.isNullOrEmpty()) {
+                        it.map { task -> task.copy(category = null) }
+                    } else {
+                        it
+                    }
                 }
-            }
-        tasks.forEach { db.taskDao().insertTask(it.toEntity()) }
+                .map { it.toEntity().first }
+        tasks.forEach { db.taskDao().insertTask(it) }
     }
     // endregion
 }
@@ -111,14 +122,14 @@ private fun Category.toEntity() =
 private fun CategoryEntity.toModel() =
     Category(id = id, name = name, description = description, colorValue = color)
 
-private fun Task.toEntity() =
+private fun Task.toEntity(): Pair<TaskEntity, List<EventEntity>?> =
     TaskEntity(
         id = id ?: 0,
         title = title,
         description = description,
         isCompleted = isCompleted,
         categoryId = category?.id
-    )
+    ) to events?.map { it.toEntity(id) }
 
 private fun TaskWithCategoryAndEvents.toModel() =
     Task(
@@ -130,9 +141,7 @@ private fun TaskWithCategoryAndEvents.toModel() =
         events = events.map { it.toModel() }
     )
 
-private fun EventEntity.toModel() =
-    TaskEvent(
-        id = id,
-        name = name,
-        timestampSeconds = timestampSeconds
-    )
+private fun EventEntity.toModel() = TaskEvent(id = id, name = name, timeStampMillis = timestamp)
+
+private fun TaskEvent.toEntity(taskId: Int?) =
+    EventEntity(id = id ?: 0, name = name, timestamp = timeStampMillis, taskId = taskId)
