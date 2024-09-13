@@ -17,6 +17,8 @@
  */
 package app.jjerrell.root.records.android.feature.task.edit
 
+import android.text.format.DateFormat
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -42,9 +44,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import app.jjerrell.root.records.android.ui.core.RootDefaults
 import app.jjerrell.root.records.service.model.Category
+import app.jjerrell.root.records.service.model.TaskEvent
 
 @Composable
 fun TaskEditScreen(
@@ -101,6 +105,31 @@ fun TaskEditScreen(
         ) {
             Text(viewModel.state.selectedTask?.category?.name ?: "Select category")
         }
+
+        TextButton(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            onClick = { viewModel.createNewEvent() },
+            enabled = viewModel.state.newEvent == null
+        ) {
+            Text("New event")
+        }
+
+        AnimatedVisibility(visible = viewModel.state.newEvent != null) {
+            viewModel.state.newEvent?.let { taskEvent ->
+                TaskEventCreation(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    taskEvent = taskEvent,
+                    onUpdateTaskName = { viewModel.updateNewEventName(it) },
+                    onSubmit = { viewModel.saveNewTaskEvent() }
+                )
+            }
+        }
+
+        TaskEventList(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            events = viewModel.state.selectedTask?.events.orEmpty()
+        )
+
         Row(
             modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
             horizontalArrangement = Arrangement.End,
@@ -125,6 +154,53 @@ fun TaskEditScreen(
             onClose = { viewModel.stopSelectingCategory() },
             onCategorySelected = viewModel::updateSelectedCategory
         )
+    }
+}
+
+@Composable
+private fun TaskEventCreation(
+    modifier: Modifier = Modifier,
+    taskEvent: TaskEvent,
+    onUpdateTaskName: (String) -> Unit,
+    onSubmit: () -> Unit
+) {
+    Column(modifier = modifier) {
+        TextField(
+            modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
+            value = taskEvent.name,
+            onValueChange = onUpdateTaskName,
+            placeholder = { Text("Name") }
+        )
+        TextButton(modifier = Modifier.padding(horizontal = 16.dp), onClick = onSubmit) {
+            Text("Submit")
+        }
+    }
+}
+
+@Composable
+private fun TaskEventList(
+    modifier: Modifier = Modifier,
+    events: List<TaskEvent>,
+    //    onEdit: (TaskEvent) -> Unit,
+    ) {
+    val context = LocalContext.current
+    Column(modifier = modifier) {
+        events.forEach {
+            Row(
+                modifier =
+                    Modifier.fillMaxWidth().clickable {
+                        //                        onEdit(it)
+                    },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = it.name)
+                it.timeStampMillis.let {
+                    val dateFormat = DateFormat.getMediumDateFormat(context)
+                    Text(text = dateFormat.format(it))
+                }
+            }
+        }
     }
 }
 
