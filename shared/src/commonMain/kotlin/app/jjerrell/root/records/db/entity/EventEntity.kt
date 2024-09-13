@@ -18,6 +18,6 @@ import androidx.room.PrimaryKey
 data class EventEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-    val timestampSeconds: Long,
+    val timestamp: Long,
     @ColumnInfo(name = "task_id", index = true) val taskId: Int?
 )

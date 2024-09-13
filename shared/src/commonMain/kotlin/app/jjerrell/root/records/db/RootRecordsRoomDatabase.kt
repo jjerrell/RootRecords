@@ -23,26 +23,18 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import app.jjerrell.root.records.db.dao.CategoryDao
 import app.jjerrell.root.records.db.dao.TaskDao
+import app.jjerrell.root.records.db.dao.TaskEventDao
 import app.jjerrell.root.records.db.entity.CategoryEntity
 import app.jjerrell.root.records.db.entity.EventEntity
 import app.jjerrell.root.records.db.entity.TaskEntity
 
 @Database(
     entities = [CategoryEntity::class, TaskEntity::class, EventEntity::class],
-    version = 8,
-    autoMigrations =
-        [
-            AutoMigration(from = 1, to = 2),
-            AutoMigration(from = 2, to = 3),
-            AutoMigration(from = 3, to = 4),
-            AutoMigration(from = 4, to = 5),
-            AutoMigration(from = 5, to = 6),
-            AutoMigration(from = 6, to = 7),
-            AutoMigration(from = 7, to = 8)
-        ]
+    version = 1
 )
 @ConstructedBy(DatabaseConstructor::class)
 abstract class RootRecordsRoomDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun taskDao(): TaskDao
+    abstract fun taskEventDao(): TaskEventDao
 }

@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class TaskEvent(
     val id: Int? = null,
     val name: String,
-    val timestampSeconds: Long,
+    val timeStampMillis: Long,
 )
