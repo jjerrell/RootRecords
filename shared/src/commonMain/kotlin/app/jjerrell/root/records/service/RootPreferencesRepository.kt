@@ -21,11 +21,21 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 private const val HAS_ASKED_FOR_DEFAULT_CATEGORIES = "has_asked_for_default_categories"
 private const val HAS_ASKED_FOR_DEFAULT_TASKS = "has_asked_for_default_tasks"
+
+enum class TaskListDisplayType {
+    SEPARATE,
+    GROUPED;
+
+    companion object {
+        const val KEY = "task_list_display_type"
+    }
+}
 
 class RootPreferencesRepository(private val dataStore: DataStore<Preferences>) {
     // region Category
@@ -53,6 +63,22 @@ class RootPreferencesRepository(private val dataStore: DataStore<Preferences>) {
         dataStore.edit { preferences -> preferences[defaultTasksKey] = value }
     }
     // endregion
+
+    //region Display
+    suspend fun getTaskListDisplayType(): TaskListDisplayType {
+        val dataStoreKey = stringPreferencesKey(TaskListDisplayType.KEY)
+        return dataStore.data.map { preferences ->
+            preferences[dataStoreKey]?.let {
+                TaskListDisplayType.valueOf(it)
+            } ?: TaskListDisplayType.SEPARATE
+        }.first()
+    }
+
+    suspend fun setTaskListDisplayType(value: TaskListDisplayType) {
+        val dataStoreKey = stringPreferencesKey(TaskListDisplayType.KEY)
+        dataStore.edit { preferences -> preferences[dataStoreKey] = value.name }
+    }
+    //endregion
 
     // region Maintenance
     suspend fun clearPreferences() {

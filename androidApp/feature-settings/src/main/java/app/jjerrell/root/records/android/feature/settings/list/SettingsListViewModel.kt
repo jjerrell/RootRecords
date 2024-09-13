@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.jjerrell.root.records.service.RootPreferencesRepository
 import app.jjerrell.root.records.service.RootRecordsRepository
+import app.jjerrell.root.records.service.TaskListDisplayType
 import java.io.File
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
@@ -31,6 +32,12 @@ class SettingsListViewModel(
     private val repository: RootRecordsRepository,
     private val preferencesRepository: RootPreferencesRepository
 ) : ViewModel() {
+    fun setTaskListDisplayType(value: TaskListDisplayType) {
+        viewModelScope.launch {
+            preferencesRepository.setTaskListDisplayType(value)
+        }
+    }
+
     fun exportDatabaseToJSON(context: Context) {
         viewModelScope.launch {
             repository.getCategories()?.let {
