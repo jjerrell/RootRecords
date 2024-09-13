@@ -17,7 +17,6 @@
  */
 package app.jjerrell.root.records.db
 
-import androidx.room.AutoMigration
 import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
@@ -28,13 +27,12 @@ import app.jjerrell.root.records.db.entity.CategoryEntity
 import app.jjerrell.root.records.db.entity.EventEntity
 import app.jjerrell.root.records.db.entity.TaskEntity
 
-@Database(
-    entities = [CategoryEntity::class, TaskEntity::class, EventEntity::class],
-    version = 1
-)
+@Database(entities = [CategoryEntity::class, TaskEntity::class, EventEntity::class], version = 1)
 @ConstructedBy(DatabaseConstructor::class)
 abstract class RootRecordsRoomDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
+
     abstract fun taskDao(): TaskDao
+
     abstract fun taskEventDao(): TaskEventDao
 }

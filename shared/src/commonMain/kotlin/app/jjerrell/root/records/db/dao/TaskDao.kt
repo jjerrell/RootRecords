@@ -33,7 +33,9 @@ interface TaskDao {
 
     @Update suspend fun updateTask(task: TaskEntity)
 
-    @Transaction @Query("SELECT * FROM taskEntity") fun getAllTasks(): Flow<List<TaskWithCategoryAndEvents>>
+    @Transaction
+    @Query("SELECT * FROM taskEntity")
+    fun getAllTasks(): Flow<List<TaskWithCategoryAndEvents>>
 
     @Transaction
     @Query("SELECT * FROM taskEntity WHERE category_id = :id")

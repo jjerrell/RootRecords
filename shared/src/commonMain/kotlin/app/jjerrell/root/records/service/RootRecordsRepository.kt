@@ -75,12 +75,12 @@ class RootRecordsRepository(
     suspend fun updateTask(task: Task) {
         val taskAndEvents = task.toEntity()
         db.taskDao().updateTask(taskAndEvents.first)
-        taskAndEvents.second?.partition {
-            it.id == 0
-        } ?.let {
-            db.taskEventDao().insertEvents(it.first)
-            db.taskEventDao().updateEvents(it.second)
-        }
+        taskAndEvents.second
+            ?.partition { it.id == 0 }
+            ?.let {
+                db.taskEventDao().insertEvents(it.first)
+                db.taskEventDao().updateEvents(it.second)
+            }
     }
 
     suspend fun deleteTask(id: Int) {
@@ -102,15 +102,15 @@ class RootRecordsRepository(
     private suspend fun populateTasks(jsonString: String) {
         val categories = getCategories()
         val tasks =
-            Json.decodeFromString<List<Task>>(jsonString).let {
-                if (categories.isNullOrEmpty()) {
-                    it.map { task -> task.copy(category = null) }
-                } else {
-                    it
+            Json.decodeFromString<List<Task>>(jsonString)
+                .let {
+                    if (categories.isNullOrEmpty()) {
+                        it.map { task -> task.copy(category = null) }
+                    } else {
+                        it
+                    }
                 }
-            }.map {
-                it.toEntity().first
-            }
+                .map { it.toEntity().first }
         tasks.forEach { db.taskDao().insertTask(it) }
     }
     // endregion
@@ -141,16 +141,7 @@ private fun TaskWithCategoryAndEvents.toModel() =
         events = events.map { it.toModel() }
     )
 
-private fun EventEntity.toModel() =
-    TaskEvent(
-        id = id,
-        name = name,
-        timeStampMillis = timestamp
-    )
+private fun EventEntity.toModel() = TaskEvent(id = id, name = name, timeStampMillis = timestamp)
 
-private fun TaskEvent.toEntity(taskId: Int?) = EventEntity(
-    id = id ?: 0,
-    name = name,
-    timestamp = timeStampMillis,
-    taskId = taskId
-)
+private fun TaskEvent.toEntity(taskId: Int?) =
+    EventEntity(id = id ?: 0, name = name, timestamp = timeStampMillis, taskId = taskId)

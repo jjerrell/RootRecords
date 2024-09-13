@@ -18,7 +18,6 @@
 package app.jjerrell.root.records.android.feature.settings.list
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.jjerrell.root.records.service.RootPreferencesRepository
