@@ -18,19 +18,24 @@
 package app.jjerrell.root.records.android.feature.task.list
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import app.jjerrell.root.records.android.ui.core.RootDefaults
 import app.jjerrell.root.records.android.ui.core.component.RootSwipeToDismiss
+import app.jjerrell.root.records.android.ui.theme.DisplayType
+import app.jjerrell.root.records.android.ui.theme.LocalRootDisplays
 import app.jjerrell.root.records.android.ui.theme.RootRecordsTheme
 import app.jjerrell.root.records.service.model.Task
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun TaskListView(
     modifier: Modifier = Modifier,
@@ -38,27 +43,40 @@ internal fun TaskListView(
     onTaskClick: (id: Int) -> Unit,
     onTaskDelete: (id: Int) -> Unit
 ) {
+    val displayType = LocalRootDisplays.current.taskList
+    val hasCategories = tasks.any { it.category != null }
     LazyColumn(
         modifier = modifier,
         contentPadding = RootDefaults.contentPadding,
         verticalArrangement = RootDefaults.defaultArrangement
     ) {
-        items(items = tasks) { task: Task ->
-            RootSwipeToDismiss(
-                onSwipeValue = { swipeValue: SwipeToDismissBoxValue ->
-                    if (swipeValue == SwipeToDismissBoxValue.EndToStart) {
-                        onTaskDelete(task.id!!)
+        tasks
+            .groupBy { task -> task.category.takeUnless { displayType == DisplayType.SEPARATE } }
+            .forEach { (category, tasks) ->
+                if (hasCategories && displayType == DisplayType.GROUPED) {
+                    if (category == null) {
+                        stickyHeader { Text("Other") }
+                    } else {
+                        stickyHeader { Text(category.name) }
                     }
-                },
-                content = {
-                    TaskListItem(
-                        modifier = Modifier.fillMaxWidth(),
-                        task = task,
-                        onTaskClick = { onTaskClick(task.id!!) }
+                }
+                items(items = tasks) { task: Task ->
+                    RootSwipeToDismiss(
+                        onSwipeValue = { swipeValue: SwipeToDismissBoxValue ->
+                            if (swipeValue == SwipeToDismissBoxValue.EndToStart) {
+                                onTaskDelete(task.id!!)
+                            }
+                        },
+                        content = {
+                            TaskListItem(
+                                modifier = Modifier.fillMaxWidth(),
+                                task = task,
+                                onTaskClick = { onTaskClick(task.id!!) }
+                            )
+                        }
                     )
                 }
-            )
-        }
+            }
     }
 }
 
