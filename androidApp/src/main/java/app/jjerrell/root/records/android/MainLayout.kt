@@ -34,6 +34,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -44,6 +46,9 @@ import app.jjerrell.root.records.android.feature.category.categoryGraph
 import app.jjerrell.root.records.android.feature.settings.settingsGraph
 import app.jjerrell.root.records.android.feature.task.taskGraph
 import app.jjerrell.root.records.android.ui.navigation.RootRecordsNavigation
+import app.jjerrell.root.records.android.ui.theme.DisplayType
+import app.jjerrell.root.records.android.ui.theme.LocalRootDisplays
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,92 +56,107 @@ fun MainLayout(
     modifier: Modifier = Modifier,
     landingScreen: RootRecordsNavigation = RootRecordsNavigation.Tasks
 ) {
+    val viewModel: MainLayoutViewModel = koinViewModel()
     val controller = rememberNavController()
     val navBackStackEntry by controller.currentBackStackEntryAsState()
     val currentDestination =
         RootRecordsNavigation.fromNavDestination(navBackStackEntry?.destination)
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            TopAppBar(
-                title = {
-                    val titleResource =
-                        currentDestination?.titleResourceId?.takeUnless {
-                            currentDestination == landingScreen
-                        }
-                            ?: R.string.app_name
-                    Text(text = stringResource(id = titleResource))
-                },
-                navigationIcon = {
-                    if (currentDestination != null && currentDestination != landingScreen) {
-                        IconButton(onClick = { controller.popBackStack() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = stringResource(id = R.string.back)
-                            )
-                        }
-                    }
-                },
-                actions = {
-                    if (currentDestination == landingScreen) {
-                        IconButton(
-                            onClick = { controller.navigate(RootRecordsNavigation.Settings.route) }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.Settings,
-                                contentDescription = stringResource(id = R.string.settings_title)
-                            )
-                        }
-                    }
-                    if (currentDestination == RootRecordsNavigation.Tasks) {
-                        IconButton(
-                            onClick = {
-                                controller.navigate(RootRecordsNavigation.Categories.route)
+    LaunchedEffect(navBackStackEntry) { viewModel.getTaskListDisplayType() }
+    CompositionLocalProvider(LocalRootDisplays provides viewModel.displayTypes) {
+        Scaffold(
+            modifier = modifier,
+            topBar = {
+                TopAppBar(
+                    title = {
+                        val titleResource =
+                            currentDestination?.titleResourceId?.takeUnless {
+                                currentDestination == landingScreen
                             }
+                                ?: R.string.app_name
+                        Text(text = stringResource(id = titleResource))
+                    },
+                    navigationIcon = {
+                        if (currentDestination != null && currentDestination != landingScreen) {
+                            IconButton(onClick = { controller.popBackStack() }) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = stringResource(id = R.string.back)
+                                )
+                            }
+                        }
+                    },
+                    actions = {
+                        if (currentDestination == landingScreen) {
+                            IconButton(
+                                onClick = {
+                                    controller.navigate(RootRecordsNavigation.Settings.route)
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Settings,
+                                    contentDescription =
+                                        stringResource(id = R.string.settings_title)
+                                )
+                            }
+                        }
+                        if (currentDestination == RootRecordsNavigation.Tasks) {
+                            when (viewModel.displayTypes.taskList) {
+                                DisplayType.SEPARATE ->
+                                    IconButton(
+                                        onClick = {
+                                            controller.navigate(
+                                                RootRecordsNavigation.Categories.route
+                                            )
+                                        }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Menu,
+                                            contentDescription =
+                                                stringResource(id = R.string.categories_title)
+                                        )
+                                    }
+                                else -> {}
+                            }
+                        }
+                    },
+                    colors =
+                        TopAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            scrolledContainerColor = MaterialTheme.colorScheme.primary,
+                            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                            navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                            actionIconContentColor = MaterialTheme.colorScheme.onPrimary
+                        )
+                )
+            },
+            floatingActionButton = {
+                when (val addRouteDestination = currentDestination?.addRoute) {
+                    null -> {}
+                    else -> {
+                        FloatingActionButton(
+                            onClick = { controller.navigate(addRouteDestination.route) },
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
                         ) {
                             Icon(
-                                imageVector = Icons.Filled.Menu,
-                                contentDescription = stringResource(id = R.string.categories_title)
+                                imageVector = Icons.Default.Add,
+                                contentDescription =
+                                    stringResource(addRouteDestination.titleResourceId)
                             )
                         }
-                    }
-                },
-                colors =
-                    TopAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        scrolledContainerColor = MaterialTheme.colorScheme.primary,
-                        titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                        navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                        actionIconContentColor = MaterialTheme.colorScheme.onPrimary
-                    )
-            )
-        },
-        floatingActionButton = {
-            when (val addRouteDestination = currentDestination?.addRoute) {
-                null -> {}
-                else -> {
-                    FloatingActionButton(
-                        onClick = { controller.navigate(addRouteDestination.route) },
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = stringResource(addRouteDestination.titleResourceId)
-                        )
                     }
                 }
             }
-        }
-    ) { paddingValues ->
-        NavHost(
-            modifier = Modifier.fillMaxSize().padding(paddingValues),
-            navController = controller,
-            startDestination = landingScreen.name
-        ) {
-            taskGraph(controller)
-            categoryGraph(controller)
-            settingsGraph(controller)
+        ) { paddingValues ->
+            NavHost(
+                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                navController = controller,
+                startDestination = landingScreen.name
+            ) {
+                taskGraph(controller)
+                categoryGraph(controller)
+                settingsGraph(controller)
+            }
         }
     }
 }

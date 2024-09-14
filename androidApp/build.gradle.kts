@@ -58,6 +58,7 @@ dependencies {
 
     implementation(libs.koin.core)
     implementation(libs.koin.android)
+    implementation(libs.koin.viewmodel)
 
     implementation(project(":androidApp:ui:theme"))
     implementation(project(":androidApp:ui:navigation"))

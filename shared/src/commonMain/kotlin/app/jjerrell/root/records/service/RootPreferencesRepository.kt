@@ -27,15 +27,7 @@ import kotlinx.coroutines.flow.map
 
 private const val HAS_ASKED_FOR_DEFAULT_CATEGORIES = "has_asked_for_default_categories"
 private const val HAS_ASKED_FOR_DEFAULT_TASKS = "has_asked_for_default_tasks"
-
-enum class TaskListDisplayType {
-    SEPARATE,
-    GROUPED;
-
-    companion object {
-        const val KEY = "task_list_display_type"
-    }
-}
+private const val TASK_DISPLAY_TYPE = "task_list_display_type"
 
 class RootPreferencesRepository(private val dataStore: DataStore<Preferences>) {
     // region Category
@@ -64,21 +56,17 @@ class RootPreferencesRepository(private val dataStore: DataStore<Preferences>) {
     }
     // endregion
 
-    //region Display
-    suspend fun getTaskListDisplayType(): TaskListDisplayType {
-        val dataStoreKey = stringPreferencesKey(TaskListDisplayType.KEY)
-        return dataStore.data.map { preferences ->
-            preferences[dataStoreKey]?.let {
-                TaskListDisplayType.valueOf(it)
-            } ?: TaskListDisplayType.SEPARATE
-        }.first()
+    // region Display
+    suspend fun getTaskListDisplayType(): String {
+        val dataStoreKey = stringPreferencesKey(TASK_DISPLAY_TYPE)
+        return dataStore.data.map { preferences -> preferences[dataStoreKey] ?: "SEPARATE" }.first()
     }
 
-    suspend fun setTaskListDisplayType(value: TaskListDisplayType) {
-        val dataStoreKey = stringPreferencesKey(TaskListDisplayType.KEY)
-        dataStore.edit { preferences -> preferences[dataStoreKey] = value.name }
+    suspend fun setTaskListDisplayType(value: String) {
+        val dataStoreKey = stringPreferencesKey(TASK_DISPLAY_TYPE)
+        dataStore.edit { preferences -> preferences[dataStoreKey] = value }
     }
-    //endregion
+    // endregion
 
     // region Maintenance
     suspend fun clearPreferences() {
