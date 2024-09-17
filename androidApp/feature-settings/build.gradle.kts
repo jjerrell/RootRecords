@@ -63,6 +63,7 @@ dependencies {
 
     implementation(projects.shared)
     api(project(":androidApp:ui:core"))
+    implementation(project(":androidApp:ui:theme"))
     implementation(project(":androidApp:ui:navigation"))
 
     debugImplementation(libs.compose.ui.tooling)

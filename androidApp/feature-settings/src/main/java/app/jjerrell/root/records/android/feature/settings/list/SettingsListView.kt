@@ -30,19 +30,30 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import app.jjerrell.root.records.BuildConfig
 import app.jjerrell.root.records.android.ui.core.RootDefaults
+import app.jjerrell.root.records.android.ui.theme.LocalRootDisplays
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
 fun SettingsListView(modifier: Modifier = Modifier, viewModel: SettingsListViewModel) {
     val context = LocalContext.current
+    val currentDisplayType = LocalRootDisplays.current
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = RootDefaults.contentPadding,
         verticalArrangement = RootDefaults.defaultArrangement
     ) {
+        item {
+            SettingsListItem(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { viewModel.toggleTaskListDisplayType(currentDisplayType.taskList) }
+            ) {
+                Text(
+                    text = "Toggle Display Type",
+                )
+            }
+        }
         if (BuildConfig.DEBUG) {
             developerOptionsItems(context = context, viewModel = viewModel)
         } else {

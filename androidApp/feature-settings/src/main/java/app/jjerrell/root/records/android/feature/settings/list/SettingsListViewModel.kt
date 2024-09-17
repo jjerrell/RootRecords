@@ -20,6 +20,7 @@ package app.jjerrell.root.records.android.feature.settings.list
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.jjerrell.root.records.android.ui.theme.DisplayType
 import app.jjerrell.root.records.service.RootPreferencesRepository
 import app.jjerrell.root.records.service.RootRecordsRepository
 import java.io.File
@@ -31,6 +32,17 @@ class SettingsListViewModel(
     private val repository: RootRecordsRepository,
     private val preferencesRepository: RootPreferencesRepository
 ) : ViewModel() {
+    fun toggleTaskListDisplayType(currentType: DisplayType) {
+        viewModelScope.launch {
+            val newType =
+                when (currentType) {
+                    DisplayType.SEPARATE -> DisplayType.GROUPED
+                    DisplayType.GROUPED -> DisplayType.SEPARATE
+                }
+            preferencesRepository.setTaskListDisplayType(newType.name)
+        }
+    }
+
     fun exportDatabaseToJSON(context: Context) {
         viewModelScope.launch {
             repository.getCategories()?.let {
